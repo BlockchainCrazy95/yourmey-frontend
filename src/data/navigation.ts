@@ -106,17 +106,42 @@ const otherPageChildMenus: NavItemType[] = [
   },
 ];
 
+// export const NAVIGATION_DEMO_2: NavItemType[] = [
+//   {
+//     id: ncNanoId(),
+//     href: "#",
+//     name: "Discover",
+//     type: "dropdown",
+//     children: otherPageChildMenus,
+//   },
+//   {
+//     id: ncNanoId(),
+//     href: "/#",
+//     name: "Help center",
+//   },
+// ];
+
 export const NAVIGATION_DEMO_2: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "#",
-    name: "Discover",
+    name: "Home",
     type: "dropdown",
     children: otherPageChildMenus,
   },
   {
     id: ncNanoId(),
     href: "/#",
-    name: "Help center",
+    name: "Explorer",
+  },
+  {
+    id: ncNanoId(),
+    href: "/#",
+    name: "Pages",
+  },
+  {
+    id: ncNanoId(),
+    href: "/#",
+    name: "Blogs",
   },
 ];

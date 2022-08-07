@@ -114,7 +114,7 @@ const CardNFTMusic: FC<CardNFTMusicProps> = ({
       </div>
 
       {/* ----TIME--- */}
-      <RemainingTimeNftCard />
+      {/* <RemainingTimeNftCard /> */}
 
       {/* MAIN CONTENT */}
       <div className="w-11/12 max-w-[360px] transform -mt-32 relative z-10">

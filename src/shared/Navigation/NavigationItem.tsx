@@ -195,7 +195,7 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
         }}
         activeClassName="!font-semibold !text-neutral-900 bg-neutral-100 dark:bg-neutral-800 dark:!text-neutral-100"
       >
-        {item.name}
+        <span className="text-white hover:text-neutral-900">{item.name}</span>
         {item.type && (
           <ChevronDownIcon
             className="ml-1 -mr-1 h-4 w-4 text-neutral-400"

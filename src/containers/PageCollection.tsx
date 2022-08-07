@@ -24,7 +24,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
       data-nc-id="PageCollection"
     >
       <Helmet>
-        <title>Collection || Ciscryp NFT Template</title>
+        <title>Yourmey</title>
       </Helmet>
 
       {/* HEADER */}

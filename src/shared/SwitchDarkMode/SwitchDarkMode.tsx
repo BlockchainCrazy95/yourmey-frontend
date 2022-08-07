@@ -12,7 +12,8 @@ const SwitchDarkMode: React.FC<SwitchDarkModeProps> = ({ className = "" }) => {
       (!("theme" in localStorage) &&
         window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
-      toDark();
+      // toDark();
+      toLight();
     } else {
       toLight();
     }
