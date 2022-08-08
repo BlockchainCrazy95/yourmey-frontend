@@ -5,5 +5,5 @@ export const TESTNET_ID = 80001;
 export const RPC_URL = {
     137: "https://polygon-mainnet.g.alchemy.com/v2/yVcv2MTQpFLvVclugH6QPGKPBsFAZrDg",
     // 80001: "https://speedy-nodes-nyc.moralis.io/f20199705d9b3bb894f74574/polygon/mumbai",
-    80001: "https://speedy-nodes-nyc.moralis.io/20cea78632b2835b730fdcf4/polygon/mainnet", // code
+    80001: "https://speedy-nodes-nyc.moralis.io/20cea78632b2835b730fdcf4/polygon/mumbai", // code
 }
