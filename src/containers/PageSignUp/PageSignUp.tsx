@@ -53,9 +53,6 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Password
-                <Link to="/forgot-pass" className="text-sm text-green-600 hover:text-green-400 hover:underline hover:underline-offset-4">
-                  Forgot password?
-                </Link>
               </span>
               <Input
                 type="password"
