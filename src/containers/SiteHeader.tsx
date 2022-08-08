@@ -1,6 +1,6 @@
 import AvatarDropdown from "components/Header/AvatarDropdown";
 import NotifyDropdown from "components/Header/NotifyDropdown";
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
@@ -10,7 +10,7 @@ import MenuBar from "shared/MenuBar/MenuBar";
 import Navigation from "shared/Navigation/Navigation";
 import styled from "styled-components";
 
-const SearchInput = styled.input`
+const SearchHomeInput = styled.input`
   font-size: 16px;
   border: none;
   font-weight: 500;
@@ -18,10 +18,43 @@ const SearchInput = styled.input`
   color: white;
 `
 
+const SearchInput = styled.input`
+  font-size: 16px;
+  border: none;
+  font-weight: 500;
+  background: linear-gradient(90.28deg,rgb(16 123 215 / 9%) -5.54%,rgb(64 101 205 / 16%) 112.42%) !important;
+  color: black;
+`
+
 export interface SiteHeaderProps {}
+
+const params = [
+  {
+    title: "Sign In",
+    url: '/login'
+  },
+  {
+    title: 'Sign Up',
+    url: '/signup'
+  },
+  {
+    title: "Sign In",
+    url: '/login'
+  }
+]
 
 const SiteHeader: FC<SiteHeaderProps> = () => {
   let location = useLocation();
+  const [type, setType] = useState(0);
+
+  useEffect(() => {
+    if(location.pathname === "/")
+      setType(0)
+    else if(location.pathname === '/login')
+      setType(1)
+    else if(location.pathname === '/signup')
+      setType(2)
+  }, [location])
 
   const isLogged = false;
 
@@ -33,11 +66,18 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
             <Logo />
             <div className="hidden sm:block flex-grow max-w-xs">
               <form action="/" method="GET" className="relative">
+                { type === 0 ? <SearchHomeInput 
+                  type="search"
+                  placeholder="Search items"
+                  className="pr-10 w-full h-[42px] pl-4 py-3 border-black"
+                />:
                 <SearchInput 
                   type="search"
                   placeholder="Search items"
-                  className="pr-10 w-full h-[42px] pl-4 py-3"
-                />
+                  className="pr-10 w-full h-[42px] pl-4 py-3 border-black"
+                />  
+                }
+                
                 {/* <Input
                   type="search"
                   placeholder="Search items"
@@ -93,10 +133,10 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
                   Create
                 </ButtonPrimary>
                 <ButtonSecondary
-                  href={"/connect-wallet"}
+                  href={params[type].url}
                   sizeClass="px-4 py-2 sm:px-5"
                 >
-                  Connect Wallet
+                  {params[type].title}
                 </ButtonSecondary>
               </>}
             </div>

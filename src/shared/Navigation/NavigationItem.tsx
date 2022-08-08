@@ -1,7 +1,7 @@
 import { Popover, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import React, { FC, Fragment, useEffect, useState } from "react";
-import { NavLink, RouteComponentProps, withRouter } from "react-router-dom";
+import { NavLink, RouteComponentProps, useLocation, withRouter } from "react-router-dom";
 import { LocationStates } from "routers/types";
 
 // <--- NavItemType --->
@@ -31,6 +31,8 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
   menuItem,
   history,
 }) => {
+  const location = useLocation();
+  const isHome = location.pathname === "/"
   const [menuCurrentHovers, setMenuCurrentHovers] = useState<string[]>([]);
 
   // CLOSE ALL MENU OPENING WHEN CHANGE HISTORY
@@ -195,7 +197,7 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
         }}
         activeClassName="!font-semibold !text-neutral-900 bg-neutral-100 dark:bg-neutral-800 dark:!text-neutral-100"
       >
-        <span className="text-white hover:text-neutral-900">{item.name}</span>
+        {isHome? <span className="text-white hover:text-neutral-900">{item.name}</span> : <>{item.name}</>}
         {item.type && (
           <ChevronDownIcon
             className="ml-1 -mr-1 h-4 w-4 text-neutral-400"

@@ -9,6 +9,7 @@ import metamaskImg from "images/metamask.webp";
 import walletconnectImg from "images/walletconnect.webp";
 import walletlinkImg from "images/walletlink.webp";
 import fortmaticImg from "images/fortmatic.webp";
+import { useWeb3Context } from "hooks/web3Context";
 
 export interface PageConnectWalletProps {
   className?: string;
@@ -22,7 +23,7 @@ const plans = [
   {
     name: "Walletconnect",
     img: walletconnectImg,
-  },
+  } /*,
   {
     name: "Walletlink",
     img: walletlinkImg,
@@ -30,10 +31,24 @@ const plans = [
   {
     name: "Fortmatic",
     img: fortmaticImg,
-  },
+  }, */
 ];
 const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
   const [showModal, setShowModal] = useState(false);
+  const { address, connect, disconnect, connected } = useWeb3Context()
+
+  const onConnect = (name:string) => {
+    if(name === plans[0].name) { // Metamask
+      console.log("connected = ", connected)
+      if(connected) {
+        disconnect();
+      } else {
+        connect();
+      }
+    } else if(name === plans[1].name) { // WalletConnect
+
+    }
+  }
 
   const renderContent = () => {
     return (
@@ -79,11 +94,13 @@ const PageConnectWallet: FC<PageConnectWalletProps> = ({ className = "" }) => {
           </div>
           <div className="w-full border-b-2 border-neutral-100 dark:border-neutral-700"></div>
           <div className="mt-10 md:mt-0 space-y-5 sm:space-y-6 md:sm:space-y-8">
+            <span>{connected ? address : "Not connected"}</span>
             <div className="space-y-3">
               {plans.map((plan) => (
                 <div
                   key={plan.name}
-                  onClick={() => setShowModal(true)}
+                  // onClick={() => setShowModal(true)}
+                  onClick={() => onConnect(plan.name)}
                   typeof="button"
                   tabIndex={0}
                   className="relative rounded-xl hover:shadow-lg hover:bg-neutral-50 border 

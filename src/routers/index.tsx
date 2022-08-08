@@ -19,7 +19,7 @@ import NftDetailPage from "containers/NftDetailPage/NftDetailPage";
 import PageCollection from "containers/PageCollection";
 import PageSearch from "containers/PageSearch";
 import PageUploadItem from "containers/PageUploadItem";
-import PageConnectWallet from "containers/PageConnectWallet";
+// import PageConnectWallet from "containers/PageConnectWallet";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
@@ -32,7 +32,7 @@ export const pages: Page[] = [
   { path: "/page-author", component: AuthorPage },
   { path: "/account", component: AccountPage },
   { path: "/page-upload-item", component: PageUploadItem },
-  { path: "/connect-wallet", component: PageConnectWallet },
+  // { path: "/connect-wallet", component: PageConnectWallet },
   //
   { path: "/blog", component: BlogPage },
   { path: "/blog-single", component: BlogSingle },
