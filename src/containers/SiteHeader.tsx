@@ -1,14 +1,17 @@
 import AvatarDropdown from "components/Header/AvatarDropdown";
 import NotifyDropdown from "components/Header/NotifyDropdown";
 import React, { FC, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import styled from "styled-components";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import Input from "shared/Input/Input";
 import Logo from "shared/Logo/Logo";
 import MenuBar from "shared/MenuBar/MenuBar";
 import Navigation from "shared/Navigation/Navigation";
-import styled from "styled-components";
+
+import { RootState } from "app/store";
 
 const SearchHomeInput = styled.input`
   font-size: 16px;
@@ -45,6 +48,7 @@ const params = [
 
 const SiteHeader: FC<SiteHeaderProps> = () => {
   let location = useLocation();
+  const { user } = useSelector((state:RootState) => state.home)
   const [type, setType] = useState(0);
 
   useEffect(() => {
@@ -56,7 +60,7 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
       setType(2)
   }, [location])
 
-  const isLogged = false;
+  const isLogged = user !== null;
 
   return (
     <div className="nc-Header relative w-full z-40 ">

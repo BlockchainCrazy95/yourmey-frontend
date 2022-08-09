@@ -32,7 +32,7 @@ export default function NotifyDropdown() {
             <Popover.Button
               className={`
                 ${open ? "" : "text-opacity-90"}
-                 group  p-3 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-full inline-flex items-center text-base font-medium hover:text-opacity-100
+                 group  p-3 hover:bg-gray-100 dark:hover:bg-neutral-800 rounded-full inline-flex items-center text-white font-medium hover:text-opacity-100
                   focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 relative`}
             >
               <span className="w-2 h-2 bg-blue-500 absolute top-2 right-2 rounded-full"></span>

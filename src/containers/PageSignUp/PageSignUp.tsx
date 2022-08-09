@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
 import googleSvg from "images/Google.svg";
@@ -8,6 +8,9 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { useWeb3Context } from "hooks/web3Context";
+import { signString } from "utils/contractUtils";
+import axios from "axios";
+import { BASE_URL } from "utils/data";
 
 export interface PageSignUpProps {
   className?: string;
@@ -17,6 +20,8 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
 
   const { address, connect, disconnect, connected } = useWeb3Context();
 
+  const [username, setUsername] = useState('');
+
   const onHandleConnect = () => {
     if(connected) {
       disconnect();
@@ -25,8 +30,39 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
     }
   }
 
-  const onHandleSignUp = () => {
+  const onHandleSignUp = async () => {
     console.log("onHandleSignUp");
+    if(!connected || username === '') {
+      alert("Please input params correctly!")
+      return;
+    }
+
+    let signingResult = await signString(address, username);
+    const params:any = {};
+    if(signingResult.success) {
+      params.address = address;
+      params.username = username;
+      params.password = signingResult.message;
+      // console.log("params=", params)
+      await axios({
+        method: "post",
+        url: `${BASE_URL}users/create`,
+        data: params
+      }).then((res:any) => {
+        console.log("response =", res);
+        if(res.data.code === 1) {
+          const errMsg = "Address is duplicated";
+          alert(errMsg);
+        } else {
+          alert("success");
+        }
+      }).catch((err:any) => {
+        console.log("error:", err);
+        alert(err);
+      })
+    } else {
+      alert("Sign Up failed!!!")
+    }
   }
 
   return (
@@ -48,9 +84,11 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 type="text"
                 placeholder="e.g: user"
                 className="mt-1"
+                value={username}
+                onChange={(e)=>setUsername(e.target.value)}
               />
             </label>
-            <label className="block">
+            {/* <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Password
               </span>
@@ -69,7 +107,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 className="mt-1"
                 placeholder="e.g: 123456"
               />
-            </label>
+            </label> */}
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 <span>Address <span className="text-[#f00]">*</span></span>

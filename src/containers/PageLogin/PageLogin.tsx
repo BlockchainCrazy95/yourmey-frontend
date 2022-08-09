@@ -1,13 +1,19 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
 import googleSvg from "images/Google.svg";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import jwt_decode from "jwt-decode";
 import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { useWeb3Context } from "hooks/web3Context";
+import axios from "axios";
+import { BASE_URL } from "utils/data";
+import { signString } from "utils/contractUtils";
+import { useAppDispatch } from "app/hooks";
+import { setUser } from "app/home/home";
 
 export interface PageLoginProps {
   className?: string;
@@ -32,7 +38,10 @@ export interface PageLoginProps {
 // ];
 
 const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
+  const dispatch = useAppDispatch();
+  const history = useHistory();
   const { address, connect, disconnect, connected } = useWeb3Context();
+  const [username, setUsername] = useState('');
 
   const onHandleConnect = () => {
     if(connected) {
@@ -42,8 +51,42 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
     }
   }
 
-  const onHandleLogin = () => {
+  const onHandleLogin = async () => {
     console.log("HandleLogin")
+    if(!connected || username === '') {
+      alert("Please input params correctly!")
+      return;
+    }
+    const signingResult = await signString(address, username);
+    const params: any = {};
+
+    if(signingResult.success === true) {
+      params.address = address;
+      params.username = username;
+      params.password = signingResult.message;
+      await axios({
+        method: "post",
+        url: `${BASE_URL}users/login`,
+        data: params
+      }).then((res) => {
+        console.log("response = ", res);
+        if(res.data.success === true) {
+          const token = res.data.token;
+          localStorage.setItem("jwtToken", res.data.token);
+          const decoded:any = jwt_decode(token);
+          console.log("token decode=", decoded);
+          dispatch(setUser(decoded._doc));
+          history.push("/");
+          // if(decoded.id)
+          // dispatch(getDetailedUserInfo(decoded.id))
+        }
+      }).catch((err) => {
+        console.log("Login failed error=", err);
+        alert(err.response.data.message);
+      });
+    } else {
+      alert("Signup failed!");
+    }
   }
 
   return (
@@ -65,9 +108,11 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                 type="text"
                 placeholder="e.g: user"
                 className="mt-1"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </label>
-            <label className="block">
+            {/* <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Password
                 <Link to="/forgot-pass" className="text-sm text-green-600 hover:text-green-400 hover:underline hover:underline-offset-4">
@@ -78,7 +123,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
                 className="mt-1"
                 placeholder="e.g: 123456"
               />
-            </label>
+            </label> */}
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 <span>Address <span className="text-[#f00]">*</span></span>
