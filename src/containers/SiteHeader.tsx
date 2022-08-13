@@ -52,7 +52,7 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
   const [type, setType] = useState(0);
 
   useEffect(() => {
-    if(location.pathname === "/")
+    if(location.pathname === "/" || location.pathname === "/#")
       setType(0)
     else if(location.pathname === '/login')
       setType(1)
@@ -130,12 +130,12 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
               </>
               : <>
               <div className="hidden sm:block h-10 border-l border-neutral-300 dark:border-neutral-6000"></div>
-                <ButtonPrimary
+                {/* <ButtonPrimary
                   href={"/page-upload-item"}
                   sizeClass="px-4 py-2 sm:px-5"
                 >
                   Create
-                </ButtonPrimary>
+                </ButtonPrimary> */}
                 <ButtonSecondary
                   href={params[type].url}
                   sizeClass="px-4 py-2 sm:px-5"

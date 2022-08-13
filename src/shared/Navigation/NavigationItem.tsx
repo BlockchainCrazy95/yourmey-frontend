@@ -32,7 +32,7 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
   history,
 }) => {
   const location = useLocation();
-  const isHome = location.pathname === "/"
+  const isHome = location.pathname === "/" || location.pathname === "/#";
   const [menuCurrentHovers, setMenuCurrentHovers] = useState<string[]>([]);
 
   // CLOSE ALL MENU OPENING WHEN CHANGE HISTORY
