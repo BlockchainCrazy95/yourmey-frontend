@@ -21,18 +21,18 @@ const SectionEarnWithAffiliate: FC<SectionEarnWithAffiliateProps> = ({
       <div className="flex-shrink-0 mb-16 lg:mb-0 lg:mr-10 lg:w-2/5">
         <Logo className="w-28" />
         <h2 className="font-semibold text-3xl sm:text-4xl xl:text-6xl mt-6 sm:mt-10 !leading-[1.112] tracking-tight">
-          Earn With Affiliate
+          Affiliate Your Chance
         </h2>
         <span className="block mt-6 text-neutral-500 dark:text-neutral-400 ">
           A creative agency that lead and inspire.
         </span>
         <div className="flex space-x-2 sm:space-x-5 mt-6 sm:mt-12">
           <ButtonPrimary href="/page-upload-item" className="">
-            Create item
+            Learn more
           </ButtonPrimary>
-          <ButtonSecondary href="/page-search" className="">
+          {/* <ButtonSecondary href="/page-search" className="">
             Discover more
-          </ButtonSecondary>
+          </ButtonSecondary> */}
         </div>
       </div>
       <div className="flex-grow">

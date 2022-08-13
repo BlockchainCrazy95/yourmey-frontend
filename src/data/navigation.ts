@@ -132,16 +132,16 @@ export const NAVIGATION_DEMO_2: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "/#",
-    name: "Explorer",
+    name: "Explore",
   },
   {
     id: ncNanoId(),
     href: "/#",
-    name: "Pages",
+    name: "Stat",
   },
   {
     id: ncNanoId(),
     href: "/#",
-    name: "Blogs",
+    name: "Profile",
   },
 ];
