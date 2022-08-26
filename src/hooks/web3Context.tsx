@@ -26,7 +26,7 @@ const web3Modal = new Web3Modal({
         options: {
           rpc: {
             137: getMainnetURI(),
-            80001: getTestnetURI(),
+            4: getTestnetURI(),
           },
         },
       },

@@ -44,14 +44,14 @@ function PageHome() {
               heading={
                 <span className="text-white">
                   Discover 🖼
-                  <br /> collect, and sell <br /> extraordinary {` `}
+                  <br /> collect, and get part<br />  of the NFT {` `}
                   <span className="relative pr-3">
                     <img
                       className="w-full absolute bottom-3 -left-1"
                       src={Vector1}
                       alt="Vector1"
                     />
-                    <span className="relative">NFTs</span>
+                    <span className="relative">Universum</span>
                   </span>
                 </span>
               }
@@ -71,7 +71,7 @@ function PageHome() {
       </div>
 
       <div className="container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
-        <SectionNewEntrys />
+        {/* <SectionNewEntrys />
 
         <div className="relative py-20 lg:py-28">
           <BackgroundSection />
@@ -87,34 +87,12 @@ function PageHome() {
         <div className="relative py-20 lg:py-28">
           <BackgroundSection />
           <SectionRankings cardStyle="style2" />
-        </div>
+        </div> */}
 
         <SectionEarnWithAffiliate />
 
       </div>
 
-      {/*
-      <div className="container relative space-y-24 my-24 lg:space-y-32 lg:my-32">
-        <SectionGridAuthorBox boxCard="box3" />
-
-        <div className="relative py-20 lg:py-28">
-          <BackgroundSection />
-          <SectionSliderCollections />
-        </div>
-
-        <SectionGridFeatureNFT />
-
-        <div className="relative py-20 lg:py-24">
-          <BackgroundSection />
-          <SectionBecomeAnAuthor />
-        </div>
-
-        <SectionSubscribe2 />
-
-        <SectionSliderCategories />
-
-        <SectionVideos />
-      </div> */}
     </>
   );
 }

@@ -56,7 +56,7 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
       setType(0)
     else if(location.pathname === '/login')
       setType(1)
-    else if(location.pathname === '/signup')
+    else // if(location.pathname === '/signup')
       setType(2)
   }, [location])
 
@@ -120,9 +120,9 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
               <Navigation />
               { isLogged ? <>
                 <div className="hidden sm:block h-6 border-l border-neutral-300 dark:border-neutral-6000"></div>
-                <div className="flex">
+                {/* <div className="flex">
                   <NotifyDropdown />
-                </div>
+                </div> */}
                 <div></div>
                 <ButtonPrimary sizeClass="px-4 py-2 sm:px-5">Create</ButtonPrimary>
                 <div></div>
@@ -142,22 +142,24 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
                 >
                   {params[type].title}
                 </ButtonSecondary>
+                {type === 0 ? <ButtonSecondary href="/signup" sizeClass="px-4 py-2 sm:px-5">Sign Up</ButtonSecondary>:<></>}
               </>}
             </div>
             {isLogged? <>
               <div className="flex items-center space-x-3 xl:hidden">
-                <NotifyDropdown />
+                {/* <NotifyDropdown /> */}
                 <AvatarDropdown />
                 <MenuBar />
               </div>
             </>:<>
               <div className="flex items-center space-x-1.5 xl:hidden">
                 <ButtonPrimary
-                  href={"/page-upload-item"}
+                  href={params[type].url}
                   sizeClass="px-4 py-2 sm:px-5"
                 >
-                  Create
+                  {params[type].title}
                 </ButtonPrimary>
+                {type === 0 ? <ButtonSecondary href="/signup" sizeClass="px-4 py-2 sm:px-5">Sign Up</ButtonSecondary>:<></>}
                 <MenuBar />
               </div>
             </>}

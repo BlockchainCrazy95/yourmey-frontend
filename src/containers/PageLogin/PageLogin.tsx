@@ -10,7 +10,7 @@ import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { useWeb3Context } from "hooks/web3Context";
 import axios from "axios";
-import { BASE_URL } from "utils/data";
+import { API_SERVER_URL } from "utils/data";
 import { signString } from "utils/contractUtils";
 import { useAppDispatch } from "app/hooks";
 import { setUser } from "app/home/home";
@@ -66,7 +66,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
       params.password = signingResult.message;
       await axios({
         method: "post",
-        url: `${BASE_URL}users/login`,
+        url: `${API_SERVER_URL}users/login`,
         data: params
       }).then((res) => {
         console.log("response = ", res);
@@ -82,7 +82,12 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
         }
       }).catch((err) => {
         console.log("Login failed error=", err);
-        alert(err.response.data.message);
+        if(err.message) {
+          // err.code = "ERR_NETWORK", err.message = "Network Error", err.name = "AxiosError"
+          alert(err.message);
+        }
+        if(err.response.data.message)
+          alert(err.response.data.message);
       });
     } else {
       alert("Signup failed!");

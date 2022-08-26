@@ -10,7 +10,7 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { useWeb3Context } from "hooks/web3Context";
 import { signString } from "utils/contractUtils";
 import axios from "axios";
-import { BASE_URL } from "utils/data";
+import { API_SERVER_URL } from "utils/data";
 
 export interface PageSignUpProps {
   className?: string;
@@ -46,7 +46,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
       // console.log("params=", params)
       await axios({
         method: "post",
-        url: `${BASE_URL}users/create`,
+        url: `${API_SERVER_URL}users/create`,
         data: params
       }).then((res:any) => {
         console.log("response =", res);

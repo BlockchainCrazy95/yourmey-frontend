@@ -121,27 +121,39 @@ const otherPageChildMenus: NavItemType[] = [
 //   },
 // ];
 
+export const SIGNED_INDEXES: number[] = [ 4, 5 ];
+
 export const NAVIGATION_DEMO_2: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "#",
-    name: "Home",
-    type: "dropdown",
-    children: otherPageChildMenus,
+    name: "Buy YEM",
   },
   {
     id: ncNanoId(),
-    href: "/#",
+    href: "#",
+    name: "Home",
+    // type: "dropdown",
+    // children: otherPageChildMenus,
+  },
+  {
+    id: ncNanoId(),
+    href: "#",
     name: "Explore",
   },
   {
     id: ncNanoId(),
-    href: "/#",
+    href: "#",
     name: "Stat",
   },
   {
     id: ncNanoId(),
-    href: "/#",
-    name: "Profile",
+    href: "#",
+    name: "Affiliate"
+  },
+  {
+    id: ncNanoId(),
+    href: "/account",
+    name: "My account",
   },
 ];

@@ -102,13 +102,13 @@ const CardLarge1: FC<CardLarge1Props> = ({
             </ButtonSecondary>
           </div>
         </div>
-        <div className="p-4 sm:pt-8 sm:px-10 ">
+        {/* <div className="p-4 sm:pt-8 sm:px-10 ">
           <NextPrev
             btnClassName="w-11 h-11 text-xl"
             onClickNext={onClickNext}
             onClickPrev={onClickPrev}
           />
-        </div>
+        </div> */}
       </div>
 
       <div className="w-full lg:w-[64%] relative ">

@@ -37,7 +37,7 @@ const TimeCountDown = () => {
             strokeLinejoin="round"
           />
         </svg>
-        <span className="leading-none mt-1">Auction ending in:</span>
+        <span className="leading-none mt-1">Launch Time:</span>
       </div>
       <div className="flex space-x-5 sm:space-x-10">
         <div className="flex flex-col items-center">

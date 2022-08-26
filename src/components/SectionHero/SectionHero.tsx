@@ -13,8 +13,8 @@ export interface SectionHeroProps {
 
 const SectionHero: FC<SectionHeroProps> = ({
   className = "",
-  heading = "Discover, collect, and sell extraordinary NFTs ",
-  subHeading = "Discover the most outstanding NTFs in all topics of life. Creative your NTFs and sell them",
+  heading = "Discover, collect and get part of the NFT Universum",
+  subHeading = "Your chance with our platform, discover the most outstanding NFT's in the metaverse. We support the YEM-Community!",
 }) => {
   const { connected } = useWeb3Context();
   return (
