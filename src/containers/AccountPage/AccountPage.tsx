@@ -39,6 +39,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
       history.push("/")
     }
     const loadData = async () => {
+      if(!affiliateContract) return;
       const _parent = await getParent(affiliateContract, address);
       setHasParent(!isNullAddress(_parent));
       setParentAddress(_parent);
@@ -50,13 +51,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
   useEffect(() => {
     const getData = async () => {
-      console.log("web3 = ", web3);
       if(web3) {
         // @ts-ignore
         const resBal = await web3.eth.getBalance(address);
         const _bal = displayFixed(resBal, 5);
         setBalance(_bal);
-        console.log("contract = ", affiliateContract);
       }
     }
     getData();
