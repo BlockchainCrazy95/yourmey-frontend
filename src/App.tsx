@@ -1,17 +1,23 @@
 import { setUser } from "app/home/home";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
 import MyRouter from "routers/index";
+import { useLocation } from "react-router-dom";
+import Web3 from 'web3';
+
+
+
 function App() {
   const dispatch = useDispatch();
+    
   useEffect(() => {
     const jwtToken = window.localStorage.getItem("jwtToken");
     if(jwtToken) {
       const decoded:any = jwt_decode(jwtToken);
       console.log("token decode=", decoded);
       dispatch(setUser(decoded._doc));
-    }
+    }    
   }, [])
 
   return (

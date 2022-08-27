@@ -1,5 +1,5 @@
 import Label from "components/Label/Label";
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Avatar from "shared/Avatar/Avatar";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Input from "shared/Input/Input";
@@ -8,7 +8,13 @@ import { Helmet } from "react-helmet";
 import { useSelector } from "react-redux";
 import { RootState } from "app/store";
 import { useHistory } from "react-router-dom";
+import Web3 from 'web3';
 import CopyToClipboard from "react-copy-to-clipboard";
+import { BASE_URL, SITE_NAME } from "utils/data";
+import { useWeb3Context } from "hooks/web3Context";
+import { useContract, useRefresh } from "hooks";
+import { displayFixed, isNullAddress } from "utils";
+import { getAccountName, getParent, getParentName, setParent } from "contracts/affiliateHelper";
 
 export interface AccountPageProps {
   className?: string;
@@ -17,14 +23,54 @@ export interface AccountPageProps {
 const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
   const history = useHistory();
-  const { user } = useSelector((state:RootState) => state.home);
-  
+  const { user, refAddress } = useSelector((state:RootState) => state.home);
+  const { connected, address } = useWeb3Context();
+  const { fastRefresh } = useRefresh();
+  const { web3, affiliateContract } = useContract();
+
+  const [ balance, setBalance ] = useState("0");
+  const [ hasParent, setHasParent ] = useState(false);
+  const [ parentAddress, setParentAddress ] = useState("");
+  const [ parentName, setParentName ] = useState("");
+  const hasRefAddress = !isNullAddress(refAddress);
+
   useEffect(() => {
     if(!user) {
       history.push("/")
     }
+    const loadData = async () => {
+      const _parent = await getParent(affiliateContract, address);
+      setHasParent(!isNullAddress(_parent));
+      setParentAddress(_parent);
+      const _parentName = await getParentName(affiliateContract, address);
+      setParentName(_parentName);
+    }
+    loadData();
   }, [])
-  console.log("user=", user)
+
+  useEffect(() => {
+    const getData = async () => {
+      console.log("web3 = ", web3);
+      if(web3) {
+        // @ts-ignore
+        const resBal = await web3.eth.getBalance(address);
+        const _bal = displayFixed(resBal, 5);
+        setBalance(_bal);
+        console.log("contract = ", affiliateContract);
+      }
+    }
+    getData();
+  }, [address, fastRefresh, web3])
+
+  const onHandleAffiliate = async () => {
+    if(!refAddress) return;
+    console.log("onHandleAffiliate")
+    console.log("child=", address);
+    console.log("parent=", refAddress);
+    console.log("name=", user.username);
+    await setParent(affiliateContract, address, refAddress, user.username);
+  }
+
   if(!user) return <></>
 
   return (
@@ -78,19 +124,19 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               {/* ---- */}
               <div>
                 <Label>Username</Label>
-                <Input className="mt-1.5" value={user.username} />
+                <Input className="mt-1.5" value={user.username} readOnly disabled/>
               </div>
 
               {/* ---- */}
               <div>
                 <Label>YEM Balance</Label>
-                <Input className="mt-1.5" value="0.0" />
+                <Input className="mt-1.5" disabled value="0.0" readOnly />
               </div>
 
               {/* ---- */}
               <div>
                 <Label>Matic Balance</Label>
-                <Input className="mt-1.5" value="0.0"/>
+                <Input className="mt-1.5" disabled value={balance} readOnly/>
               </div>
             </div>
           </div>
@@ -98,22 +144,37 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
             <div className="flex flex-col md:flex-row">
               <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-5 sm:space-y-6 md:sm:space-y-7">
 
+
               {/* ---- */}
+
+              {/* ---- */}
+              { hasParent ? <>
+              <div>
+                <Label>Sponsor Address</Label>
+                <div className="mt-1.5 relative text-neutral-700 dark:text-neutral-300">
+                  <Input
+                    className="!pr-10 "
+                    disabled
+                    value={parentAddress}
+                  />
+                </div>
+              </div>
               <div className="">
                 <Label>Affiliate Link</Label>
                 <div className="mt-1.5 flex">
-                  <span className="inline-flex items-center px-3 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm">
+                  <span className="inline-flex items-center px-3 rounded-l-2xl border border-r-0 border-neutral-200 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 text-sm pr-0">
                     https://
                   </span>
 
                   <div className="relative text-neutral-700 dark:text-neutral-300 w-full">
                     <Input
-                      className="!rounded-l-none !pr-10 "
+                      className="!rounded-l-none !pr-10 pl-0"
                       placeholder="yemnation.com"
-                      value={`yemnation.com?address=${user.address}`}
+                      value={`${SITE_NAME}?ref=${user.address}`}
+                      readOnly
                     />
                     <CopyToClipboard
-                      text={`https://yemnation.com?address=${user.address}`}
+                      text={`${BASE_URL}?ref=${user.address}`}
                     >
                       <span className="absolute right-2.5 cursor-pointer top-1/2 -translate-y-1/2 ">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -137,7 +198,20 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                   </div>
                 </div>
               </div>
-
+              </>
+              : (hasRefAddress ? <div>
+                  <Label>Your partner will be...</Label>
+                  <div className="mt-1.5 relative text-neutral-700 dark:text-neutral-300">
+                    <Input
+                      className="!pr-10 "
+                      disabled
+                      placeholder="ex: 0x0000000000000000000000000000000000000000"
+                      value={refAddress}
+                      readOnly
+                    />
+                  </div>
+                </div> : <></>)
+              }
               {/* -- Social Sites -- */}
               {/* <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-2.5">
                 <div>
@@ -181,42 +255,17 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                 </div>
               </div> */}
 
-              {/* ---- */}
-              <div>
-                <Label>Wallet Address</Label>
-                <div className="mt-1.5 relative text-neutral-700 dark:text-neutral-300">
-                  <Input
-                    className="!pr-10 "
-                    disabled
-                    value={user.address}
-                  />
-                  <CopyToClipboard text={user.address}>
-                    <span className="absolute right-2.5 cursor-pointer top-1/2 -translate-y-1/2 ">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path
-                          d="M21.6602 10.44L20.6802 14.62C19.8402 18.23 18.1802 19.69 15.0602 19.39C14.5602 19.35 14.0202 19.26 13.4402 19.12L11.7602 18.72C7.59018 17.73 6.30018 15.67 7.28018 11.49L8.26018 7.30001C8.46018 6.45001 8.70018 5.71001 9.00018 5.10001C10.1702 2.68001 12.1602 2.03001 15.5002 2.82001L17.1702 3.21001C21.3602 4.19001 22.6402 6.26001 21.6602 10.44Z"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M15.0603 19.3901C14.4403 19.8101 13.6603 20.1601 12.7103 20.4701L11.1303 20.9901C7.16034 22.2701 5.07034 21.2001 3.78034 17.2301L2.50034 13.2801C1.22034 9.3101 2.28034 7.2101 6.25034 5.9301L7.83034 5.4101C8.24034 5.2801 8.63034 5.1701 9.00034 5.1001C8.70034 5.7101 8.46034 6.4501 8.26034 7.3001L7.28034 11.4901C6.30034 15.6701 7.59034 17.7301 11.7603 18.7201L13.4403 19.1201C14.0203 19.2601 14.5603 19.3501 15.0603 19.3901Z"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                  </CopyToClipboard>
-                </div>
-              </div>
 
               {/* ---- */}
-              <div className="pt-2 text-center">
-                <ButtonPrimary className=" ">Become an affiliate</ButtonPrimary>
-              </div>
+              { hasParent ? <></> : 
+                <div className="pt-2 text-center">
+                  { hasRefAddress ? 
+                    <ButtonPrimary onClick={() => { onHandleAffiliate() }}>Become an affiliate</ButtonPrimary>
+                    :
+                    <ButtonPrimary disabled>You need partner address</ButtonPrimary>
+                  }
+                  </div>
+              }
             </div>
           </div>
         </div>

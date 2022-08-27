@@ -1,5 +1,8 @@
-import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React, { useEffect, useMemo } from "react";
+import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import Web3 from "web3";
+
 import { Page } from "./types";
 import ScrollToTop from "./ScrollToTop";
 import Footer from "shared/Footer/Footer";
@@ -19,6 +22,7 @@ import NftDetailPage from "containers/NftDetailPage/NftDetailPage";
 import PageCollection from "containers/PageCollection";
 import PageSearch from "containers/PageSearch";
 import PageUploadItem from "containers/PageUploadItem";
+import { setRefAddress } from "app/home/home";
 // import PageConnectWallet from "containers/PageConnectWallet";
 
 export const pages: Page[] = [
@@ -44,9 +48,30 @@ export const pages: Page[] = [
   { path: "/subscription", component: PageSubcription },
 ];
 
+const useQuery = () => {
+  const { search } = useLocation();
+  return useMemo(() => new URLSearchParams(search), [search]);
+}
+
+const QueryParamsCheck = () => {
+  const query = useQuery();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Check affiliate link
+    const queryRef = query.get("ref");
+    if(queryRef && Web3.utils.isAddress(queryRef)) {
+      dispatch(setRefAddress({refAddress: queryRef.toLowerCase()}));
+    }
+  }, []);
+
+  return <></>;
+}
+
 const Routes = () => {
-  return (
+   return (
     <BrowserRouter basename="/">
+      <QueryParamsCheck />
       <ScrollToTop />
       <SiteHeader />
       <Switch>

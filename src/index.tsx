@@ -13,6 +13,8 @@ import { Provider } from "react-redux";
 import { persistor, store } from "app/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { Web3ContextProvider } from "hooks/web3Context";
+import { RefreshContextProvider } from "hooks/RefreshContext";
+import { ContractProvider } from "hooks/ContractProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -21,9 +23,13 @@ root.render(
   // <React.StrictMode>
   <Provider store={store}>
     <Web3ContextProvider>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
+      <ContractProvider>
+        <RefreshContextProvider>
+          <PersistGate loading={null} persistor={persistor}>
+            <App />
+          </PersistGate>
+        </RefreshContextProvider>
+      </ContractProvider>
     </Web3ContextProvider>
   </Provider>
   // </React.StrictMode>

@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
 
 export interface HomeState {
-    user?: any
+    user?: any,
+    refAddress?: string
 }
 
 const initialState: HomeState = {
-    user: null
+    user: null,
+    refAddress: ""
 };
 
 export const homeSlice = createSlice({
@@ -18,13 +20,17 @@ export const homeSlice = createSlice({
         },
         logout: (state) => {
             state.user = null;
+        },
+        setRefAddress: (state, action: PayloadAction<HomeState>) => {
+            state.refAddress = action.payload.refAddress;
         }
     }
 });
 
 export const {
     logout,
-    setUser
+    setUser,
+    setRefAddress
 } = homeSlice.actions;
 
 export default homeSlice.reducer;

@@ -5,6 +5,7 @@ import rightLargeImgDark from "images/rightLargeImgDark.png";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Logo from "shared/Logo/Logo";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
+import { useWeb3Context } from "hooks/web3Context";
 
 export interface SectionEarnWithAffiliateProps {
   className?: string;
@@ -13,6 +14,7 @@ export interface SectionEarnWithAffiliateProps {
 const SectionEarnWithAffiliate: FC<SectionEarnWithAffiliateProps> = ({
   className = "",
 }) => {
+  const { connected } = useWeb3Context();
   return (
     <div
       className={`nc-SectionEarnWithAffiliate relative flex flex-col lg:flex-row items-center  ${className}`}
@@ -27,9 +29,16 @@ const SectionEarnWithAffiliate: FC<SectionEarnWithAffiliateProps> = ({
           A chance to build your money machine and to start a bright future with us
         </span>
         <div className="flex space-x-2 sm:space-x-5 mt-6 sm:mt-12">
-          <ButtonPrimary href="/signup" className="">
-            Sign Up
-          </ButtonPrimary>
+          {
+            connected ? 
+            <ButtonPrimary href="/account" className="">
+              Become an affiliate
+            </ButtonPrimary>
+            :
+            <ButtonPrimary href="/signup" className="">
+              Sign Up
+            </ButtonPrimary>
+          }
           {/* <ButtonSecondary href="/page-search" className="">
             Discover more
           </ButtonSecondary> */}

@@ -1,5 +1,8 @@
 import Web3 from 'web3';
 import { CHAIN_ID, RPC_URL } from "utils/data";
+import { useContext } from 'react';
+import { RefreshContext } from './RefreshContext';
+import { ContractContext } from './ContractProvider';
 
 
 export const changeNetwork = async() => {
@@ -31,4 +34,14 @@ export const changeNetwork = async() => {
             }
         }
     }
+}
+
+export const useRefresh = () => {
+    const { fast, slow } = useContext(RefreshContext);
+    return { fastRefresh: fast, slowRefresh: slow }
+}
+
+export const useContract = () => {
+    const { web3, affiliateContract } = useContext(ContractContext);
+    return { web3, affiliateContract };
 }

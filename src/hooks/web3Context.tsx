@@ -44,6 +44,7 @@ type onChainProvider = {
   address: string;
   connected: Boolean;
   web3Modal: Web3Modal;
+  chainID: any
 };
 
 export type Web3ContextData = {
