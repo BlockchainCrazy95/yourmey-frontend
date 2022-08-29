@@ -42,8 +42,8 @@ const CardLarge1: FC<CardLarge1Props> = ({
         <div className="nc-CardLarge1__left p-4 sm:p-8 xl:py-14 md:px-10 bg-white dark:bg-neutral-900 shadow-lg rounded-3xl space-y-3 sm:space-y-8 ">
           {/* TITLE */}
           <h2 className="text-2xl lg:text-3xl 2xl:text-5xl font-semibold ">
-            <Link to={"/nft-detailt"} title="Launch Time Headline">
-              Launch Time Headline
+            <Link to={"/nft-detailt"} title="Launch Time">
+              Launch Time
               {/* {randomTitle[Math.floor(Math.random() * randomTitle.length)]} */}
             </Link>
           </h2>
@@ -77,7 +77,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
           <div className="pt-6">
             <div className="flex flex-col sm:flex-row items-baseline p-6 border-2 border-green-500 rounded-xl relative">
               <span className="block absolute bottom-full translate-y-1.5 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400 ring ring-offset-0 ring-white dark:ring-neutral-900">
-                Current Bid
+                Current Price
               </span>
               <span className="text-3xl xl:text-4xl font-semibold text-green-500">
                 1.000 ETH
