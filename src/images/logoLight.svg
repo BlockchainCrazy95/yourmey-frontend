@@ -11,7 +11,7 @@
 		tspan { white-space:pre } 
 		.s0 { fill: url(#g1) } 
 		.s1 { fill: #ffffff } 
-		.t2 { font-size: 23px;fill: #000000;font-weight: 400;font-family: "DejaVuSans", "DejaVu Sans" } 
+		.t2 { font-size: 23px;fill: #d7dbfc;font-weight: 400;font-family: "DejaVuSans", "DejaVu Sans" } 
 	</style>
 	<use id="Background" href="#img1" x="0" y="0"/>
 	<path id="Layer" class="s0" d="m44.9 22.7c0 12-9.8 21.8-21.8 21.8-12 0-21.7-9.8-21.7-21.8 0-12 9.7-21.7 21.7-21.7 12 0 21.8 9.7 21.8 21.7z"/>

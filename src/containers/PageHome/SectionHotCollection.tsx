@@ -33,11 +33,11 @@ const SectionHotCollection: FC<SectionHotCollectionProps> = ({
   return (
     <div className={`nc-SectionHotCollection relative ${className}`}>
         <Heading
-            desc={"The most popular NFTs"}
+            desc={"Take your chance in our greate community."}
             className="mb-14 text-neutral-900 dark:text-neutral-50"
             isCenter
         >
-            Hot Collections
+            Our Hot Launch Phase
         </Heading>
         {[1, 1, 1].map((_, index) =>
             indexActive === index ? (

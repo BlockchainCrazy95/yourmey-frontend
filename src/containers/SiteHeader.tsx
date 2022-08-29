@@ -61,13 +61,14 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
   }, [location])
 
   const isLogged = user !== null;
+  console.log("SiteHeader:", type);
 
   return (
     <div className="nc-Header relative w-full z-40 ">
       <div className={`nc-MainNav relative z-10 ${"onTop "}`}>
         <div className="container py-5 relative flex justify-between items-center space-x-4 xl:space-x-8">
           <div className="flex justify-start flex-grow items-center space-x-3 sm:space-x-8 lg:space-x-10">
-            <Logo />
+            <Logo isDark={type !== 0}/>
             <div className="hidden sm:block flex-grow max-w-xs">
               <form action="/" method="GET" className="relative">
                 { type === 0 ? <SearchHomeInput 

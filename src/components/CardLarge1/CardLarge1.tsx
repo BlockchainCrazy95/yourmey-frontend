@@ -42,13 +42,14 @@ const CardLarge1: FC<CardLarge1Props> = ({
         <div className="nc-CardLarge1__left p-4 sm:p-8 xl:py-14 md:px-10 bg-white dark:bg-neutral-900 shadow-lg rounded-3xl space-y-3 sm:space-y-8 ">
           {/* TITLE */}
           <h2 className="text-2xl lg:text-3xl 2xl:text-5xl font-semibold ">
-            <Link to={"/nft-detailt"} title="Walking On Air">
-              {randomTitle[Math.floor(Math.random() * randomTitle.length)]}
+            <Link to={"/nft-detailt"} title="Launch Time Headline">
+              Launch Time Headline
+              {/* {randomTitle[Math.floor(Math.random() * randomTitle.length)]} */}
             </Link>
           </h2>
 
           {/* AUTHOR AND COLLECTION */}
-          <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-12">
+          {/* <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-12">
             <div className="flex items-center">
               <div className="flex-shrink-0 h-10 w-10">
                 <Avatar sizeClass="w-10 h-10" />
@@ -70,7 +71,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
                 <div className="text-sm font-semibold ">Marscapes</div>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* PRICE */}
           <div className="pt-6">
