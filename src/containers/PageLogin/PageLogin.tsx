@@ -14,6 +14,8 @@ import { API_SERVER_URL } from "utils/data";
 import { signString } from "utils/contractUtils";
 import { useAppDispatch } from "app/hooks";
 import { setUser } from "app/home/home";
+import { postLogin } from "utils/fetchHelpers";
+import ModalNotification from "components/ModalNotification";
 
 export interface PageLoginProps {
   className?: string;
@@ -42,6 +44,13 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   const history = useHistory();
   const { address, connect, disconnect, connected } = useWeb3Context();
   const [username, setUsername] = useState('');
+  const [ isShow, setIsShow ] = useState(false);
+
+  const openModal = () => setIsShow(true);
+  const closeModal = () => {
+    history.push("/");
+    setIsShow(false);
+  }
 
   const onHandleConnect = () => {
     if(connected) {
@@ -64,33 +73,27 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
       params.address = address;
       params.username = username;
       params.password = signingResult.message;
-      await axios({
-        method: "post",
-        url: `${API_SERVER_URL}users/login`,
-        data: params
-      }).then((res) => {
-        console.log("response = ", res);
-        if(res.data.success === true) {
+      const {success, res, err}:any = await postLogin(params);
+      if(success) {
           const token = res.data.token;
           localStorage.setItem("jwtToken", res.data.token);
           const decoded:any = jwt_decode(token);
           console.log("token decode=", decoded);
           dispatch(setUser(decoded._doc));
-          history.push("/");
+          // history.push("/");
+          openModal();
           // if(decoded.id)
           // dispatch(getDetailedUserInfo(decoded.id))
-        }
-      }).catch((err) => {
-        console.log("Login failed error=", err);
-        if(err.message) {
-          // err.code = "ERR_NETWORK", err.message = "Network Error", err.name = "AxiosError"
-          alert(err.message);
-        }
-        if(err.response.data.message)
+      } else {
+        console.log("err=", err)
+        if(err.response.data) {
           alert(err.response.data.message);
-      });
+        } else {
+          alert(err.message)
+        }
+      }
     } else {
-      alert("Signup failed!");
+      alert("Login failed!");
     }
   }
 
@@ -158,6 +161,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
           </span>
         </div>
       </div>
+      <ModalNotification show={isShow} onCloseModalNotification={closeModal} />
     </div>
   );
 };

@@ -16,7 +16,6 @@ const Logo: React.FC<LogoProps> = ({
   className = "",
   isDark = false
 }) => {
-  console.log("Logo isDark=", isDark)
   return (
     <Link
       to="/"

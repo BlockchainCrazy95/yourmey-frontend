@@ -31,9 +31,9 @@ const SectionHotCollection: FC<SectionHotCollectionProps> = ({
   };
 
   return (
-    <div className={`nc-SectionHotCollection relative ${className}`}>
+    <div className={`nc-SectionHotCollection relative ${className}`} id="launch">
         <Heading
-            desc={"Take your chance in our greate community."}
+            desc={"Take your chance in our great community."}
             className="mb-14 text-neutral-900 dark:text-neutral-50"
             isCenter
         >

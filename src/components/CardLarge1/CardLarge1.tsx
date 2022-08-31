@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import NextPrev from "shared/NextPrev/NextPrev";
 import NcImage from "shared/NcImage/NcImage";
@@ -11,6 +12,7 @@ import { nftsLargeImgs } from "contains/fakeData";
 import TimeCountDown from "./TimeCountDown";
 import collectionPng from "images/nfts/collection.png";
 import VerifyIcon from "components/VerifyIcon";
+import { RootState } from "app/store";
 
 export interface CardLarge1Props {
   className?: string;
@@ -34,6 +36,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
     "Lovely NFT",
     "Wolf Face #1",
   ];
+  const { user } = useSelector((state:RootState) => state.home)
   return (
     <div
       className={`nc-CardLarge1 nc-CardLarge1--hasAnimation relative flex flex-col-reverse lg:flex-row justify-end ${className}`}
@@ -74,7 +77,8 @@ const CardLarge1: FC<CardLarge1Props> = ({
           </div> */}
 
           {/* PRICE */}
-          <div className="pt-6">
+          Will come soon...
+          {/* <div className="pt-6">
             <div className="flex flex-col sm:flex-row items-baseline p-6 border-2 border-green-500 rounded-xl relative">
               <span className="block absolute bottom-full translate-y-1.5 py-1 px-1.5 bg-white dark:bg-neutral-900 text-sm text-neutral-500 dark:text-neutral-400 ring ring-offset-0 ring-white dark:ring-neutral-900">
                 Current Price
@@ -86,21 +90,32 @@ const CardLarge1: FC<CardLarge1Props> = ({
                 (≈ $3,221.22)
               </span>
             </div>
-          </div>
+          </div> */}
 
           {/* AUTION TIME */}
           <TimeCountDown />
 
-          <div className="w h-[1px] bg-neutral-100 dark:bg-neutral-700"></div>
+          <div className="w h-[1px] bg-neutral-200 dark:bg-neutral-700"></div>
 
           {/* DESCRIPTION */}
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-            <ButtonPrimary href={"/nft-detailt"} className="flex-1">
+            {
+              user ? 
+              <ButtonPrimary href={"/account"} className="flex-1">
+                Become an affiliate
+              </ButtonPrimary>
+              :
+              <ButtonPrimary href={"/signup"} className="flex-1">
+                Sign Up
+              </ButtonPrimary>
+            }
+            <div className="flex-1">{" "}</div>
+            {/* <ButtonPrimary href={"/nft-detailt"} className="flex-1">
               Place a bid
             </ButtonPrimary>
             <ButtonSecondary href={"/nft-detailt"} className="flex-1">
               View item
-            </ButtonSecondary>
+            </ButtonSecondary> */}
           </div>
         </div>
         {/* <div className="p-4 sm:pt-8 sm:px-10 ">

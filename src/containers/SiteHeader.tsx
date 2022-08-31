@@ -61,7 +61,6 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
   }, [location])
 
   const isLogged = user !== null;
-  console.log("SiteHeader:", type);
 
   return (
     <div className="nc-Header relative w-full z-40 ">
@@ -125,7 +124,7 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
                   <NotifyDropdown />
                 </div> */}
                 <div></div>
-                <ButtonPrimary sizeClass="px-4 py-2 sm:px-5">Create</ButtonPrimary>
+                <ButtonPrimary sizeClass="px-4 py-2 sm:px-5 w-28">Create</ButtonPrimary>
                 <div></div>
                 <AvatarDropdown />
               </>
@@ -139,11 +138,11 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
                 </ButtonPrimary> */}
                 <ButtonSecondary
                   href={params[type].url}
-                  sizeClass="px-4 py-2 sm:px-5"
+                  sizeClass="px-4 py-2 sm:px-5 w-28"
                 >
                   {params[type].title}
                 </ButtonSecondary>
-                {type === 0 ? <ButtonSecondary href="/signup" sizeClass="px-4 py-2 sm:px-5">Sign Up</ButtonSecondary>:<></>}
+                {type === 0 ? <ButtonSecondary href="/signup" sizeClass="px-4 py-2 sm:px-5 w-28">Sign Up</ButtonSecondary>:<></>}
               </>}
             </div>
             {isLogged? <>
@@ -156,11 +155,11 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
               <div className="flex items-center space-x-1.5 xl:hidden">
                 <ButtonPrimary
                   href={params[type].url}
-                  sizeClass="px-4 py-2 sm:px-5"
+                  sizeClass="px-4 py-2 sm:px-5 w-28"
                 >
                   {params[type].title}
                 </ButtonPrimary>
-                {type === 0 ? <ButtonSecondary href="/signup" sizeClass="px-4 py-2 sm:px-5">Sign Up</ButtonSecondary>:<></>}
+                {type === 0 ? <ButtonSecondary href="/signup" sizeClass="px-4 py-2 sm:px-5 w-28">Sign Up</ButtonSecondary>:<></>}
                 <MenuBar />
               </div>
             </>}

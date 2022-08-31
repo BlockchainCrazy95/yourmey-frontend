@@ -14,7 +14,8 @@ import { BASE_URL, SITE_NAME } from "utils/data";
 import { useWeb3Context } from "hooks/web3Context";
 import { useContract, useRefresh } from "hooks";
 import { displayFixed, isNullAddress } from "utils";
-import { getAccountName, getParent, getParentName, setParent } from "contracts/affiliateHelper";
+import { getDownlines} from "utils/fetchHelpers";
+import { getAccountName, getLevelOnes, getParent, getParentName, setParent } from "contracts/affiliateHelper";
 
 export interface AccountPageProps {
   className?: string;
@@ -32,6 +33,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const [ hasParent, setHasParent ] = useState(false);
   const [ parentAddress, setParentAddress ] = useState("");
   const [ parentName, setParentName ] = useState("");
+  const [ levelOnes, setLevelOnes ] = useState("-");
   const hasRefAddress = !isNullAddress(refAddress);
 
   useEffect(() => {
@@ -45,9 +47,17 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
       setParentAddress(_parent);
       const _parentName = await getParentName(affiliateContract, address);
       setParentName(_parentName);
+      const _levelOnes = await getLevelOnes(affiliateContract, address);
+      if(_levelOnes) {
+        const resOnes:any = await getDownlines({addresses: _levelOnes})
+        const _names = resOnes.toString().replaceAll(",", ", ");
+        setLevelOnes(resOnes.toString());
+      } else {
+        setLevelOnes("-");
+      }
     }
     loadData();
-  }, [])
+  }, [user])
 
   useEffect(() => {
     const getData = async () => {
@@ -63,10 +73,10 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
   const onHandleAffiliate = async () => {
     if(!refAddress) return;
-    console.log("onHandleAffiliate")
-    console.log("child=", address);
-    console.log("parent=", refAddress);
-    console.log("name=", user.username);
+    // console.log("onHandleAffiliate")
+    // console.log("child=", address);
+    // console.log("parent=", refAddress);
+    // console.log("name=", user.username);
     await setParent(affiliateContract, address, refAddress, user.username);
   }
 
@@ -149,12 +159,12 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               {/* ---- */}
               { hasParent ? <>
               <div>
-                <Label>Sponsor Address</Label>
+                <Label>{parentName ? "Sponsor Name" : "Sponsor Address"}</Label>
                 <div className="mt-1.5 relative text-neutral-700 dark:text-neutral-300">
                   <Input
                     className="!pr-10 "
                     disabled
-                    value={parentAddress}
+                    value={parentName ? parentName : parentAddress}
                   />
                 </div>
               </div>
@@ -195,6 +205,15 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                       </span>
                     </CopyToClipboard>
                   </div>
+                </div>
+              </div>
+              <div>
+                <Label>Downlines</Label>
+                <div className="mt-1.5 relative text-neutral-700 dark:text-neutral-300 break-all">
+                  {levelOnes}
+                  {/* { levelOnes.length ? levelOnes.map((name) => {
+                    return <span>{name}</span>
+                  }) : <>-</> } */}
                 </div>
               </div>
               </>

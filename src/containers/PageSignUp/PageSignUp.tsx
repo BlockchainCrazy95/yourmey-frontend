@@ -11,6 +11,7 @@ import { useWeb3Context } from "hooks/web3Context";
 import { signString } from "utils/contractUtils";
 import axios from "axios";
 import { API_SERVER_URL } from "utils/data";
+import { postSignUp } from "utils/fetchHelpers";
 
 export interface PageSignUpProps {
   className?: string;
@@ -40,26 +41,27 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
     let signingResult = await signString(address, username);
     const params:any = {};
     if(signingResult.success) {
-      params.address = address;
+      params.address = address.toLowerCase();
       params.username = username;
       params.password = signingResult.message;
+      await postSignUp(params);
       // console.log("params=", params)
-      await axios({
-        method: "post",
-        url: `${API_SERVER_URL}users/create`,
-        data: params
-      }).then((res:any) => {
-        console.log("response =", res);
-        if(res.data.code === 1) {
-          const errMsg = "Address is duplicated";
-          alert(errMsg);
-        } else {
-          alert("success");
-        }
-      }).catch((err:any) => {
-        console.log("error:", err);
-        alert(err);
-      })
+      // await axios({
+      //   method: "post",
+      //   url: `${API_SERVER_URL}users/create`,
+      //   data: params
+      // }).then((res:any) => {
+      //   console.log("response =", res);
+      //   if(res.data.code === 1) {
+      //     const errMsg = "Address is duplicated";
+      //     alert(errMsg);
+      //   } else {
+      //     alert("success");
+      //   }
+      // }).catch((err:any) => {
+      //   console.log("error:", err);
+      //   alert(err);
+      // })
     } else {
       alert("Sign Up failed!!!")
     }

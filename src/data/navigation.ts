@@ -127,11 +127,6 @@ export const NAVIGATION_DEMO_2: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "#",
-    name: "Buy YEM",
-  },
-  {
-    id: ncNanoId(),
-    href: "#",
     name: "Home",
     // type: "dropdown",
     // children: otherPageChildMenus,
@@ -139,16 +134,26 @@ export const NAVIGATION_DEMO_2: NavItemType[] = [
   {
     id: ncNanoId(),
     href: "#",
-    name: "Explore",
+    name: "Buy YEM",
+  },
+  // {
+  //   id: ncNanoId(),
+  //   href: "#",
+  //   name: "Explore",
+  // },
+  // {
+  //   id: ncNanoId(),
+  //   href: "#",
+  //   name: "Stats",
+  // },
+  {
+    id: ncNanoId(),
+    href: "/#launch",
+    name: "Launch"
   },
   {
     id: ncNanoId(),
-    href: "#",
-    name: "Stat",
-  },
-  {
-    id: ncNanoId(),
-    href: "#",
+    href: "/#affiliate",
     name: "Affiliate"
   },
   {

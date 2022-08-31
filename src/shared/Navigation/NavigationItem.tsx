@@ -14,7 +14,7 @@ export interface MegamenuItem {
 export interface NavItemType {
   id: string;
   name: string;
-  href: keyof LocationStates | "#" | "/#";
+  href: keyof LocationStates | "#" | "/#" | any;
   targetBlank?: boolean;
   children?: NavItemType[];
   megaMenu?: MegamenuItem[];
@@ -185,8 +185,25 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
 
   // ===================== MENU MAIN MENU =====================
   const renderMainItem = (item: NavItemType) => {
-    return (
-      <NavLink
+    const isHomeMenu = isHome && (item.href === "/#launch" || item.href === "/#affiliate");
+    switch(item.name) {
+      case "Launch":
+        item.href = isHome ? "/#launch" : "#";
+        break;
+      case "Affiliate":
+        item.href = isHome ? "/#affiliate" : "#";
+        break;
+    }
+    console.log("isHome = ", isHome, "item=", item);
+    return (<>
+      {isHomeMenu ?
+        <a
+          className="inline-flex items-center text-sm xl:text-base font-normal text-neutral-700 dark:text-neutral-300 py-2 px-4 xl:px-5 rounded-full hover:text-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
+          target={item.targetBlank ? "_blank" : undefined}
+          rel="noopener noreferrer"
+          href={item.href}
+        >{isHome? <span className="text-white hover:text-neutral-900">{item.name}</span> : <>{item.name}</>}</a>
+      : <NavLink
         exact
         strict
         target={item.targetBlank ? "_blank" : undefined}
@@ -204,8 +221,8 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
             aria-hidden="true"
           />
         )}
-      </NavLink>
-    );
+      </NavLink>}
+    </>);
   };
 
   switch (menuItem.type) {

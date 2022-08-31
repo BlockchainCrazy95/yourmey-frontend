@@ -16,7 +16,7 @@ export const affiliateContractAddr = DEV_MODE ? "0xfF1b9b8e96b14cf95F62257589aa7
 
 export const SIGN_PASSWORD = "YOURMEY_PASSWORD"
 
-export const API_SERVER_URL = DEV_MODE ? "http://localhost:5000/api/" : "https://yemnation.com/api/";
+export const API_SERVER_URL = DEV_MODE ? "http://localhost/api/" : "https://yemnation.com/api/";
 
 export const BASE_URL = DEV_MODE ? "https://localhost:3000/" : "https://yemnation.com/";
 

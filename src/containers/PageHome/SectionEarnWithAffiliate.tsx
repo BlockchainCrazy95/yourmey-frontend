@@ -1,11 +1,12 @@
 import React, { FC } from "react";
+import { useSelector } from "react-redux";
 import NcImage from "shared/NcImage/NcImage";
 import rightImgDemo from "images/rightLargeImg.png";
 import rightLargeImgDark from "images/rightLargeImgDark.png";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Logo from "shared/Logo/Logo";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
-import { useWeb3Context } from "hooks/web3Context";
+import { RootState } from "app/store";
 
 export interface SectionEarnWithAffiliateProps {
   className?: string;
@@ -14,11 +15,12 @@ export interface SectionEarnWithAffiliateProps {
 const SectionEarnWithAffiliate: FC<SectionEarnWithAffiliateProps> = ({
   className = "",
 }) => {
-  const { connected } = useWeb3Context();
+  const { user } = useSelector((state:RootState) => state.home);
   return (
     <div
       className={`nc-SectionEarnWithAffiliate relative flex flex-col lg:flex-row items-center  ${className}`}
       data-nc-id="SectionEarnWithAffiliate"
+      id="affiliate"
     >
       <div className="flex-shrink-0 mb-16 lg:mb-0 lg:mr-10 lg:w-2/5">
         {/* <Logo className="w-28" /> */}
@@ -30,7 +32,7 @@ const SectionEarnWithAffiliate: FC<SectionEarnWithAffiliateProps> = ({
         </span>
         <div className="flex space-x-2 sm:space-x-5 mt-6 sm:mt-12">
           {
-            connected ? 
+            user ? 
             <ButtonPrimary href="/account" className="">
               Become an affiliate
             </ButtonPrimary>
