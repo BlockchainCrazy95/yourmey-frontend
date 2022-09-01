@@ -188,13 +188,13 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
     const isHomeMenu = isHome && (item.href === "/#launch" || item.href === "/#affiliate");
     switch(item.name) {
       case "Launch":
-        item.href = isHome ? "/#launch" : "#";
+        item.href = isHome ? "/#launch" : "";
         break;
       case "Affiliate":
-        item.href = isHome ? "/#affiliate" : "#";
+        item.href = isHome ? "/#affiliate" : "";
         break;
     }
-    console.log("isHome = ", isHome, "item=", item);
+    // console.log("isHome = ", isHome, "item=", item);
     return (<>
       {isHomeMenu ?
         <a

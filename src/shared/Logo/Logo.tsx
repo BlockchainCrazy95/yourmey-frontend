@@ -14,7 +14,7 @@ const Logo: React.FC<LogoProps> = ({
   img = logoImg,
   imgLight = logoLightImg,
   className = "",
-  isDark = false
+  isDark = true
 }) => {
   return (
     <Link

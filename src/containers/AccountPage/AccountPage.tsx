@@ -1,21 +1,23 @@
-import Label from "components/Label/Label";
 import React, { FC, useEffect, useState } from "react";
+
 import Avatar from "shared/Avatar/Avatar";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
+import Label from "components/Label/Label";
 import Input from "shared/Input/Input";
 import Textarea from "shared/Textarea/Textarea";
 import { Helmet } from "react-helmet";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "app/store";
 import { useHistory } from "react-router-dom";
 import Web3 from 'web3';
 import CopyToClipboard from "react-copy-to-clipboard";
-import { BASE_URL, SITE_NAME } from "utils/data";
+import { BASE_URL, CHAIN_ID, SITE_NAME } from "utils/data";
 import { useWeb3Context } from "hooks/web3Context";
-import { useContract, useRefresh } from "hooks";
-import { displayFixed, isNullAddress } from "utils";
-import { getDownlines} from "utils/fetchHelpers";
+import { changeNetwork, useContract, useRefresh } from "hooks";
+import { displayFixed, ellipseAddress, isNullAddress, isPerNum, showToast } from "utils";
+import { getDownlines, postUpdatePerNum} from "utils/fetchHelpers";
 import { getAccountName, getLevelOnes, getParent, getParentName, setParent } from "contracts/affiliateHelper";
+import { setUser } from "app/home/home";
 
 export interface AccountPageProps {
   className?: string;
@@ -24,14 +26,16 @@ export interface AccountPageProps {
 const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
   const history = useHistory();
+  const dispatch = useDispatch();
   const { user, refAddress } = useSelector((state:RootState) => state.home);
-  const { connected, address } = useWeb3Context();
+  const { connected, address, chainID } = useWeb3Context();
   const { fastRefresh } = useRefresh();
   const { web3, affiliateContract } = useContract();
 
   const [ balance, setBalance ] = useState("0");
   const [ hasParent, setHasParent ] = useState(false);
   const [ parentAddress, setParentAddress ] = useState("");
+  const [ pernum, setPerNum ] = useState("");
   const [ parentName, setParentName ] = useState("");
   const [ levelOnes, setLevelOnes ] = useState("-");
   const hasRefAddress = !isNullAddress(refAddress);
@@ -40,6 +44,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
     if(!user) {
       history.push("/")
     }
+    // console.log("user = ", user)
     const loadData = async () => {
       if(!affiliateContract) return;
       const _parent = await getParent(affiliateContract, address);
@@ -48,13 +53,15 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
       const _parentName = await getParentName(affiliateContract, address);
       setParentName(_parentName);
       const _levelOnes = await getLevelOnes(affiliateContract, address);
-      if(_levelOnes) {
+      if(_levelOnes.length !== 0) {
         const resOnes:any = await getDownlines({addresses: _levelOnes})
         const _names = resOnes.toString().replaceAll(",", ", ");
-        setLevelOnes(resOnes.toString());
+        setLevelOnes(_names);
       } else {
         setLevelOnes("-");
       }
+      if(user)
+        setPerNum(user.pernum)
     }
     loadData();
   }, [user])
@@ -69,15 +76,53 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
       }
     }
     getData();
-  }, [address, fastRefresh, web3])
+  }, [address, fastRefresh, web3, chainID])
 
   const onHandleAffiliate = async () => {
     if(!refAddress) return;
+    if(chainID !== CHAIN_ID) {
+      changeNetwork();
+      return;
+    }
     // console.log("onHandleAffiliate")
     // console.log("child=", address);
     // console.log("parent=", refAddress);
     // console.log("name=", user.username);
     await setParent(affiliateContract, address, refAddress, user.username);
+  }
+
+  const onChangePerNum = (e:any) => {
+    e.preventDefault();
+    const _value = e.target.value;
+
+    setPerNum(_value);
+  }
+
+  const onHandlePerNumSave = async () => {
+    console.log("PerNum = ", pernum)
+    if(!isPerNum(pernum)) {
+      showToast(<span>Please input YEM PerNum correctly!<br/> Ex: 1001001000</span>, "error");
+      return;
+    }
+    const params:any = {
+      id: user._id,
+      pernum
+    }
+    try {
+      const {success, res}:any = await postUpdatePerNum(params);
+      console.log("res = ", res)
+      if(success){
+        showToast(res.data.message, "success");
+        // console.log("new pernum = ", params.pernum)
+        dispatch(setUser({...user, pernum: params.pernum}));
+        window.localStorage.removeItem("jwtToken")
+      }
+      else
+        showToast(res.data.message, "error");
+    } catch(err) {
+      console.log("error = ", err);
+      showToast(err, "error")
+    }
   }
 
   if(!user) return <></>
@@ -136,10 +181,18 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                 <Input className="mt-1.5" value={user.username} readOnly disabled/>
               </div>
 
+              <div>
+                <Label>YEM Pernum</Label>
+                <div className="flex flex-col sm:flex-row">
+                  <Input className="mt-1.5" placeholder="Ex: 0000000000" value={pernum} onChange={onChangePerNum} />
+                  <ButtonPrimary className="mt-1.5 ml-1 float-right" onClick={onHandlePerNumSave}> Save </ButtonPrimary>
+                </div>
+              </div>
+
               {/* ---- */}
               <div>
                 <Label>YEM Balance</Label>
-                <Input className="mt-1.5" disabled value="0.0" readOnly />
+                <Input className="mt-1.5 h-11" disabled value="0.0" readOnly />
               </div>
 
               {/* ---- */}
@@ -164,7 +217,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                   <Input
                     className="!pr-10 "
                     disabled
-                    value={parentName ? parentName : parentAddress}
+                    value={parentName ? parentName : ellipseAddress(parentAddress)}
                   />
                 </div>
               </div>
@@ -218,12 +271,12 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               </div>
               </>
               : (hasRefAddress ? <div>
-                  <Label>Your partner will be...</Label>
+                  <Label>Your Sponsor-Partner will be:</Label>
                   <div className="mt-1.5 relative text-neutral-700 dark:text-neutral-300">
                     <Input
                       className="!pr-10 "
                       disabled
-                      placeholder="ex: 0x0000000000000000000000000000000000000000"
+                      placeholder="Ex: 0x0000000000000000000000000000000000000000"
                       value={refAddress}
                       readOnly
                     />
@@ -280,7 +333,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                   { hasRefAddress ? 
                     <ButtonPrimary onClick={() => { onHandleAffiliate() }}>Become an affiliate</ButtonPrimary>
                     :
-                    <ButtonPrimary disabled>You need partner address</ButtonPrimary>
+                    <ButtonPrimary disabled>You need a partner address for affiliate-marketing</ButtonPrimary>
                   }
                   </div>
               }

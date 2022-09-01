@@ -16,6 +16,7 @@ import { useAppDispatch } from "app/hooks";
 import { setUser } from "app/home/home";
 import { postLogin } from "utils/fetchHelpers";
 import ModalNotification from "components/ModalNotification";
+import { showToast } from "utils";
 
 export interface PageLoginProps {
   className?: string;
@@ -62,8 +63,17 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
 
   const onHandleLogin = async () => {
     console.log("HandleLogin")
-    if(!connected || username === '') {
-      alert("Please input params correctly!")
+    if(username === '') {
+      showToast("Please add Username!", "error");
+      return;
+    }
+    if(!connected) {
+      showToast("Please connect wallet!", "error");
+      return;
+    }
+    if(username.length > 20) {
+      showToast("Not more than 20 letters", "error");
+      // alert("Not more than 20 letters");
       return;
     }
     const signingResult = await signString(address, username);
@@ -87,13 +97,16 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
       } else {
         console.log("err=", err)
         if(err.response.data) {
-          alert(err.response.data.message);
+          showToast(err.response.data.message, "error");
+          // alert(err.response.data.message);
         } else {
-          alert(err.message)
+          showToast(err.message, "error");
+          // alert(err.message)
         }
       }
     } else {
-      alert("Login failed!");
+      showToast("Login failed!", "error");
+      // alert("Login failed!");
     }
   }
 

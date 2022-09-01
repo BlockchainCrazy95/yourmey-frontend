@@ -133,7 +133,7 @@ export const NAVIGATION_DEMO_2: NavItemType[] = [
   },
   {
     id: ncNanoId(),
-    href: "#",
+    href: "",
     name: "Buy YEM",
   },
   // {

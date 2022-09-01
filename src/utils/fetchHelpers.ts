@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { showToast } from 'utils';
 import { API_SERVER_URL } from './data';
 
 export const postSignUp = async (params:any) => {
@@ -10,15 +11,19 @@ export const postSignUp = async (params:any) => {
         console.log("response =", res);
         if(res.data.code === 1) {
           const errMsg = "Address is duplicated";
-          alert(errMsg);
+          showToast(errMsg, "error");
+        //   alert(errMsg);
         } else {
-          alert("success");
+          showToast("Successfully registered", "success");
+        //   alert("success");
         }
    }).catch((err:any) => {
     if(err.response.data) {
-        alert(err.response.data.message);
+        showToast(err.response.data.message, "error");
+        // alert(err.response.data.message);
     } else {
-        alert(err.message)
+        showToast(err.message, "error");
+        // alert(err.message)
     }
   })
 }
@@ -42,6 +47,25 @@ export const postLogin = async (params:any) => {
     }
 }
 
+export const postUpdatePerNum = async (params:any) => {
+    try {
+        const res = await axios({
+            method: "post",
+            url: `${API_SERVER_URL}users/updatePerNum`,
+            data: params
+        });
+        return {
+            success: true,
+            res
+        }
+    } catch(err) {
+        return {
+            success: false,
+            err
+        }
+    }
+}
+
 export const getDownlines = async (params:any) => {
     try {
         const res = await axios({
@@ -49,7 +73,6 @@ export const getDownlines = async (params:any) => {
             url: `${API_SERVER_URL}users/getdownlines`,
             data: params
         });
-        console.log('res = ', res)
         const data = res.data.data;
         const _names = [];
         for(let i = 0;i<data.length;i++) {
@@ -59,11 +82,14 @@ export const getDownlines = async (params:any) => {
     } catch (err:any) {
         console.log("err=", err)
         if(err.response.status === 500) {
-            alert(err.response.statusText)
+            showToast(err.response.statusText, "error");
+            // alert(err.response.statusText)
         } else if(err.response.data) {
-            alert(err.response.data.message);
+            showToast(err.response.data.message, "error");
+            // alert(err.response.data.message);
         } else {
-            alert(err.message);
+            showToast(err.message, "error");
+            // alert(err.message);
         }
     }
     return [];

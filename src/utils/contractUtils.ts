@@ -1,3 +1,4 @@
+import { showToast } from "utils";
 import Web3 from "web3";
 import { SIGN_PASSWORD } from "./data";
 
@@ -10,6 +11,7 @@ export const signString = async (data:string, password:string) => {
         await web3.eth.personal.sign(web3.utils.toHex(msgHash), address, SIGN_PASSWORD, (err:any, result:any) => {
             if(err) {
                 console.error(err);
+                showToast(err, "error");
                 return {
                     success: false,
                     message: err
@@ -29,6 +31,7 @@ export const signString = async (data:string, password:string) => {
             message: signedString
         }
     } catch (err:any) {
+        showToast(err.message, "error");
         return {
             success: false,
             message: err.message

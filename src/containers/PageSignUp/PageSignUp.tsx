@@ -12,6 +12,7 @@ import { signString } from "utils/contractUtils";
 import axios from "axios";
 import { API_SERVER_URL } from "utils/data";
 import { postSignUp } from "utils/fetchHelpers";
+import { showToast } from "utils";
 
 export interface PageSignUpProps {
   className?: string;
@@ -34,7 +35,13 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   const onHandleSignUp = async () => {
     console.log("onHandleSignUp");
     if(!connected || username === '') {
-      alert("Please input params correctly!")
+      showToast("Please input params correctly!", "error");
+      // alert("Please input params correctly!")
+      return;
+    }
+    if(username.length > 20) {
+      showToast("Not more than 20 letters", "error");
+      // alert("Not more than 20 letters");
       return;
     }
 
@@ -45,25 +52,9 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
       params.username = username;
       params.password = signingResult.message;
       await postSignUp(params);
-      // console.log("params=", params)
-      // await axios({
-      //   method: "post",
-      //   url: `${API_SERVER_URL}users/create`,
-      //   data: params
-      // }).then((res:any) => {
-      //   console.log("response =", res);
-      //   if(res.data.code === 1) {
-      //     const errMsg = "Address is duplicated";
-      //     alert(errMsg);
-      //   } else {
-      //     alert("success");
-      //   }
-      // }).catch((err:any) => {
-      //   console.log("error:", err);
-      //   alert(err);
-      // })
     } else {
-      alert("Sign Up failed!!!")
+      showToast("Sign up failed", "error");
+      // alert("Sign Up failed!!!")
     }
   }
 

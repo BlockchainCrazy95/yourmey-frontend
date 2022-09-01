@@ -1,6 +1,6 @@
-export const DEV_MODE = true;
+export const DEV_MODE = false;
 
-export const CHAIN_ID = DEV_MODE ? 4 : 137;
+export const CHAIN_ID = DEV_MODE ? 137 : 137;
 export const MAINNET_ID = 137;
 export const TESTNET_ID = 4;
 
@@ -11,12 +11,12 @@ export const RPC_URL = {
     4: "https://rinkeby.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161"
 }
 
-export const affiliateContractAddr = DEV_MODE ? "0xfF1b9b8e96b14cf95F62257589aa7D0A61Fa8f8B" : "";
+export const affiliateContractAddr = DEV_MODE ? "0x09Db320e8a17735c53BeAb385B83B04D8e872F22" : "0x09Db320e8a17735c53BeAb385B83B04D8e872F22";
 
 
 export const SIGN_PASSWORD = "YOURMEY_PASSWORD"
 
-export const API_SERVER_URL = DEV_MODE ? "http://localhost/api/" : "https://yemnation.com/api/";
+export const API_SERVER_URL = DEV_MODE ? "http://localhost/api/" : "https://api.yemnation.com/api/";
 
 export const BASE_URL = DEV_MODE ? "https://localhost:3000/" : "https://yemnation.com/";
 

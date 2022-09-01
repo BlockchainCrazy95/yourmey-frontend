@@ -111,7 +111,8 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   const _checkNetwork = (otherChainID: number): Boolean => {
     if (chainID !== otherChainID) {
       console.warn("You are switching networks", otherChainID);
-      if (otherChainID === MAINNET_ID || otherChainID === TESTNET_ID) {
+      // if (otherChainID === MAINNET_ID || otherChainID === TESTNET_ID) {
+      if (otherChainID === CHAIN_ID) {
         setChainID(otherChainID);
         return true;
       }

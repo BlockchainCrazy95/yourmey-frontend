@@ -26,7 +26,7 @@ root.render(
       <ContractProvider>
         <RefreshContextProvider>
           <PersistGate loading={null} persistor={persistor}>
-            <App />
+              <App />
           </PersistGate>
         </RefreshContextProvider>
       </ContractProvider>

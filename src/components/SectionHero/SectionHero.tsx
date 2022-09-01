@@ -27,7 +27,7 @@ const SectionHero: FC<SectionHeroProps> = ({
           <h2 className="text-3xl !leading-tight font-semibold text-neutral-900 md:text-4xl xl:text-5xl dark:text-neutral-100">
             {heading}
           </h2>
-          <span className="block text-base xl:text-lg text-neutral-6000 dark:text-neutral-400 max-w-lg">
+          <span className="block text-base xl:text-lg text-neutral-8000 dark:text-neutral-400 max-w-lg">
             {subHeading}
           </span>
           <div className="pt-7 flex  space-x-4">
@@ -35,7 +35,7 @@ const SectionHero: FC<SectionHeroProps> = ({
               <span className="">Explore</span>
               <SearchIcon className="w-5 h-5 ml-2.5" />
             </ButtonPrimary> */}
-            { connected ? <ButtonSecondary href="/page-upload-item">
+            {/* { connected ? <ButtonSecondary href="/page-upload-item">
                 <span>Create</span>
                 <svg className="w-5 h-5 ml-2.5" viewBox="0 0 24 24" fill="none">
                   <path
@@ -63,7 +63,7 @@ const SectionHero: FC<SectionHeroProps> = ({
                     strokeLinejoin="round"
                   />
                 </svg>
-              </ButtonSecondary> : <></>}
+              </ButtonSecondary> : <></>} */}
           </div>
         </div>
         <div className="flex-grow">
