@@ -16,7 +16,9 @@ import { useAppDispatch } from "app/hooks";
 import { setUser } from "app/home/home";
 import { postLogin } from "utils/fetchHelpers";
 import ModalNotification from "components/ModalNotification";
-import { showToast } from "utils";
+import { isNullAddress, showToast } from "utils";
+import { useContract } from "hooks";
+import { getParent } from "contracts/affiliateHelper";
 
 export interface PageLoginProps {
   className?: string;
@@ -46,6 +48,8 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   const { address, connect, disconnect, connected } = useWeb3Context();
   const [username, setUsername] = useState('');
   const [ isShow, setIsShow ] = useState(false);
+  const { affiliateContract } = useContract();
+
 
   const openModal = () => setIsShow(true);
   const closeModal = () => {
@@ -91,7 +95,11 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
           console.log("token decode=", decoded);
           dispatch(setUser(decoded._doc));
           // history.push("/");
-          openModal();
+          const _parent = await getParent(affiliateContract, address);
+          if(isNullAddress(_parent))
+            openModal();
+          else
+            history.push("/");
           // if(decoded.id)
           // dispatch(getDetailedUserInfo(decoded.id))
       } else {
