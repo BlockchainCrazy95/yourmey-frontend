@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Switch, Route, useLocation, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Web3 from "web3";
 import jwt_decode from "jwt-decode";
@@ -25,7 +25,7 @@ import PageSearch from "containers/PageSearch";
 import PageUploadItem from "containers/PageUploadItem";
 import { logout, setRefAddress } from "app/home/home";
 import { useWeb3Context } from "hooks/web3Context";
-import AuctionLists from "containers/AuctionList";
+import AuctionLists from "containers/AuctionLists";
 // import PageConnectWallet from "containers/PageConnectWallet";
 
 export const pages: Page[] = [
@@ -34,9 +34,10 @@ export const pages: Page[] = [
   { path: "/signup", component: PageSignUp },
   { path: "/login", component: PageLogin },
   { path: "/auction", component: AuctionLists },
+  { path: "/auction-detail/:id", component: NftDetailPage},
   //
   { path: "/home-header-2", exact: true, component: PageHome },
-  { path: "/nft-detailt", component: NftDetailPage },
+  // { path: "/nft-detailt", component: NftDetailPage },
   // { path: "/page-collection", component: PageCollection },
   { path: "/page-search", component: PageSearch },
   { path: "/page-author", component: AuthorPage },
@@ -59,6 +60,7 @@ const useQuery = () => {
 
 const QueryParamsCheck = () => {
   const query = useQuery();
+  const history = useHistory();
   const dispatch = useDispatch();
   const { address } = useWeb3Context();
 
@@ -74,9 +76,10 @@ const QueryParamsCheck = () => {
     const jwtToken = window.localStorage.getItem("jwtToken");
     if(jwtToken) {
       const decoded:any = jwt_decode(jwtToken);
-      console.log("check address change decoded = ", decoded);
+      // console.log("check address change decoded = ", decoded);
       if(decoded._doc.address !== address) {
         dispatch(logout());
+        history.push("/");
       }
     }    
   }, [address]);

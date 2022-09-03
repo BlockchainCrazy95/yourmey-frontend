@@ -94,3 +94,25 @@ export const getDownlines = async (params:any) => {
     }
     return [];
 }
+
+export const getAuctionList = async () => {
+    try {
+        const res = await axios({
+            method: "get",
+            url: `${API_SERVER_URL}legendaries/get_list`
+        });
+        return res.data.data;
+    } catch(err:any) {
+        console.log("err=", err)
+        if(err.response.status === 500) {
+            showToast(err.response.statusText, "error");
+            // alert(err.response.statusText)
+        } else if(err.response.data) {
+            showToast(err.response.data.message, "error");
+            // alert(err.response.data.message);
+        } else {
+            showToast(err.message, "error");
+            // alert(err.message);
+        }
+    }
+}

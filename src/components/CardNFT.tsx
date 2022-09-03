@@ -8,13 +8,15 @@ import LikeButton from "./LikeButton";
 import Prices from "./Prices";
 import { ClockIcon } from "@heroicons/react/outline";
 import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
+import { getLegendaryNFTUrl } from "utils";
 
 export interface CardNFTProps {
   className?: string;
   isLiked?: boolean;
+  item?: any;
 }
 
-const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked }) => {
+const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, item }) => {
   const renderAvatars = () => {
     return (
       <div className="flex -space-x-1 ">
@@ -47,19 +49,19 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked }) => {
         <div>
           <NcImage
             containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0"
-            src={nftsImgs[Math.floor(Math.random() * nftsImgs.length)]}
+            src={getLegendaryNFTUrl(item.dataURL)}
             className="object-cover w-full h-full group-hover:scale-[1.03] transition-transform duration-300 ease-in-out will-change-transform"
           />
         </div>
-        {Math.random() > 0.5 ? (
+        {/* {Math.random() > 0.5 ? (
           <ItemTypeVideoIcon className="absolute top-3 left-3 !w-9 !h-9" />
         ) : (
           <ItemTypeImageIcon className="absolute top-3 left-3 !w-9 !h-9" />
-        )}
-        <LikeButton
+        )} */}
+        {/* <LikeButton
           liked={isLiked}
           className="absolute top-3 right-3 z-10 !h-9"
-        />
+        /> */}
         <div className="absolute top-3 inset-x-3 flex"></div>
       </div>
 
@@ -71,7 +73,7 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked }) => {
           </span>
         </div>
         <h2 className={`text-lg font-medium`}>
-          CloneF #{Math.floor(Math.random() * 1000) + 1000}
+          {item.name}
         </h2>
 
         <div className="w-2d4 w-full border-b border-neutral-100 dark:border-neutral-700"></div>
@@ -87,7 +89,7 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked }) => {
         </div>
       </div>
 
-      <Link to={"/nft-detailt"} className="absolute inset-0"></Link>
+      <Link to={`/auction-detail/${item.tokenId}`} className="absolute inset-0"></Link>
     </div>
   );
 };

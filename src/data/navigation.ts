@@ -121,7 +121,7 @@ const otherPageChildMenus: NavItemType[] = [
 //   },
 // ];
 
-export const SIGNED_INDEXES: number[] = [ 4, 5 ];
+export const SIGNED_INDEXES: number[] = [ 5, 6 ];
 
 export const NAVIGATION_DEMO_2: NavItemType[] = [
   {
@@ -146,6 +146,11 @@ export const NAVIGATION_DEMO_2: NavItemType[] = [
   //   href: "#",
   //   name: "Stats",
   // },
+  {
+    id: ncNanoId(),
+    href: "/auction",
+    name: "Auction"
+  },
   {
     id: ncNanoId(),
     href: "/#launch",

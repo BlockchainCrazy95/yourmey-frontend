@@ -1,7 +1,9 @@
 import { Disclosure } from "@headlessui/react";
 import { ChevronUpIcon } from "@heroicons/react/solid";
 
-export default function AccordionInfo() {
+const AccordionInfo = ( props:any ) => {
+  const { item } = props
+  if(!item) return <></>;
   return (
     <div className="w-full rounded-2xl">
       <Disclosure defaultOpen>
@@ -19,10 +21,7 @@ export default function AccordionInfo() {
               className="px-4 pt-4 pb-2 text-neutral-500 text-sm dark:text-neutral-400"
               as="p"
             >
-              Tattooed Kitty Gang (“TKG”) is a collection of 666 badass kitty
-              gangsters, with symbol of tattoos, living in the Proud Kitty Gang
-              (“PKG”) metaverse. Each TKG is an 1/1 ID as gangster member & all
-              the joint rights.
+              {item.description}
             </Disclosure.Panel>
           </>
         )}
@@ -39,17 +38,17 @@ export default function AccordionInfo() {
               />
             </Disclosure.Button>
             <Disclosure.Panel className="px-4 pt-4 pb-2 flex flex-col text-xs text-neutral-500 dark:text-neutral-400 overflow-hidden">
-              <span>2000 x 2000 px.IMAGE(685KB)</span>
+              {/* <span>2000 x 2000 px.IMAGE(685KB)</span> 
               <br />
               <span>Contract Address</span>
               <span className="text-base text-neutral-900 dark:text-neutral-100 line-clamp-1">
                 0x50f5474724e0ee42d9a4e711ccfb275809fd6d4a
-              </span>
-
+              </span> */}
               <br />
               <span>Token ID</span>
               <span className="text-base text-neutral-900 dark:text-neutral-100">
-                100300372864
+                {/* 100300372864 */}
+                {item.tokenId}
               </span>
             </Disclosure.Panel>
           </>
@@ -58,3 +57,5 @@ export default function AccordionInfo() {
     </div>
   );
 }
+
+export default AccordionInfo;

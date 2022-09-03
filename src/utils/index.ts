@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
 import { toast } from "react-toastify";
+import { UPLOAD_SERVER_URL } from "./data";
 
 export const ellipseAddress = (address:string) => {
     return address.slice(0, 6) + "..." + address.slice(-4);
@@ -65,4 +66,12 @@ export const showToast = (content:any, type:string = "error") => {
 export const isPerNum = (pernum:string) => {
     const _nums:any = pernum.match("/[^0-9]/g");
     return pernum.length === 10 && _nums === null;
+}
+
+export const getLegendaryNFTUrlById = (id:any) => {
+    return `${UPLOAD_SERVER_URL}legendary/${id}.jpeg`;
+}
+
+export const getLegendaryNFTUrl = (dataURL:any) => {
+    return `${UPLOAD_SERVER_URL}${dataURL}`;
 }

@@ -4,6 +4,7 @@ import Glide from "@glidejs/glide";
 import CollectionCard from "./CollectionCard";
 import CollectionCard2 from "./CollectionCard2";
 import { Link } from "react-router-dom";
+import { getLegendaryNFTUrlById } from "utils";
 
 export interface SectionSliderCollectionsProps {
   className?: string;
@@ -64,13 +65,20 @@ const SectionSliderCollections: FC<SectionSliderCollectionsProps> = ({
         <Heading
           isCenter={false}
           hasNextPrev
-          desc="Discover the new creative economy"
+          desc="Please check top rated NFTs."
           rightPopoverText="last 7 days"
         >
-          Top collections
+          Top rated NFT
         </Heading>
         <div className="glide__track" data-glide-el="track">
           <ul className="glide__slides">
+            <li className={`glide__slide`}>
+              <MyCollectionCard
+                imgs={[
+                  getLegendaryNFTUrlById(1)
+                ]}
+              />
+            </li>
             <li className={`glide__slide`}>
               <MyCollectionCard
                 imgs={[

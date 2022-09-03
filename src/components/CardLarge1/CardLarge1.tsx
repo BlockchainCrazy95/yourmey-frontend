@@ -100,17 +100,17 @@ const CardLarge1: FC<CardLarge1Props> = ({
           {/* DESCRIPTION */}
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
             {
-              user ? 
+              // user ? 
               // <ButtonPrimary href={"/account"} className="flex-1">
               //   Become an affiliate
               // </ButtonPrimary>
               <ButtonPrimary href={"/auction"} className="flex-1">
                 Buy NFTs
               </ButtonPrimary>
-              :
-              <ButtonPrimary href={"/signup"} className="flex-1">
-                Sign Up
-              </ButtonPrimary>
+              // :
+              // <ButtonPrimary href={"/signup"} className="flex-1">
+              //   Sign Up
+              // </ButtonPrimary>
             }
             <div className="flex-1">{" "}</div>
             {/* <ButtonPrimary href={"/nft-detailt"} className="flex-1">
@@ -132,7 +132,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
 
       <div className="w-full lg:w-[64%] relative ">
         <div className="nc-CardLarge1__right ">
-          <Link to={"/nft-detailt"}>
+          <Link to={"/auction"}>
             <NcImage
               containerClassName="aspect-w-1 aspect-h-1 relative"
               className="absolute inset-0 object-cover rounded-3xl sm:rounded-[40px] border-4 sm:border-[14px] border-white dark:border-neutral-800"

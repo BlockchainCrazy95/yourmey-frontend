@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import BackgroundSection from "components/BackgroundSection/BackgroundSection";
 import NcImage from "shared/NcImage/NcImage";
@@ -12,12 +12,33 @@ import ButtonDropDownShare from "components/ButtonDropDownShare";
 import TabFilters from "components/TabFilters";
 import SectionSliderCollections from "components/SectionSliderCollections";
 import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
+import { getLegendaryNFTUrlById } from "utils";
+import { getAuctionList } from "utils/fetchHelpers";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "app/store";
+import { setAuctionList } from "app/auction/auction";
 
 export interface AuctionListsProps {
   className?: string;
 }
 
 const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
+
+  const dispatch = useDispatch();
+
+  const [ auctionList, setAuctionLists ] = useState([]);
+
+  const loadData = async () => {
+    const _list = await getAuctionList();
+    console.log("loadData = ", _list)
+    setAuctionLists(_list);
+    dispatch(setAuctionList({auctionList: _list}));
+  }
+
+  useEffect(() => {
+    loadData();
+  }, [dispatch])
+
   return (
     <div
       className={`nc-AuctionLists  ${className}`}
@@ -41,11 +62,11 @@ const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
             <div className="flex flex-col sm:flex-row md:block sm:items-start sm:justify-between">
               <div className="w-40 sm:w-48 md:w-56 xl:w-60">
                 <NcImage
-                  src={nftsImgs[2]}
+                  src={getLegendaryNFTUrlById(1)}
                   containerClassName="aspect-w-1 aspect-h-1 rounded-3xl overflow-hidden"
                 />
               </div>
-              <div className="mt-4 flex items-center sm:justify-center space-x-3">
+              {/* <div className="mt-4 flex items-center sm:justify-center space-x-3">
                 <div className="flex space-x-1.5 text-neutral-700 dark:text-neutral-300">
                   <a
                     href="##"
@@ -82,17 +103,16 @@ const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
                     containerClassName="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full bg-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 dark:bg-neutral-800 cursor-pointer"
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="mt-5 md:mt-0 md:ml-8 xl:ml-14 flex-grow">
               <div className="max-w-screen-sm ">
                 <h2 className="inline-block text-2xl sm:text-3xl lg:text-4xl font-semibold">
-                  {"Awesome NFTs collection "}
+                  {"Legendary NFTs collection "}
                 </h2>
                 <span className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                  Karafuru is home to 5,555 generative arts where colors reign
-                  supreme. Leave the drab reality and enter the world of
-                  Karafuru by Museum of Toys.
+                  Please buy this legendary NFT. It has only 20 arts.
+                  Don't miss the chance to buy them. Please bid as much as you can.
                 </span>
               </div>
               <div className="mt-6 xl:mt-8 grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 xl:gap-6">
@@ -152,30 +172,30 @@ const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
       <div className="container py-16 lg:pb-28 lg:pt-20 space-y-20 lg:space-y-28">
         <main>
           {/* TABS FILTER */}
-          <TabFilters />
+          {/* <TabFilters /> */}
 
           {/* LOOP ITEMS */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10  mt-8 lg:mt-10">
-            {Array.from("11111111").map((_, index) => (
-              <CardNFT key={index} />
-            ))}
+            {auctionList && auctionList.length ? auctionList.map((item:any, index:any) => (
+              <CardNFT key={index} item={item}/>
+            )): <>No Auction List</>}
           </div>
 
           {/* PAGINATION */}
-          <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
+          {/* <div className="flex flex-col mt-12 lg:mt-16 space-y-5 sm:space-y-0 sm:space-x-3 sm:flex-row sm:justify-between sm:items-center">
             <Pagination />
             <ButtonPrimary loading>Show me more</ButtonPrimary>
-          </div>
+          </div> */}
         </main>
 
         {/* === SECTION 5 === */}
-        <div className="relative py-20 lg:py-28">
+        {/* <div className="relative py-20 lg:py-28">
           <BackgroundSection />
           <SectionSliderCollections />
-        </div>
+        </div> */}
 
         {/* SUBCRIBES */}
-        <SectionBecomeAnAuthor />
+        {/* <SectionBecomeAnAuthor /> */}
       </div>
     </div>
   );

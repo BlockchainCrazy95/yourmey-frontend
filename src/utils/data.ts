@@ -1,4 +1,4 @@
-export const DEV_MODE = false;
+export const DEV_MODE = true;
 
 export const CHAIN_ID = DEV_MODE ? 137 : 137;
 export const MAINNET_ID = 137;
@@ -17,6 +17,8 @@ export const affiliateContractAddr = DEV_MODE ? "0x09Db320e8a17735c53BeAb385B83B
 export const SIGN_PASSWORD = "YOURMEY_PASSWORD"
 
 export const API_SERVER_URL = DEV_MODE ? "http://localhost/api/" : "https://api.yemnation.com/api/";
+
+export const UPLOAD_SERVER_URL = DEV_MODE ? "http://localhost/assets/" : "https://yemnation.com/assets/";
 
 export const BASE_URL = DEV_MODE ? "https://localhost:3000/" : "https://yemnation.com/";
 

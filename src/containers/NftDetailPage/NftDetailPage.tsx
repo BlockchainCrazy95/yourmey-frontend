@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Avatar from "shared/Avatar/Avatar";
 import Badge from "shared/Badge/Badge";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
@@ -16,6 +16,12 @@ import ItemTypeVideoIcon from "components/ItemTypeVideoIcon";
 import LikeButton from "components/LikeButton";
 import AccordionInfo from "./AccordionInfo";
 import SectionBecomeAnAuthor from "components/SectionBecomeAnAuthor/SectionBecomeAnAuthor";
+import { useHistory, useParams } from "react-router-dom";
+import { getLegendaryNFTUrl, showToast } from "utils";
+import ModalBid from "components/ModalBid";
+import { useSelector } from "react-redux";
+import { RootState } from "app/store";
+import { useWeb3Context } from "hooks/web3Context";
 
 export interface NftDetailPageProps {
   className?: string;
@@ -26,22 +32,62 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   className = "",
   isPreviewMode,
 }) => {
+  const history = useHistory();
+  const params:any = useParams();
+  const [ id, setId ] = useState(0);
+  const [ curBidPrice, setCurBidPrice ] = useState("0");
+  const [ selItem, setSelItem ] = useState<any>(null);
+  const [ isBidShow, setIsBidShow ] = useState(false);
+  const { user } = useSelector((state:RootState) => state.home);
+  const { auctionList } = useSelector((state:RootState) => state.auction);
+
+  useEffect(() => {
+    const _id = parseInt(params.id)
+    if(!Number.isNaN(_id)) {
+      setId(_id);
+      const _item = auctionList.filter((item:any) => item.tokenId === _id);
+      if(_item.length !== 0)
+        setSelItem(_item[0]);
+      else
+        history.push("/auction");
+    } else
+      history.push("/auction");
+  }, [params])
+  
+  const closeBidModal = () => setIsBidShow(false)
+
+  const onClickPlaceABid = () => {
+    if(!user) {
+      showToast("Please login before bidding!", "error");
+      return;
+    }
+    setCurBidPrice("100");
+    setIsBidShow(true);
+  }
+
+  const onPlaceABid = (newPrice:any) => {
+    console.log("onPlaceABid = ", newPrice)
+  }
+
+  // const onClickMakeOffer = () => { }
+
   const renderSection1 = () => {
+    if(!selItem) return <></>;
     return (
       <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
         {/* ---------- 1 ----------  */}
         <div className="pb-9 space-y-5">
-          <div className="flex justify-between items-center">
+          {/* <div className="flex justify-between items-center">
             <Badge name="Virtual Worlds" color="green" />
             <LikeSaveBtns />
-          </div>
+          </div> */}
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-semibold">
-            BearX #3636
+            {selItem.name}
           </h2>
 
           {/* ---------- 4 ----------  */}
           <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-8 text-sm">
-            <div className="flex items-center ">
+            {/* <div className="flex items-center ">
               <Avatar sizeClass="h-9 w-9" radius="rounded-full" />
               <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="text-sm">Creator</span>
@@ -65,7 +111,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                   <VerifyIcon iconClass="w-4 h-4" />
                 </span>
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -83,7 +129,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
                 Current Bid
               </span>
               <span className="text-3xl xl:text-4xl font-semibold text-green-500">
-                1.000 ETH
+                1.000 YEM
               </span>
               <span className="text-lg text-neutral-400 sm:ml-5">
                 ( ≈ $3,221.22)
@@ -96,7 +142,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
           </div>
 
           <div className="mt-8 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
-            <ButtonPrimary href={"/connect-wallet"} className="flex-1">
+            <ButtonPrimary className="flex-1 max-w-[50%]" onClick={onClickPlaceABid}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M18.04 13.55C17.62 13.96 17.38 14.55 17.44 15.18C17.53 16.26 18.52 17.05 19.6 17.05H21.5V18.24C21.5 20.31 19.81 22 17.74 22H6.26C4.19 22 2.5 20.31 2.5 18.24V11.51C2.5 9.44001 4.19 7.75 6.26 7.75H17.74C19.81 7.75 21.5 9.44001 21.5 11.51V12.95H19.48C18.92 12.95 18.41 13.17 18.04 13.55Z"
@@ -130,7 +176,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
 
               <span className="ml-2.5">Place a bid</span>
             </ButtonPrimary>
-            <ButtonSecondary href={"/connect-wallet"} className="flex-1">
+            {/* <ButtonSecondary className="flex-1" onClick={onClickMakeOffer}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M8.57007 15.27L15.11 8.72998"
@@ -163,7 +209,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               </svg>
 
               <span className="ml-2.5"> Make offer</span>
-            </ButtonSecondary>
+            </ButtonSecondary> */}
           </div>
         </div>
 
@@ -174,7 +220,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       </div>
     );
   };
-
+  if(!selItem) return <></>;
   return (
     <div
       className={`nc-NftDetailPage  ${className}`}
@@ -188,17 +234,17 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
             {/* HEADING */}
             <div className="relative">
               <NcImage
-                src={nftsLargeImgs[0]}
+                src={getLegendaryNFTUrl(selItem.dataURL)}
                 containerClassName="aspect-w-11 aspect-h-12 rounded-3xl overflow-hidden"
               />
               {/* META TYPE */}
-              <ItemTypeVideoIcon className="absolute left-3 top-3  w-8 h-8 md:w-10 md:h-10" />
+              {/* <ItemTypeVideoIcon className="absolute left-3 top-3  w-8 h-8 md:w-10 md:h-10" /> */}
 
               {/* META FAVORITES */}
-              <LikeButton className="absolute right-3 top-3 " />
+              {/* <LikeButton className="absolute right-3 top-3 " /> */}
             </div>
 
-            <AccordionInfo />
+            <AccordionInfo item={selItem}/>
           </div>
 
           {/* SIDEBAR */}
@@ -209,18 +255,19 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       </main>
 
       {/* OTHER SECTION */}
-      {!isPreviewMode && (
+      {/* {!isPreviewMode && (
         <div className="container py-24 lg:py-32">
-          {/* SECTION 1 */}
           <div className="relative py-24 lg:py-28">
             <BackgroundSection />
             <SectionSliderCategories />
           </div>
 
-          {/* SECTION */}
           <SectionBecomeAnAuthor className="pt-24 lg:pt-32" />
         </div>
-      )}
+      )} */}
+
+      <ModalBid show={isBidShow} onCloseModalBid={closeBidModal} curPrice={curBidPrice} onClickBid={onPlaceABid} />
+
     </div>
   );
 };

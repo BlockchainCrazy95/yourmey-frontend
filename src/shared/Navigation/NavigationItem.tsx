@@ -33,6 +33,7 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
 }) => {
   const location = useLocation();
   const isHome = location.pathname === "/" || location.pathname === "/#";
+  const isDetail = location.pathname.indexOf("auction-detail") !== -1;
   const [menuCurrentHovers, setMenuCurrentHovers] = useState<string[]>([]);
 
   // CLOSE ALL MENU OPENING WHEN CHANGE HISTORY
@@ -187,6 +188,9 @@ const NavigationItem: FC<NavigationItemWithRouterProps> = ({
   const renderMainItem = (item: NavItemType) => {
     const isHomeMenu = isHome && (item.href === "/#launch" || item.href === "/#affiliate");
     switch(item.name) {
+      case "Home":
+        item.href = isDetail ? "/#" : "#";
+        break;
       case "Launch":
         item.href = isHome ? "/#launch" : "";
         break;
