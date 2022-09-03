@@ -33,23 +33,23 @@ export const pages: Page[] = [
   { path: "/#", exact: true, component: PageHome },
   { path: "/signup", component: PageSignUp },
   { path: "/login", component: PageLogin },
-  { path: "/auction", component: AuctionLists },
+  // { path: "/auction", component: AuctionLists },
   //
-  { path: "/home-header-2", exact: true, component: PageHome },
-  { path: "/nft-detailt", component: NftDetailPage },
+  // { path: "/home-header-2", exact: true, component: PageHome },
+  // { path: "/nft-detailt", component: NftDetailPage },
   // { path: "/page-collection", component: PageCollection },
-  { path: "/page-search", component: PageSearch },
-  { path: "/page-author", component: AuthorPage },
+  // { path: "/page-search", component: PageSearch },
+  // { path: "/page-author", component: AuthorPage },
   { path: "/account", component: AccountPage },
-  { path: "/page-upload-item", component: PageUploadItem },
+  // { path: "/page-upload-item", component: PageUploadItem },
   // { path: "/connect-wallet", component: PageConnectWallet },
   //
-  { path: "/blog", component: BlogPage },
-  { path: "/blog-single", component: BlogSingle },
+  // { path: "/blog", component: BlogPage },
+  // { path: "/blog-single", component: BlogSingle },
   //
-  { path: "/contact", component: PageContact },
-  { path: "/about", component: PageAbout },
-  { path: "/subscription", component: PageSubcription },
+  // { path: "/contact", component: PageContact },
+  // { path: "/about", component: PageAbout },
+  // { path: "/subscription", component: PageSubcription },
 ];
 
 const useQuery = () => {

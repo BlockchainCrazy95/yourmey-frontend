@@ -48,7 +48,7 @@ const SectionEarnWithAffiliate: FC<SectionEarnWithAffiliateProps> = ({
         </div>
       </div>
       <div className="flex-grow">
-        <NcImage containerClassName="block dark:hidden" src={nftImg} />
+        <NcImage containerClassName="block dark:hidden" src={nftImg} className="inset-0 object-cover rounded-3xl sm:rounded-[40px] border-4 sm:border-[14px] border-white m-auto shadow-md" />
         <NcImage
           containerClassName="hidden dark:block"
           src={rightLargeImgDark}
