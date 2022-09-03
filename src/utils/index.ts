@@ -14,6 +14,10 @@ export const displayFixed = (value:any, fixed:any) => {
       return Number(displayEther(value)).toFixed(fixed);
 }
 
+export const displayFixedNumber = (value:any, fixed:any) => {
+    return Number(value).toFixed(fixed);
+}
+
 export const isNullAddress = (address:any) => {
     return address === "0x0000000000000000000000000000000000000000" || address === "";
 }

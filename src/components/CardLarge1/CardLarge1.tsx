@@ -145,7 +145,7 @@ const CardLarge1: FC<CardLarge1Props> = ({
           <ItemTypeVideoIcon className="absolute w-8 h-8 md:w-10 md:h-10 left-3 bottom-3 sm:left-7 sm:bottom-7 " />
 
           {/* META FAVORITES */}
-          <LikeButton className="absolute right-3 top-3 sm:right-7 sm:top-7" />
+          {/* <LikeButton className="absolute right-3 top-3 sm:right-7 sm:top-7" /> */}
         </div>
       </div>
     </div>

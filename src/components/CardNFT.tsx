@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "shared/Avatar/Avatar";
 import NcImage from "shared/NcImage/NcImage";
@@ -8,7 +8,7 @@ import LikeButton from "./LikeButton";
 import Prices from "./Prices";
 import { ClockIcon } from "@heroicons/react/outline";
 import ItemTypeVideoIcon from "./ItemTypeVideoIcon";
-import { getLegendaryNFTUrl } from "utils";
+import { displayFixed, displayFixedNumber, getLegendaryNFTUrl } from "utils";
 
 export interface CardNFTProps {
   className?: string;
@@ -17,6 +17,15 @@ export interface CardNFTProps {
 }
 
 const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, item }) => {
+
+  const [ remainTime, setRemainTime ] = useState(0);
+
+  useEffect(() => {
+    const now = parseInt(`${new Date().getTime() / 1000}`);
+    const _remain = item.auctionStarted + item.auctionPeriod - now;
+    setRemainTime(_remain);
+  }, [])
+
   const renderAvatars = () => {
     return (
       <div className="flex -space-x-1 ">
@@ -69,7 +78,7 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, item }) => {
         <div className="flex justify-between">
           {renderAvatars()}
           <span className="text-neutral-700 dark:text-neutral-400 text-xs">
-            {Math.floor(Math.random() * 90) + 10} in stock
+            {item.bids.length} bids
           </span>
         </div>
         <h2 className={`text-lg font-medium`}>
@@ -79,11 +88,14 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, item }) => {
         <div className="w-2d4 w-full border-b border-neutral-100 dark:border-neutral-700"></div>
 
         <div className="flex justify-between items-end ">
-          <Prices labelTextClassName="bg-white dark:bg-neutral-900 dark:group-hover:bg-neutral-800 group-hover:bg-neutral-50" />
+          <Prices
+            labelTextClassName="bg-white dark:bg-neutral-900 dark:group-hover:bg-neutral-800 group-hover:bg-neutral-50"
+            price={`${displayFixedNumber(item.lastPrice, 2)} YEM`}
+          />
           <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400">
             <ClockIcon className="w-4 h-4" />
             <span className="ml-1 mt-0.5">
-              {Math.floor(Math.random() * 20) + 1} hours left
+              {parseInt(`${remainTime / 3600}`)} hours left
             </span>
           </div>
         </div>
