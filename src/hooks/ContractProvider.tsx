@@ -18,7 +18,7 @@ export const ContractProvider = ({ children } : any) => {
     const { chainID, provider } = useWeb3Context();
 
     useEffect(() => {
-        if(!chainID || !provider) {
+        if(!chainID) {
             return;
         }
         const web3Instance = new Web3();

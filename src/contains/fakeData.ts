@@ -1,32 +1,32 @@
 import avatar1 from "images/avatars/default.webp";
 //
-import nfts1 from "images/nfts/1.png";
-import nfts2 from "images/nfts/2.png";
-import nfts3 from "images/nfts/3.png";
-import nfts4 from "images/nfts/4.png";
-import nfts5 from "images/nfts/5.png";
+import nfts1 from "images/nfts/6.png";
+import nfts2 from "images/nfts/6.png";
+import nfts3 from "images/nfts/6.png";
+import nfts4 from "images/nfts/6.png";
+import nfts5 from "images/nfts/6.png";
 import nfts6 from "images/nfts/6.png";
-import nfts7 from "images/nfts/7.png";
-import nfts8 from "images/nfts/8.png";
-import nfts9 from "images/nfts/9.png";
-import nfts10 from "images/nfts/10.png";
-import nfts11 from "images/nfts/11.png";
-import nfts12 from "images/nfts/12.png";
-import nfts13 from "images/nfts/13.png";
-import nfts14 from "images/nfts/14.png";
-import nfts15 from "images/nfts/15.png";
-import nfts16 from "images/nfts/16.png";
+import nfts7 from "images/nfts/6.png";
+import nfts8 from "images/nfts/6.png";
+import nfts9 from "images/nfts/6.png";
+import nfts10 from "images/nfts/6.png";
+import nfts11 from "images/nfts/6.png";
+import nfts12 from "images/nfts/6.png";
+import nfts13 from "images/nfts/6.png";
+import nfts14 from "images/nfts/6.png";
+import nfts15 from "images/nfts/6.png";
+import nfts16 from "images/nfts/6.png";
 // import nftsLarge1 from "images/nfts/large1.png";
 import nftsLarge2 from "images/nfts/large2.png";
 import nftsLarge3 from "images/nfts/large3.png";
 import nftsLarge1New from "images/nfts/new_large1.jpg";
 //
 import nftsCat1 from "images/nfts/cat1.png";
-import nftsCat2 from "images/nfts/cat2.png";
-import nftsCat3 from "images/nfts/cat3.png";
-import nftsCat4 from "images/nfts/cat4.png";
-import nftsCat5 from "images/nfts/cat5.png";
-import nftsCat6 from "images/nfts/cat6.png";
+import nftsCat2 from "images/nfts/cat1.png";
+import nftsCat3 from "images/nfts/cat1.png";
+import nftsCat4 from "images/nfts/cat1.png";
+import nftsCat5 from "images/nfts/cat1.png";
+import nftsCat6 from "images/nfts/cat1.png";
 
 export const nftsCatImgs = [
   nftsCat1,

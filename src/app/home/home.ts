@@ -20,6 +20,7 @@ export const homeSlice = createSlice({
         },
         logout: (state) => {
             state.user = null;
+            window.localStorage.removeItem("jwtToken");
         },
         setRefAddress: (state, action: PayloadAction<HomeState>) => {
             state.refAddress = action.payload.refAddress;

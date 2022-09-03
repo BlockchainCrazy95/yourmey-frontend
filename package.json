@@ -62,7 +62,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "CI=false && GENERATE_SOURCEMAP=false react-app-rewired build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "typechain": "typechain --out-dir src/contracts/abis/types --target=ethers-v5 \"src/contracts/abis/*.json\""

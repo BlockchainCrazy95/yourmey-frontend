@@ -48,7 +48,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
     let signingResult = await signString(address, username);
     const params:any = {};
     if(signingResult.success) {
-      params.address = address.toLowerCase();
+      params.address = address;
       params.username = username;
       params.password = signingResult.message;
       await postSignUp(params);

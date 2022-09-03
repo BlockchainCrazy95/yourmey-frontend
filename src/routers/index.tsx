@@ -2,6 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Web3 from "web3";
+import jwt_decode from "jwt-decode";
 
 import { Page } from "./types";
 import ScrollToTop from "./ScrollToTop";
@@ -22,16 +23,21 @@ import NftDetailPage from "containers/NftDetailPage/NftDetailPage";
 import PageCollection from "containers/PageCollection";
 import PageSearch from "containers/PageSearch";
 import PageUploadItem from "containers/PageUploadItem";
-import { setRefAddress } from "app/home/home";
+import { logout, setRefAddress } from "app/home/home";
+import { useWeb3Context } from "hooks/web3Context";
+import AuctionLists from "containers/AuctionList";
 // import PageConnectWallet from "containers/PageConnectWallet";
 
 export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
   { path: "/#", exact: true, component: PageHome },
+  { path: "/signup", component: PageSignUp },
+  { path: "/login", component: PageLogin },
+  { path: "/auction", component: AuctionLists },
   //
   { path: "/home-header-2", exact: true, component: PageHome },
   { path: "/nft-detailt", component: NftDetailPage },
-  { path: "/page-collection", component: PageCollection },
+  // { path: "/page-collection", component: PageCollection },
   { path: "/page-search", component: PageSearch },
   { path: "/page-author", component: AuthorPage },
   { path: "/account", component: AccountPage },
@@ -43,8 +49,6 @@ export const pages: Page[] = [
   //
   { path: "/contact", component: PageContact },
   { path: "/about", component: PageAbout },
-  { path: "/signup", component: PageSignUp },
-  { path: "/login", component: PageLogin },
   { path: "/subscription", component: PageSubcription },
 ];
 
@@ -56,14 +60,26 @@ const useQuery = () => {
 const QueryParamsCheck = () => {
   const query = useQuery();
   const dispatch = useDispatch();
+  const { address } = useWeb3Context();
 
   useEffect(() => {
     // Check affiliate link
     const queryRef = query.get("ref");
     if(queryRef && Web3.utils.isAddress(queryRef)) {
-      dispatch(setRefAddress({refAddress: queryRef.toLowerCase()}));
+      dispatch(setRefAddress({refAddress: queryRef}));
     }
   }, []);
+
+  useEffect(() => {
+    const jwtToken = window.localStorage.getItem("jwtToken");
+    if(jwtToken) {
+      const decoded:any = jwt_decode(jwtToken);
+      console.log("check address change decoded = ", decoded);
+      if(decoded._doc.address !== address) {
+        dispatch(logout());
+      }
+    }    
+  }, [address]);
 
   return <></>;
 }

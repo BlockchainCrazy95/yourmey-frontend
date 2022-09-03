@@ -4,11 +4,6 @@ import React, { FC, useId } from "react";
 import { useEffect } from "react";
 import clientSayMain from "images/clientSayMain.png";
 import clientSay1 from "images/clientSay1.png";
-import clientSay2 from "images/clientSay2.png";
-import clientSay3 from "images/clientSay3.png";
-import clientSay4 from "images/clientSay4.png";
-import clientSay5 from "images/clientSay5.png";
-import clientSay6 from "images/clientSay6.png";
 import quotationImg from "images/quotation.png";
 import quotationImg2 from "images/quotation2.png";
 
@@ -61,25 +56,25 @@ const SectionClientSay: FC<SectionClientSayProps> = ({ className = "" }) => {
         <img className="absolute top-9 -left-20" src={clientSay1} alt="" />
         <img
           className="absolute bottom-[100px] right-full mr-40"
-          src={clientSay2}
+          src={clientSay1}
           alt=""
         />
         <img
           className="absolute top-full left-[140px]"
-          src={clientSay3}
+          src={clientSay1}
           alt=""
         />
         <img
           className="absolute -bottom-10 right-[140px]"
-          src={clientSay4}
+          src={clientSay1}
           alt=""
         />
         <img
           className="absolute left-full ml-32 bottom-[80px]"
-          src={clientSay5}
+          src={clientSay1}
           alt=""
         />
-        <img className="absolute -right-10 top-10 " src={clientSay6} alt="" />
+        <img className="absolute -right-10 top-10 " src={clientSay1} alt="" />
       </div>
     );
   };

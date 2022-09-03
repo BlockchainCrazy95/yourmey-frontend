@@ -40,31 +40,72 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const [ levelOnes, setLevelOnes ] = useState("-");
   const hasRefAddress = !isNullAddress(refAddress);
 
+  let timerId:any = -1;
+
   useEffect(() => {
     if(!user) {
-      history.push("/")
+      history.push("/");
     }
-    // console.log("user = ", user)
-    const loadData = async () => {
-      if(!affiliateContract) return;
-      const _parent = await getParent(affiliateContract, address);
-      setHasParent(!isNullAddress(_parent));
-      setParentAddress(_parent);
-      const _parentName = await getParentName(affiliateContract, address);
-      setParentName(_parentName);
-      const _levelOnes = await getLevelOnes(affiliateContract, address);
-      if(_levelOnes.length !== 0) {
-        const resOnes:any = await getDownlines({addresses: _levelOnes})
-        const _names = resOnes.toString().replaceAll(",", ", ");
-        setLevelOnes(_names);
-      } else {
-        setLevelOnes("-");
-      }
-      if(user)
-        setPerNum(user.pernum)
-    }
-    loadData();
   }, [user])
+
+  useEffect(() => {
+    if(affiliateContract) 
+      updateData();
+    if(timerId !== -1) return;
+    timerId = setInterval(() => {
+      if(affiliateContract && address) {
+        updateData();
+      }
+    }, 10000);
+    return () => {
+      clearInterval(timerId);
+    }
+  }, [affiliateContract, address])
+
+  // useEffect(() => {
+  //   if(!user) {
+  //     history.push("/")
+  //   }
+  //   // console.log("user = ", user)
+  //   const loadData = async () => {
+  //     if(!affiliateContract) return;
+  //     const _parent = await getParent(affiliateContract, address);
+  //     setHasParent(!isNullAddress(_parent));
+  //     setParentAddress(_parent);
+  //     const _parentName = await getParentName(affiliateContract, address);
+  //     setParentName(_parentName);
+  //     const _levelOnes = await getLevelOnes(affiliateContract, address);
+  //     if(_levelOnes.length !== 0) {
+  //       const resOnes:any = await getDownlines({addresses: _levelOnes})
+  //       const _names = resOnes.toString().replaceAll(",", ", ");
+  //       setLevelOnes(_names);
+  //     } else {
+  //       setLevelOnes("-");
+  //     }
+  //     if(user)
+  //       setPerNum(user.pernum)
+  //   }
+  //   loadData();
+  // }, [user])
+
+  const updateData = async () => {
+    if(!affiliateContract || !address) return;
+    const _parent = await getParent(affiliateContract, address);
+    setHasParent(!isNullAddress(_parent));
+    setParentAddress(_parent);
+    const _parentName = await getParentName(affiliateContract, address);
+    setParentName(_parentName);
+    const _levelOnes = await getLevelOnes(affiliateContract, address);
+    if(_levelOnes.length !== 0) {
+      const resOnes:any = await getDownlines({addresses: _levelOnes})
+      const _names = resOnes.toString().replaceAll(",", ", ");
+      setLevelOnes(_names);
+    } else {
+      setLevelOnes("-");
+    }
+    if(user)
+      setPerNum(user.pernum)
+  }
 
   useEffect(() => {
     const getData = async () => {
@@ -78,6 +119,8 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
     getData();
   }, [address, fastRefresh, web3, chainID])
 
+  
+
   const onHandleAffiliate = async () => {
     if(!refAddress) return;
     if(chainID !== CHAIN_ID) {
@@ -88,7 +131,8 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
     // console.log("child=", address);
     // console.log("parent=", refAddress);
     // console.log("name=", user.username);
-    await setParent(affiliateContract, address, refAddress, user.username);
+    const res = await setParent(affiliateContract, address, refAddress, user.username);
+    showToast(res.message, res.success ? "success" : "error");
   }
 
   const onChangePerNum = (e:any) => {

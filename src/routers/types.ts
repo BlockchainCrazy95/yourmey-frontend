@@ -6,6 +6,7 @@ export interface LocationStates {
   "/home2"?: {};
   "/home3"?: {};
   //
+  "/auction"?: {};
   "/nft-detailt"?: {};
   "/page-collection"?: {};
   "/page-search"?: {};

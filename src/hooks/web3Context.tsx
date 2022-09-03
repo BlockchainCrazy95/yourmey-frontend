@@ -4,6 +4,7 @@ import { StaticJsonRpcProvider, JsonRpcProvider, Web3Provider, WebSocketProvider
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import { CHAIN_ID, MAINNET_ID, RPC_URL, TESTNET_ID } from "../utils/data";
 import { changeNetwork } from "hooks";
+import { ethers } from "ethers";
 
 /**
  * kept as function to mimic `getMainnetURI()`
@@ -75,7 +76,7 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   const [connected, setConnected] = useState(false);
   const [chainID, setChainID] = useState(CHAIN_ID);
   const [address, setAddress] = useState("");
-  const [provider, setProvider] = useState(null);
+  const [provider, setProvider] = useState<any>(RPC_URL[CHAIN_ID]);
 
   const hasCachedProvider = (): Boolean => {
     if (!web3Modal) return false;
@@ -158,6 +159,10 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
   useEffect(() => {
     if(web3Modal.cachedProvider) {
       connect();
+    } else {
+      const _provider = new ethers.providers.StaticJsonRpcProvider(RPC_URL[CHAIN_ID], CHAIN_ID);
+      setProvider(_provider);
+      subscribeProvider(_provider);
     }
   }, [])
 

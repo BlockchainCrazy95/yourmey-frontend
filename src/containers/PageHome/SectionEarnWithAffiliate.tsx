@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import NcImage from "shared/NcImage/NcImage";
 import rightImgDemo from "images/rightLargeImg.png";
+import nftImg from "images/nfts/6.png";
 import rightLargeImgDark from "images/rightLargeImgDark.png";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import Logo from "shared/Logo/Logo";
@@ -47,7 +48,7 @@ const SectionEarnWithAffiliate: FC<SectionEarnWithAffiliateProps> = ({
         </div>
       </div>
       <div className="flex-grow">
-        <NcImage containerClassName="block dark:hidden" src={rightImgDemo} />
+        <NcImage containerClassName="block dark:hidden" src={nftImg} />
         <NcImage
           containerClassName="hidden dark:block"
           src={rightLargeImgDark}
