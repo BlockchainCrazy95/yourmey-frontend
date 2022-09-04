@@ -4,7 +4,7 @@ const calculateTimeLeft = () => {
   // let year = new Date().getFullYear();
   // let month = new Date().getMonth();
   // let difference = +new Date(`${month + 2}/10/${year}`) - +new Date();
-  let difference = +new Date(`${9}/5/${2022}`) - +new Date();
+  let difference = +new Date(`${9}/7/${2022}`) - +new Date();
 
   let timeLeft = {
     days: 0,
