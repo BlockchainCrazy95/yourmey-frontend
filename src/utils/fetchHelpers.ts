@@ -47,6 +47,25 @@ export const postLogin = async (params:any) => {
     }
 }
 
+export const postSimpleLogin = async (params:any) => {
+    try {
+        const res = await axios({
+            method: "post",
+            url: `${API_SERVER_URL}users/simple_login`,
+            data: params
+        });
+        return {
+            success: true,
+            res
+        }
+    } catch(err) {
+        return {
+            success: false,
+            err
+        }
+    }
+}
+
 export const postUpdatePerNum = async (params:any) => {
     try {
         const res = await axios({

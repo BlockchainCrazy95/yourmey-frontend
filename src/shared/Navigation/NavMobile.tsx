@@ -12,6 +12,7 @@ import SwitchDarkMode from "shared/SwitchDarkMode/SwitchDarkMode";
 import ButtonSecondary from "shared/Button/ButtonSecondary";
 import { useSelector } from "react-redux";
 import { RootState } from "app/store";
+import ConnectButton from "components/ConnectButton";
 
 export interface NavMobileProps {
   data?: NavItemType[];
@@ -152,12 +153,13 @@ const NavMobile: React.FC<NavMobileProps> = ({
             </ButtonPrimary>
           :
           <>
-            <ButtonPrimary href="/login" className="!px-10" onClick={onClickClose}>
+            {/* <ButtonPrimary href="/login" className="!px-10" onClick={onClickClose}>
               Sign In
-            </ButtonPrimary>
-            <ButtonSecondary href="/signup" className="flex-1" onClick={onClickClose}>
+            </ButtonPrimary> */}
+            <ConnectButton />
+            {/* <ButtonSecondary href="/signup" className="flex-1" onClick={onClickClose}>
               Sign Up
-            </ButtonSecondary>
+            </ButtonSecondary> */}
           </>
         }
       </div>

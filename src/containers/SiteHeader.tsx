@@ -12,6 +12,7 @@ import MenuBar from "shared/MenuBar/MenuBar";
 import Navigation from "shared/Navigation/Navigation";
 
 import { RootState } from "app/store";
+import ConnectButton from "components/ConnectButton";
 
 const SearchHomeInput = styled.input`
   font-size: 16px;
@@ -31,46 +32,23 @@ const SearchInput = styled.input`
 
 export interface SiteHeaderProps {}
 
-const params = [
-  {
-    title: "Sign In",
-    url: '/login'
-  },
-  {
-    title: 'Sign Up',
-    url: '/signup'
-  },
-  {
-    title: "Sign In",
-    url: '/login'
-  }
-]
-
 const SiteHeader: FC<SiteHeaderProps> = () => {
   let location = useLocation();
   const { user } = useSelector((state:RootState) => state.home)
-  const [type, setType] = useState(0);
-
-  useEffect(() => {
-    if(location.pathname === "/" || location.pathname === "/#")
-      setType(0)
-    else if(location.pathname === '/login')
-      setType(1)
-    else // if(location.pathname === '/signup')
-      setType(2)
-  }, [location])
 
   const isLogged = user !== null;
+  const isHome = location.pathname === "/" || location.pathname === "/#";
+  const isSignUpPage = location.pathname === "/signup";
 
   return (
     <div className="nc-Header relative w-full z-40 ">
       <div className={`nc-MainNav relative z-10 ${"onTop "}`}>
         <div className="container py-5 relative flex justify-between items-center space-x-4 xl:space-x-8">
           <div className="flex justify-start flex-grow items-center space-x-3 sm:space-x-8 lg:space-x-10">
-            <Logo isDark={type !== 0}/>
+            <Logo isDark={!isHome}/>
             <div className="hidden sm:block flex-grow max-w-xs">
               <form action="/" method="GET" className="relative">
-                { type === 0 ? <SearchHomeInput 
+                { isHome ? <SearchHomeInput 
                   type="search"
                   placeholder="Search items"
                   className="pr-10 w-full h-[42px] pl-4 py-3 border-black"
@@ -124,7 +102,8 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
                   <NotifyDropdown />
                 </div> */}
                 <div></div>
-                <ButtonPrimary sizeClass="px-4 py-2 sm:px-5 w-28">Create</ButtonPrimary>
+                {/* <ButtonPrimary sizeClass="px-4 py-2 sm:px-5 w-28">Create</ButtonPrimary> */}
+                <ConnectButton />
                 <div></div>
                 <AvatarDropdown />
               </>
@@ -136,13 +115,14 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
                 >
                   Create
                 </ButtonPrimary> */}
-                <ButtonSecondary
+                <ConnectButton />
+                {/* <ButtonSecondary
                   href={params[type].url}
                   sizeClass="px-4 py-2 sm:px-5 w-28"
                 >
                   {params[type].title}
-                </ButtonSecondary>
-                {type === 0 ? <ButtonSecondary href="/signup" sizeClass="px-4 py-2 sm:px-5 w-28">Sign Up</ButtonSecondary>:<></>}
+                </ButtonSecondary> */}
+                { !isSignUpPage ? <ButtonSecondary href="/signup" sizeClass="px-4 py-2 sm:px-5 w-28">Sign Up</ButtonSecondary> : <></>}
               </>}
             </div>
             {isLogged? <>
@@ -153,13 +133,15 @@ const SiteHeader: FC<SiteHeaderProps> = () => {
               </div>
             </>:<>
               <div className="flex items-center space-x-1.5 xl:hidden">
-                <ButtonPrimary
+                <ConnectButton />
+                { !isSignUpPage ? <ButtonSecondary href="/signup" sizeClass="px-4 py-2 sm:px-5 w-28">Sign Up</ButtonSecondary>:<></>}
+                {/* <ButtonPrimary
                   href={params[type].url}
                   sizeClass="px-4 py-2 sm:px-5 w-28"
                 >
                   {params[type].title}
                 </ButtonPrimary>
-                {type === 0 ? <ButtonSecondary href="/signup" sizeClass="px-4 py-2 sm:px-5 w-28">Sign Up</ButtonSecondary>:<></>}
+                {type === 0 ? <ButtonSecondary href="/signup" sizeClass="px-4 py-2 sm:px-5 w-28">Sign Up</ButtonSecondary>:<></>} */}
                 <MenuBar />
               </div>
             </>}

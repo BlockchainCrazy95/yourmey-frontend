@@ -9,14 +9,14 @@ function Navigation() {
   const location = useLocation();
   const { user } = useSelector((state:RootState) => state.home);
   const isLogged = user !== null;
-  const isAccount = location.pathname === "/account";
+  const isAccount = location.pathname === "/account" || location.pathname === "/auction" || location.pathname.indexOf("/auction-detail") !== -1;
   console.log("isAccount = ", isAccount)
 
   return (
     <ul className="nc-Navigation hidden lg:flex lg:flex-wrap lg:items-center lg:space-x-1 relative">
       {NAVIGATION_DEMO_2.map((item, index) => (
         // (isAccount && [2, 3].indexOf(index) !== -1 || (isLogged && SIGNED_INDEXES.indexOf(index) !== -1)) ? <NavigationItem key={item.id} menuItem={item} /> : <div key={item.id}>{" "}</div> 
-        (index < 2 || !isAccount && [2, 3].indexOf(index) !== -1 || (isLogged && SIGNED_INDEXES.indexOf(index) !== -1)) ? <NavigationItem key={item.id} menuItem={item} /> : <div key={item.id}>{" "}</div> 
+        (index < 3 || !isAccount && [3, 4].indexOf(index) !== -1 || (isLogged && SIGNED_INDEXES.indexOf(index) !== -1)) ? <NavigationItem key={item.id} menuItem={item} /> : <div key={item.id}>{" "}</div> 
       ))}
     </ul>
   );
