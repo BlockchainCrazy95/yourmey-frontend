@@ -1,4 +1,4 @@
-export const DEV_MODE = true;
+export const DEV_MODE = false;
 
 export const CHAIN_ID = DEV_MODE ? 137 : 137;
 export const MAINNET_ID = 137;
