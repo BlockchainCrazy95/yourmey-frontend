@@ -2,7 +2,7 @@ import React from "react";
 import ButtonClose from "shared/ButtonClose/ButtonClose";
 import Logo from "shared/Logo/Logo";
 import { Disclosure } from "@headlessui/react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { NavItemType } from "./NavigationItem";
 import { NAVIGATION_DEMO_2, SIGNED_INDEXES } from "data/navigation";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
@@ -24,8 +24,13 @@ const NavMobile: React.FC<NavMobileProps> = ({
   onClickClose,
 }) => {
 
+  const location = useLocation();
   const { user } = useSelector((state:RootState) => state.home);
   const isLogged = user !== null;
+  const isHome = location.pathname === "/" || location.pathname === "/#";
+  const isDetail = location.pathname.indexOf("auction-detail") !== -1;
+  const isAccount = location.pathname === "/account" || location.pathname === "/auction" || location.pathname.indexOf("/auction-detail") !== -1;
+  
 
   const _renderMenuChild = (item: NavItemType) => {
     return (
@@ -74,14 +79,34 @@ const NavMobile: React.FC<NavMobileProps> = ({
   };
 
   const _renderItem = (item: NavItemType, index: number) => {
-    if(isLogged || SIGNED_INDEXES.indexOf(index) === -1) {
+    console.log("_renderItem = ", item, " index=", index, "isAccount=", isAccount, "isLogged=", isLogged)
+    if(index < 3 || !isAccount && [3, 4].indexOf(index) !== -1 || (isLogged && SIGNED_INDEXES.indexOf(index) !== -1)) {
+      const isHomeMenu = isHome && (item.href === "/#launch" || item.href === "/#affiliate");
+      switch(item.name) {
+        case "Home":
+          item.href = isDetail ? "/#" : "#";
+          break;
+        case "Launch":
+          item.href = isHome ? "/#launch" : "";
+          break;
+        case "Affiliate":
+          item.href = isHome ? "/#affiliate" : "";
+          break;
+      }
       return (
         <Disclosure
           key={item.id}
           as="li"
           className="text-neutral-900 dark:text-white"
         >
-          <NavLink
+          { isHomeMenu ?
+          <a
+            className="inline-flex items-center text-sm xl:text-base font-normal text-neutral-700 dark:text-neutral-300 py-2 px-4 xl:px-5 rounded-full hover:text-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
+            target={item.targetBlank ? "_blank" : undefined}
+            rel="noopener noreferrer"
+            href={item.href}
+          ><span className="text-secondary font-medium">{item.name}</span></a>
+          :<NavLink
             exact
             strict
             className="flex w-full items-center py-2.5 px-4 font-medium uppercase tracking-wide text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg"
@@ -113,6 +138,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
               </span>
             )}
           </NavLink>
+          }
           {item.children && (
             <Disclosure.Panel>{_renderMenuChild(item)}</Disclosure.Panel>
           )}
@@ -148,8 +174,8 @@ const NavMobile: React.FC<NavMobileProps> = ({
       </ul>
       <div className="flex items-center justify-between py-6 px-5 space-x-2">
         {isLogged ? 
-            <ButtonPrimary href="/page-upload-item" className="!px-10" onClick={onClickClose}>
-              Create
+            <ButtonPrimary href="/auction" className="!px-10" onClick={onClickClose}>
+              Buy NFTs
             </ButtonPrimary>
           :
           <>
