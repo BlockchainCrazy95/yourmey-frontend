@@ -29,7 +29,7 @@ export const setParent = async (contract:any, child:string, parent:string, name:
     try {
         const amount = ethers.utils.parseEther("0.01");
         // console.log("amount = ", amount)
-        showToast("Please wait 1 minute to be an affiliate-partner because of blockchain!", "error");
+        showToast("Please wait 1 minute to be an affiliate-partner because of blockchain!", "error-down");
         await contract.methods.setParent(child, parent, name).send({from: child, value: amount, maxPriorityFeePerGas: "52000000000"});
         return {
             success: true,

@@ -3,8 +3,9 @@ import facebookSvg from "images/Facebook.svg";
 import twitterSvg from "images/Twitter.svg";
 import googleSvg from "images/Google.svg";
 import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+import jwt_decode from "jwt-decode";
 import Input from "shared/Input/Input";
 import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { useWeb3Context } from "hooks/web3Context";
@@ -13,6 +14,8 @@ import axios from "axios";
 import { API_SERVER_URL } from "utils/data";
 import { postSignUp } from "utils/fetchHelpers";
 import { showToast } from "utils";
+import { useDispatch } from "react-redux";
+import { setUser } from "app/home/home";
 
 export interface PageSignUpProps {
   className?: string;
@@ -20,6 +23,8 @@ export interface PageSignUpProps {
 
 const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
 
+  const history = useHistory();
+  const dispatch = useDispatch();
   const { address, connect, disconnect, connected } = useWeb3Context();
 
   const [username, setUsername] = useState('');
@@ -51,7 +56,15 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
       params.address = address;
       params.username = username;
       params.password = signingResult.message;
-      await postSignUp(params);
+      const { success, message, token } = await postSignUp(params);
+      showToast(message, success ? "success" : "error");
+      if(success) {
+        localStorage.setItem("jwtToken", token);
+        const decoded:any = jwt_decode(token);
+        console.log("token decode=", decoded);
+        dispatch(setUser(decoded._doc));
+        history.push("/account");
+      }
     } else {
       showToast("Sign up failed", "error");
       // alert("Sign Up failed!!!")

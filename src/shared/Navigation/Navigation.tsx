@@ -9,7 +9,7 @@ function Navigation() {
   const location = useLocation();
   const { user } = useSelector((state:RootState) => state.home);
   const isLogged = user !== null;
-  const isAccount = location.pathname === "/account" || location.pathname === "/auction" || location.pathname.indexOf("/auction-detail") !== -1;
+  const isAccount = location.pathname === "/account" || location.pathname === "/auction" || location.pathname.indexOf("/auction-detail") !== -1 || location.pathname === '/signup';
 
   return (
     <ul className="nc-Navigation hidden lg:flex lg:flex-wrap lg:items-center lg:space-x-1 relative">
