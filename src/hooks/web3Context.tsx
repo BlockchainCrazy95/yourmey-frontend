@@ -130,11 +130,8 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
     subscribeProvider(_rawProvider);
 
     const connectedProvider = new Web3Provider(_rawProvider, "any");
-    console.log("connect before");
     const chainId = await connectedProvider.getNetwork().then((network:any) => network.chainId);
-    console.log("connect before chainId = ", chainId);
     const connectedAddress = await connectedProvider.getSigner().getAddress();
-    console.log("connect before connectedAddress = ", connectedAddress);
     const validNetwork = _checkNetwork(chainId);
     if (!validNetwork) {
       console.error("Wrong network, please switch to mainnet");
@@ -147,7 +144,6 @@ export const Web3ContextProvider: React.FC<{ children: ReactElement }> = ({ chil
 
     // Keep this at the bottom of the method, to ensure any repaints have the data we need
     setConnected(true);
-    console.log("conect end connectedProvider=", connectedProvider)
     return connectedProvider;
   }, [provider, web3Modal, connected]);
 
