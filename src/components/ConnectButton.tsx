@@ -43,10 +43,10 @@ const ConnectButton:FC<ConnectButtonProps> = (props) => {
                 const token = res.data.token;
                 localStorage.setItem("jwtToken", res.data.token);
                 const decoded:any = jwt_decode(token);
-                console.log("token decode=", decoded);
+                // console.log("token decode=", decoded);
                 dispatch(setUser(decoded._doc));
                 setIsPending(1);
-                console.log("address = ", address)
+                // console.log("address = ", address)
                 const _parent = await getParent(affiliateContract, address);
                 if(isNullAddress(_parent))
                     openModal();
@@ -71,7 +71,7 @@ const ConnectButton:FC<ConnectButtonProps> = (props) => {
     }
 
     useEffect(() => {
-        console.log("address = ", address, "isPending = ", isPending)
+        // console.log("address = ", address, "isPending = ", isPending)
         if(address) {
             if(isPending !== -1)
                 login();
@@ -79,13 +79,16 @@ const ConnectButton:FC<ConnectButtonProps> = (props) => {
             //     disconnect();
             // }
         } else {
-            setIsPending(-1);
-            disconnect();
+            if(isPending !== -1) {
+                // console.log('disconnect 111111');
+                // setIsPending(-1);
+                disconnect();
+            }
         }
     }, [address, isPending]);
 
     const onHandleConnect = async () => {
-        console.log("onHandleConnect address=", address)
+        // console.log("onHandleConnect address=", address, "isPending = ", isPending)
         try {
             setIsPending(0);
             await connect();
@@ -99,6 +102,7 @@ const ConnectButton:FC<ConnectButtonProps> = (props) => {
 
     const onHandleDisconnect = () => {
         if(connected) {
+            // console.log("disconnect 2222222")
             disconnect();
             dispatch(logout());
             setIsPending(-1);
