@@ -3,29 +3,64 @@ import { showToast } from 'utils';
 import { API_SERVER_URL } from './data';
 
 export const postSignUp = async (params:any) => {
-   await axios({
-    method: "post",
-    url: `${API_SERVER_URL}users/create`,
-    data: params
-   }).then((res:any)=>{
-        console.log("response =", res);
+    try{
+        const res = await axios({
+            method: "post",
+            url: `${API_SERVER_URL}users/create`,
+            data: params
+        });
         if(res.data.code === 1) {
-          const errMsg = "Address is duplicated";
-          showToast(errMsg, "error");
-        //   alert(errMsg);
+            // showToast("Address is duplicated!", "error");
+            return {
+                success: false,
+                message: "Address is duplicated!"
+            }
         } else {
-          showToast("Successfully registered", "success");
-        //   alert("success");
+            // showToast("Successfully registered", "success");
+            return {
+                success: true,
+                token: res.data.token,
+                message: "Successfully registered"
+            }
         }
-   }).catch((err:any) => {
-    if(err.response.data) {
-        showToast(err.response.data.message, "error");
-        // alert(err.response.data.message);
-    } else {
-        showToast(err.message, "error");
-        // alert(err.message)
+    } catch (err:any) {
+        if(err.response.data) {
+            // showToast(err.response.data.message, "error");
+            return {
+                success: false,
+                message: err.response.data.message
+            }
+        } else {
+            // showToast(err.message, "error");
+            return {
+                success: false,
+                message: err.message
+            }
+        }
     }
-  })
+//    await axios({
+//     method: "post",
+//     url: `${API_SERVER_URL}users/create`,
+//     data: params
+//    }).then((res:any)=>{
+//         console.log("response =", res);
+//         if(res.data.code === 1) {
+//           const errMsg = "Address is duplicated";
+//           showToast(errMsg, "error");
+//         //   alert(errMsg);
+//         } else {
+//           showToast("Successfully registered", "success");
+//         //   alert("success");
+//         }
+//    }).catch((err:any) => {
+//     if(err.response.data) {
+//         showToast(err.response.data.message, "error");
+//         // alert(err.response.data.message);
+//     } else {
+//         showToast(err.message, "error");
+//         // alert(err.message)
+//     }
+//   })
 }
 
 export const postLogin = async (params:any) => {

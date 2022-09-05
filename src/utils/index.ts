@@ -64,6 +64,16 @@ export const showToast = (content:any, type:string = "error") => {
             draggable: false,
         });
         break;
+    case "error-down":
+        toast.error(content, {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+        });
+        break;
     }
 }
 

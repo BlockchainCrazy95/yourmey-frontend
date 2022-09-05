@@ -38,6 +38,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const [ pernum, setPerNum ] = useState("");
   const [ parentName, setParentName ] = useState("");
   const [ levelOnes, setLevelOnes ] = useState("-");
+  const [ isPending, setIsPending ] = useState(false);
   const hasRefAddress = !isNullAddress(refAddress);
 
   let timerId:any = -1;
@@ -131,6 +132,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
     // console.log("child=", address);
     // console.log("parent=", refAddress);
     // console.log("name=", user.username);
+    setIsPending(true);
     const res = await setParent(affiliateContract, address, refAddress, user.username);
     showToast(res.message, res.success ? "success" : "error");
   }
@@ -375,7 +377,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               { hasParent ? <></> : 
                 <div className="pt-2 text-center">
                   { hasRefAddress ? 
-                    <ButtonPrimary onClick={() => { onHandleAffiliate() }}>Become an affiliate</ButtonPrimary>
+                    <ButtonPrimary className="w-56" onClick={() => { onHandleAffiliate() }} disabled={isPending}>{ isPending ? "Wait..." : "Become an affiliate"}</ButtonPrimary>
                     :
                     <ButtonPrimary disabled>You need a partner address for affiliate-marketing</ButtonPrimary>
                   }
