@@ -71,17 +71,11 @@ const ConnectButton:FC<ConnectButtonProps> = (props) => {
     }
 
     useEffect(() => {
-        // console.log("address = ", address, "isPending = ", isPending)
         if(address) {
             if(isPending !== -1)
                 login();
-            // else {
-            //     disconnect();
-            // }
         } else {
             if(isPending !== -1) {
-                // console.log('disconnect 111111');
-                // setIsPending(-1);
                 disconnect();
             }
         }
