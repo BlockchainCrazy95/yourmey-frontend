@@ -44,6 +44,16 @@ export const showToast = (content:any, type:string = "error") => {
             draggable: false,
         });
         break;
+    case "success-down":
+        toast.success(content, {
+            position: "bottom-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+        });
+        break;
     case "warning":
         toast.warning(content, {
             position: "top-right",
