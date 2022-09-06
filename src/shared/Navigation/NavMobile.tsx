@@ -79,7 +79,6 @@ const NavMobile: React.FC<NavMobileProps> = ({
   };
 
   const _renderItem = (item: NavItemType, index: number) => {
-    console.log("_renderItem = ", item, " index=", index, "isAccount=", isAccount, "isLogged=", isLogged)
     if(index < 3 || !isAccount && [3, 4].indexOf(index) !== -1 || (isLogged && SIGNED_INDEXES.indexOf(index) !== -1)) {
       const isHomeMenu = isHome && (item.href === "/#launch" || item.href === "/#affiliate");
       switch(item.name) {
@@ -105,7 +104,7 @@ const NavMobile: React.FC<NavMobileProps> = ({
             target={item.targetBlank ? "_blank" : undefined}
             rel="noopener noreferrer"
             href={item.href}
-          ><span className="text-secondary font-medium">{item.name}</span></a>
+          ><span className="text-secondary font-medium uppercase">{item.name}</span></a>
           :<NavLink
             exact
             strict
