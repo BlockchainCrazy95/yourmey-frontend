@@ -146,7 +146,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
           <span className="block text-center text-neutral-700 dark:text-neutral-300">
             Already have an account? {` `}
             <Link className="text-green-600" to="/login">
-              Sign in
+              Login
             </Link>
           </span>
         </div>

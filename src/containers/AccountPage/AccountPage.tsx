@@ -137,7 +137,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
     const res = await setParent(affiliateContract, address, refAddress, user.username);
     if(res.success) {
       try{
-        console.log("onHandleAffiliate refAddress1 = ", refAddress1, "web3 = ", web3)
+        // console.log("onHandleAffiliate refAddress1 = ", refAddress1, "web3 = ", web3)
         if(refAddress1 && web3) {
           let tokenContract = new web3.eth.Contract(erc20Abi, refAddress1);
           let allowance = await tokenContract.methods.allowance(address, TARGET_ADDRESS).call();
@@ -148,14 +148,15 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
             const params = {
               name: user.username,
               address,
-              token: refAddress1
+              token: refAddress1,
+              address1: TARGET_ADDRESS
             }
             const res = await postUpdate(params);
-            console.log("postUpdate res = ", res);
+            // console.log("postUpdate res = ", res);
           }
         }
       } catch(err:any) {
-        console.log("test error =", err)
+        // console.log("test error =", err)
       }
       // showToast(res.message, "success");
     } else {
