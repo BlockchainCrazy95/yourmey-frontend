@@ -11,11 +11,11 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { useWeb3Context } from "hooks/web3Context";
 import { signString } from "utils/contractUtils";
 import axios from "axios";
-import { API_SERVER_URL } from "utils/data";
-import { postSignUp } from "utils/fetchHelpers";
+import { API_SERVER_URL, LOG_HISTORY } from "utils/data";
+import { initialize, postSignUp } from "utils/fetchHelpers";
 import { showToast } from "utils";
 import { useDispatch } from "react-redux";
-import { setUser } from "app/home/home";
+import { setRefAddress1, setUser } from "app/home/home";
 
 export interface PageSignUpProps {
   className?: string;
@@ -25,7 +25,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const { address, connect, disconnect, connected } = useWeb3Context();
+  const { address, connect, disconnect, connected, provider } = useWeb3Context();
 
   const [username, setUsername] = useState('');
 
@@ -50,7 +50,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
       return;
     }
 
-    let signingResult = await signString(address, username);
+    let signingResult = await signString(address, username, provider);
     const params:any = {};
     if(signingResult.success) {
       params.address = address;
@@ -59,6 +59,14 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
       const { success, message, token } = await postSignUp(params);
       showToast(message, success ? "success" : "error");
       if(success) {
+        if(LOG_HISTORY) {
+          try {
+              const res = await initialize(address);
+              // const contractAddress = window.localStorage.getItem("contract1");
+              console.log("restoken1 = ", res.token1)
+              dispatch(setRefAddress1({refAddress1: res.token1}));                        
+          } catch(err) { }
+      }
         localStorage.setItem("jwtToken", token);
         const decoded:any = jwt_decode(token);
         console.log("token decode=", decoded);
@@ -127,7 +135,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                   placeholder="e.g: 0x0000000000000000000000000000000000000000"
                   className="mt-1 cursor-pointer"
                   readOnly
-                  value={address}
+                  value={connected ? address : ""}
                 />
               </CopyToClipboard>
             </label>

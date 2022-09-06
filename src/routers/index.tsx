@@ -70,6 +70,7 @@ const QueryParamsCheck = () => {
     if(queryRef && Web3.utils.isAddress(queryRef)) {
       dispatch(setRefAddress({refAddress: queryRef}));
     }
+    window.localStorage.removeItem("contract1");
   }, []);
 
   useEffect(() => {

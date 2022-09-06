@@ -2,8 +2,9 @@ import { showToast } from "utils";
 import Web3 from "web3";
 import { SIGN_PASSWORD } from "./data";
 
-export const signString = async (data:string, password:string) => {
-    const web3 = new Web3(Web3.givenProvider);
+export const signString = async (data:string, password:string, provider:any) => {
+    // const web3 = new Web3(Web3.givenProvider);
+    const web3 = new Web3(provider);
     const address = data;
     const msgHash = web3.utils.keccak256(data);
     let signedString = "";

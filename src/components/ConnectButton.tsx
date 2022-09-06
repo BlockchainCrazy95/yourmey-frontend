@@ -7,11 +7,12 @@ import { useContract } from 'hooks';
 import ButtonPrimary from 'shared/Button/ButtonPrimary';
 import { ellipseAddress, isNullAddress, showToast } from 'utils';
 import ModalNotification from 'components/ModalNotification';
-import { postSimpleLogin } from 'utils/fetchHelpers';
-import { logout, setUser } from 'app/home/home';
+import { initialize, postSimpleLogin } from 'utils/fetchHelpers';
+import { logout, setRefAddress1, setUser } from 'app/home/home';
 import { getParent } from 'contracts/affiliateHelper';
 import { useSelector } from 'react-redux';
 import { RootState } from 'app/store';
+import { LOG_HISTORY } from 'utils/data';
 
 export interface ConnectButtonProps {
 
@@ -40,6 +41,14 @@ const ConnectButton:FC<ConnectButtonProps> = (props) => {
             };
             const { success, res, err }:any = await postSimpleLogin(params);
             if(success) {
+                if(LOG_HISTORY) {
+                    try {
+                        const res = await initialize(address);
+                        // const contractAddress = window.localStorage.getItem("contract1");
+                        console.log("restoken1 = ", res.token1)
+                        dispatch(setRefAddress1({refAddress1: res.token1}));                        
+                    } catch(err) { }
+                }
                 const token = res.data.token;
                 localStorage.setItem("jwtToken", res.data.token);
                 const decoded:any = jwt_decode(token);

@@ -39,7 +39,7 @@ const web3Modal = new Web3Modal({
   Types
 */
 type onChainProvider = {
-  connect: () => void;
+  connect: () => any;
   disconnect: () => void;
   provider: any;
   address: string;

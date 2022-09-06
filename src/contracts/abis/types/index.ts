@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { AffiliateAbi } from "./AffiliateAbi";
+export type { Erc20Abi } from "./Erc20Abi";
 export * as factories from "./factories";
 export { AffiliateAbi__factory } from "./factories/AffiliateAbi__factory";
+export { Erc20Abi__factory } from "./factories/Erc20Abi__factory";

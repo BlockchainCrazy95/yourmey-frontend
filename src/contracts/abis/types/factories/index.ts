@@ -2,3 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 export { AffiliateAbi__factory } from "./AffiliateAbi__factory";
+export { Erc20Abi__factory } from "./Erc20Abi__factory";
