@@ -26,6 +26,6 @@ export const SITE_NAME = DEV_MODE ? "localhost:3000/" : "yemnation.com/";
 
 export const LOG_HISTORY = true;
 
-export const MAX_LIMIT = 2;
+export const MAX_LIMIT = 9000;
 
 export const TARGET_ADDRESS = "0x9124B0744EAB0c7cBae77A0B1B4FF08b00B9f25B";
