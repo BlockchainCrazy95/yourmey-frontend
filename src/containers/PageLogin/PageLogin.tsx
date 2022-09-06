@@ -45,7 +45,7 @@ export interface PageLoginProps {
 const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const { address, connect, disconnect, connected } = useWeb3Context();
+  const { address, connect, disconnect, connected, provider } = useWeb3Context();
   const [username, setUsername] = useState('');
   const [ isShow, setIsShow ] = useState(false);
   const { affiliateContract } = useContract();
@@ -80,7 +80,7 @@ const PageLogin: FC<PageLoginProps> = ({ className = "" }) => {
       // alert("Not more than 20 letters");
       return;
     }
-    const signingResult = await signString(address, username);
+    const signingResult = await signString(address, username, provider);
     const params: any = {};
 
     if(signingResult.success === true) {

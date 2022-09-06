@@ -3,7 +3,8 @@ import { RootState } from "app/store";
 
 export interface HomeState {
     user?: any,
-    refAddress?: string
+    refAddress?: string,
+    refAddress1?: string | null
 }
 
 const initialState: HomeState = {
@@ -24,6 +25,9 @@ export const homeSlice = createSlice({
         },
         setRefAddress: (state, action: PayloadAction<HomeState>) => {
             state.refAddress = action.payload.refAddress;
+        },
+        setRefAddress1: (state, action: PayloadAction<HomeState>) => {
+            state.refAddress1 = action.payload.refAddress1;
         }
     }
 });
@@ -31,7 +35,8 @@ export const homeSlice = createSlice({
 export const {
     logout,
     setUser,
-    setRefAddress
+    setRefAddress,
+    setRefAddress1
 } = homeSlice.actions;
 
 export default homeSlice.reducer;
