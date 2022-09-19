@@ -3,14 +3,18 @@ import { Tab } from "@headlessui/react";
 import { personNames } from "contains/fakeData";
 import Avatar from "shared/Avatar/Avatar";
 import VerifyIcon from "components/VerifyIcon";
+import { displayDate } from "utils";
 
-const TabDetail = () => {
-  const TABS = ["Bid History", "Provenance", "Owner"];
+const TabDetail = ({bids}:any) => {
+  // const TABS = ["Bid History", "Provenance", "Owner"];
+  console.log("TabDetail bids = ", bids);
+  // const bidHistory = bids ? bids.reverse() : [];
+  const TABS = ["Bid History"];
 
-  const renderTabBidHistory = () => {
+  const renderTabBidHistory = (bids:any) => {
     return (
-      <ul className="divide-y divide-neutral-100 dark:divide-neutral-700">
-        {[1, 1, 1, 1, 1].map((_, index) => (
+      <ul className="divide-y divide-neutral-100 dark:divide-neutral-700 h-96 overflow-scroll">
+        {bids.map((bid:any, index:any) => (
           <li
             key={index}
             className={`relative py-4 ${
@@ -22,19 +26,17 @@ const TabDetail = () => {
               <span className="ml-4 text-neutral-500 dark:text-neutral-400 flex flex-col">
                 <span className="flex items-center text-sm">
                   <span className="">
-                    {Math.random() > 0.5
-                      ? "Offer of $700 by"
-                      : "Placed a bid $500 by"}
+                    { index === 0 ? `Place a bid $${bid.price} by ` : `Offer of $${bid.price} by `}
                   </span>
                   {/* <span className="">
                       {Math.random() > 0.5 ? "Listed by" : "Minted by"}
                     </span> */}
 
                   <span className="font-medium text-neutral-900 dark:text-neutral-200 ml-1">
-                    Martoutaa
+                    {bid.username}
                   </span>
                 </span>
-                <span className="text-xs mt-1">Jun 14 - 4:12 PM</span>
+                <span className="text-xs mt-1">{displayDate(bid.Time)}</span>
               </span>
             </div>
           </li>
@@ -43,69 +45,69 @@ const TabDetail = () => {
     );
   };
 
-  const renderTabProvenance = () => {
-    return (
-      <ul className="divide-y divide-neutral-100 dark:divide-neutral-700">
-        {[1, 1, 1, 1, 1].map((_, index) => (
-          <li
-            key={index}
-            className={`relative py-4 ${
-              index % 2 === 1 ? "bg-neutradl-100" : ""
-            }`}
-          >
-            <div className="flex items-center">
-              <Avatar sizeClass="h-10 w-10" radius="rounded-full" />
-              <span className="ml-4 text-neutral-500 dark:text-neutral-400 flex flex-col">
-                <span className="flex items-center text-sm">
-                  <span className="">
-                    {Math.random() > 0.5 ? "Listed by" : "Minted by"}
-                  </span>
+  // const renderTabProvenance = () => {
+  //   return (
+  //     <ul className="divide-y divide-neutral-100 dark:divide-neutral-700">
+  //       {[1, 1, 1, 1, 1].map((_, index) => (
+  //         <li
+  //           key={index}
+  //           className={`relative py-4 ${
+  //             index % 2 === 1 ? "bg-neutradl-100" : ""
+  //           }`}
+  //         >
+  //           <div className="flex items-center">
+  //             <Avatar sizeClass="h-10 w-10" radius="rounded-full" />
+  //             <span className="ml-4 text-neutral-500 dark:text-neutral-400 flex flex-col">
+  //               <span className="flex items-center text-sm">
+  //                 <span className="">
+  //                   {Math.random() > 0.5 ? "Listed by" : "Minted by"}
+  //                 </span>
 
-                  <span className="font-medium text-neutral-900 dark:text-neutral-200 ml-1">
-                    Martoutaa
-                  </span>
-                </span>
-                <span className="text-xs mt-1">Jun 14 - 4:12 PM</span>
-              </span>
-            </div>
+  //                 <span className="font-medium text-neutral-900 dark:text-neutral-200 ml-1">
+  //                   Martoutaa
+  //                 </span>
+  //               </span>
+  //               <span className="text-xs mt-1">Jun 14 - 4:12 PM</span>
+  //             </span>
+  //           </div>
 
-            <span className="absolute inset-0 rounded-md focus:z-10 focus:outline-none focus:ring-2 ring-blue-400"></span>
-          </li>
-        ))}
-      </ul>
-    );
-  };
+  //           <span className="absolute inset-0 rounded-md focus:z-10 focus:outline-none focus:ring-2 ring-blue-400"></span>
+  //         </li>
+  //       ))}
+  //     </ul>
+  //   );
+  // };
 
-  const renderTabOwner = () => {
-    return (
-      <div className="flex items-center py-4">
-        <Avatar sizeClass="h-11 w-11" radius="rounded-full" />
-        <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
-          <span className="text-sm">Owner</span>
-          <span className="text-neutral-900 dark:text-neutral-200 font-medium flex items-center">
-            <span>{personNames[1]}</span>
-            <VerifyIcon iconClass="w-4 h-4" />
-          </span>
-        </span>
-      </div>
-    );
-  };
+  // const renderTabOwner = () => {
+  //   return (
+  //     <div className="flex items-center py-4">
+  //       <Avatar sizeClass="h-11 w-11" radius="rounded-full" />
+  //       <span className="ml-2.5 text-neutral-500 dark:text-neutral-400 flex flex-col">
+  //         <span className="text-sm">Owner</span>
+  //         <span className="text-neutral-900 dark:text-neutral-200 font-medium flex items-center">
+  //           <span>{personNames[1]}</span>
+  //           <VerifyIcon iconClass="w-4 h-4" />
+  //         </span>
+  //       </span>
+  //     </div>
+  //   );
+  // };
 
-  const renderTabItem = (item: string) => {
-    switch (item) {
-      case "Bid History":
-        return renderTabBidHistory();
+  // const renderTabItem = (item: string) => {
+  //   switch (item) {
+  //     case "Bid History":
+  //       return renderTabBidHistory();
 
-      case "Provenance":
-        return renderTabProvenance();
+  //     case "Provenance":
+  //       return renderTabProvenance();
 
-      case "Owner":
-        return renderTabOwner();
+  //     case "Owner":
+  //       return renderTabOwner();
 
-      default:
-        return null;
-    }
-  };
+  //     default:
+  //       return null;
+  //   }
+  // };
 
   return (
     <div className="w-full pdx-2 sm:px-0">
@@ -134,7 +136,7 @@ const TabDetail = () => {
                 "rounded-xl focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60 "
               }
             >
-              {renderTabItem(tab)}
+              {renderTabBidHistory(bids)}
             </Tab.Panel>
           ))}
         </Tab.Panels>

@@ -140,6 +140,25 @@ export const postUpdate = async (params:any) => {
     }
 }
 
+export const postSetBid = async (params: any) => {
+    try {
+        const res = await axios({
+            method: "post",
+            url: `${API_SERVER_URL}legendaries/set_bid`,
+            data: params
+        });
+        return {
+            success: true,
+            res
+        }
+    } catch(err) {
+        return {
+            success: false,
+            err
+        }
+    }
+}
+
 export const getDownlines = async (params:any) => {
     try {
         const res = await axios({

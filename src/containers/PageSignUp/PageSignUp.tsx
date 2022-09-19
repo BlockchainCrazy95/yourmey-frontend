@@ -149,6 +149,11 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
               Login
             </Link>
           </span>
+          <div style={{backgroundColor: "#e1d28b6b", padding: "20px", borderRadius: "10px"}}>
+            1. Please input user name. <br/>
+            2. Please connect your wallet. <br/>
+            3. Click the continue.
+          </div>
         </div>
       </div>
     </div>

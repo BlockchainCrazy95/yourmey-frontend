@@ -32,7 +32,7 @@ const ModalBid: FC<ModalBidProps> = ({ show, onCloseModalBid, curPrice, onClickB
   }, [show]);
 
   const onPriceChange = (e:any) => {
-    const _val = parseInt(e.target.value);
+    const _val = parseFloat(e.target.value);
     setNewPrice(_val)
   }
 
@@ -43,7 +43,6 @@ const ModalBid: FC<ModalBidProps> = ({ show, onCloseModalBid, curPrice, onClickB
       return;
     }
     onClickBid(newPrice);
-    onCloseModalBid();
   }
 
   const renderContent = () => {
