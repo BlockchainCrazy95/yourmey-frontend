@@ -26,14 +26,26 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { address, connect, disconnect, connected, provider } = useWeb3Context();
+  const [ step, setStep ] = useState(0);
 
   const [username, setUsername] = useState('');
+
+  const onChangeUserName = (e:any)=> {
+    if(e.target.value) {
+      setStep(1);
+    } else {
+      setStep(0);
+    }
+    setUsername(e.target.value);
+  }
 
   const onHandleConnect = () => {
     if(connected) {
       disconnect();
+      setStep(1);
     } else {
       connect();
+      setStep(2);
     }
   }
 
@@ -99,7 +111,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 placeholder="e.g: user"
                 className="mt-1"
                 value={username}
-                onChange={(e)=>setUsername(e.target.value)}
+                onChange={onChangeUserName}
               />
             </label>
             {/* <label className="block">
@@ -122,6 +134,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 placeholder="e.g: 123456"
               />
             </label> */}
+            { step >= 1 && 
             <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 <span>Address <span className="text-[#f00]">*</span></span>
@@ -139,7 +152,10 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 />
               </CopyToClipboard>
             </label>
-            <ButtonPrimary onClick={() => onHandleSignUp()}>Continue</ButtonPrimary>
+            }
+            { step >=2 &&
+              <ButtonPrimary onClick={() => onHandleSignUp()}>Continue</ButtonPrimary>
+            }
           </div>
 
           {/* ==== */}
@@ -150,9 +166,9 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
             </Link>
           </span>
           <div style={{backgroundColor: "#e1d28b6b", padding: "20px", borderRadius: "10px"}}>
-            1. Please input user name. <br/>
-            2. Please connect your wallet. <br/>
-            3. Click the continue.
+            <span className={step == 0 ? "font-bold" : ""}>1. Please input user name. <br/></span>
+            <span className={step == 1 ? "font-bold" : ""}>2. Please connect your wallet. <br/></span>
+            <span className={step == 2 ? "font-bold" : ""}>3. Click the continue.</span>
           </div>
         </div>
       </div>
