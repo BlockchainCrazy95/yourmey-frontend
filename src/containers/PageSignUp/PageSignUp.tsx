@@ -131,9 +131,9 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
               </Link>
             </span>
             <div style={{backgroundColor: "#e1d28b6b", padding: "20px", borderRadius: "10px"}}>
-              <span className={step == 0 ? "font-bold" : ""}>1. Please input user name. <br/></span>
-              <span className={step == 1 ? "font-bold" : ""}>2. Please connect your wallet. <br/></span>
-              <span className={step == 2 ? "font-bold" : ""}>3. Click the continue.</span>
+              <span className="flex"><span className={`w-[18px] ${step == 0 ? "font-bold" : ""}`}>1.</span><span className={step == 0 ? "font-bold" : ""}>Please input user name. <br/></span></span>
+              <span className="flex"><span className={`w-[18px] ${step == 1 ? "font-bold" : ""}`}>2.</span><span className={step == 1 ? "font-bold" : ""}>Please connect your wallet. <br/></span></span>
+              <span className="flex"><span className={`w-[18px] ${step == 2 ? "font-bold" : ""}`}>3.</span><span className={step == 2 ? "font-bold" : ""}>Click the continue.</span></span>
             </div>
 
             { step == 0 && <div>
