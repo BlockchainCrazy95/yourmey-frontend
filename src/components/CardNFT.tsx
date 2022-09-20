@@ -95,7 +95,7 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, item }) => {
           <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400">
             <ClockIcon className="w-4 h-4" />
             <span className="ml-1 mt-0.5">
-              {parseInt(`${remainTime / 3600}`)} hours left
+              {remainTime > 0 ? `${parseInt("" + remainTime / 3600)} hours left` : "End"}
             </span>
           </div>
         </div>

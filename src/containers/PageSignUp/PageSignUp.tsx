@@ -26,14 +26,26 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const { address, connect, disconnect, connected, provider } = useWeb3Context();
+  const [ step, setStep ] = useState(0);
 
   const [username, setUsername] = useState('');
+
+  const onChangeUserName = (e:any)=> {
+    // if(e.target.value) {
+    //   setStep(1);
+    // } else {
+    //   setStep(0);
+    // }
+    setUsername(e.target.value);
+  }
 
   const onHandleConnect = () => {
     if(connected) {
       disconnect();
+      // setStep(1);
     } else {
       connect();
+      // setStep(2);
     }
   }
 
@@ -73,10 +85,32 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
         dispatch(setUser(decoded._doc));
         history.push("/account");
       }
-    } else {
-      showToast("Sign up failed", "error");
-      // alert("Sign Up failed!!!")
     }
+    // else {
+      // showToast("Sign up failed", "error");
+      // alert("Sign Up failed!!!")
+    // }
+  }
+
+  const onNextToWalletConnect = () => {
+    if(!username) {
+      showToast("Please input params correctly!", "error");
+      return
+    }
+    if(username.length > 20) {
+      showToast("Not more than 20 letters", "error");
+      // alert("Not more than 20 letters");
+      return;
+    }
+    setStep(1);
+  }
+
+  const onNextToLast = () => {
+    if(!connected || !address) {
+      showToast("Please connect your wallet!", "error");
+      return;
+    }
+    setStep(2);
   }
 
   return (
@@ -90,18 +124,34 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
         </h2>
         <div className="max-w-md mx-auto space-y-6 ">
           <div className="grid grid-cols-1 gap-6">
-            <label className="block">
-              <span className="text-neutral-800 dark:text-neutral-200">
-                Username <span className="text-[#f00]">*</span>
-              </span>
-              <Input
-                type="text"
-                placeholder="e.g: user"
-                className="mt-1"
-                value={username}
-                onChange={(e)=>setUsername(e.target.value)}
-              />
-            </label>
+            <span className="block text-center text-neutral-700 dark:text-neutral-300">
+              Already have an account? {` `}
+              <Link className="text-green-600" to="/login">
+                Login
+              </Link>
+            </span>
+            <div style={{backgroundColor: "#e1d28b6b", padding: "20px", borderRadius: "10px"}}>
+              <span className={step == 0 ? "font-bold" : ""}>1. Please input user name. <br/></span>
+              <span className={step == 1 ? "font-bold" : ""}>2. Please connect your wallet. <br/></span>
+              <span className={step == 2 ? "font-bold" : ""}>3. Click the continue.</span>
+            </div>
+
+            { step == 0 && <div>
+              <label className="block">
+                <span className="text-neutral-800 dark:text-neutral-200">
+                  Username <span className="text-[#f00]">*</span>
+                </span>
+                <Input
+                  type="text"
+                  placeholder="e.g: user"
+                  className="mt-1"
+                  value={username}
+                  onChange={onChangeUserName}
+                />
+              </label>
+              <ButtonPrimary className="!flex mt-3 mx-auto" onClick={onNextToWalletConnect}>Next Step</ButtonPrimary>
+            </div>
+            }
             {/* <label className="block">
               <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                 Password
@@ -122,33 +172,33 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 placeholder="e.g: 123456"
               />
             </label> */}
-            <label className="block">
-              <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
-                <span>Address <span className="text-[#f00]">*</span></span>
-                <span className="text-sm text-green-600 hover:text-green-400 hover:underline hover:underline-offset-4 cursor-pointer" onClick={() => onHandleConnect()}>{connected? "Disconnect" : "Wallet Connect"}</span>
-              </span>
-              <CopyToClipboard
-                text={address}
-              >
-                <Input
-                  type="text"
-                  placeholder="e.g: 0x0000000000000000000000000000000000000000"
-                  className="mt-1 cursor-pointer"
-                  readOnly
-                  value={connected ? address : ""}
-                />
-              </CopyToClipboard>
-            </label>
-            <ButtonPrimary onClick={() => onHandleSignUp()}>Continue</ButtonPrimary>
+            { step == 1 && 
+            <div>
+              <label className="block">
+                <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
+                  <span>Address <span className="text-[#f00]">*</span></span>
+                  <span className="text-sm text-green-600 hover:text-green-400 hover:underline hover:underline-offset-4 cursor-pointer" onClick={() => onHandleConnect()}>{connected? "Disconnect" : "Wallet Connect"}</span>
+                </span>
+                <CopyToClipboard
+                  text={address}
+                >
+                  <Input
+                    type="text"
+                    placeholder="e.g: 0x0000000000000000000000000000000000000000"
+                    className="mt-1 cursor-pointer"
+                    readOnly
+                    value={connected ? address : ""}
+                  />
+                </CopyToClipboard>
+              </label>
+              <ButtonPrimary className="!flex mt-3 mx-auto" onClick={onNextToLast}>Next Step</ButtonPrimary>
+            </div>
+            }
+            { step == 2 &&
+              <ButtonPrimary onClick={() => onHandleSignUp()}>Continue</ButtonPrimary>
+            }
           </div>
 
-          {/* ==== */}
-          <span className="block text-center text-neutral-700 dark:text-neutral-300">
-            Already have an account? {` `}
-            <Link className="text-green-600" to="/login">
-              Login
-            </Link>
-          </span>
         </div>
       </div>
     </div>

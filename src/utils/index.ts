@@ -99,3 +99,8 @@ export const getLegendaryNFTUrlById = (id:any) => {
 export const getLegendaryNFTUrl = (dataURL:any) => {
     return `${UPLOAD_SERVER_URL}${dataURL}`;
 }
+
+export const displayDate = (timestamp:any) => {
+    const _date = new Date(parseInt(timestamp));
+    return _date.getDate()+"/"+(_date.getMonth()+1)+"/"+_date.getFullYear()+" "+_date.getHours()+":"+_date.getMinutes()+":"+_date.getSeconds()
+}
