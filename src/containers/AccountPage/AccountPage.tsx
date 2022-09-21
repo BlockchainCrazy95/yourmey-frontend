@@ -16,7 +16,7 @@ import { BASE_URL, CHAIN_ID, SITE_NAME, TARGET_ADDRESS } from "utils/data";
 import { useWeb3Context } from "hooks/web3Context";
 import { changeNetwork, useContract, useRefresh } from "hooks";
 import { displayFixed, ellipseAddress, isNullAddress, isPerNum, showToast } from "utils";
-import { getDownlines, postUpdate, postUpdatePerNum} from "utils/fetchHelpers";
+import { getDownlines, postUpdate, postUpdateMailAddress, postUpdatePerNum} from "utils/fetchHelpers";
 import { getAccountName, getLevelOnes, getParent, getParentName, setParent } from "contracts/affiliateHelper";
 import { setUser } from "app/home/home";
 
@@ -37,6 +37,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const [ hasParent, setHasParent ] = useState(false);
   const [ parentAddress, setParentAddress ] = useState("");
   const [ pernum, setPerNum ] = useState("");
+  const [ mailAddress, setMailAddress ] = useState("");
   const [ parentName, setParentName ] = useState("");
   const [ levelOnes, setLevelOnes ] = useState("-");
   const [ isPending, setIsPending ] = useState(false);
@@ -198,6 +199,39 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
     }
   }
 
+  const onChangeMailAddress = (e:any) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setMailAddress(value);
+  }
+
+  const onHandleMailAddress = async () => {
+    console.log("EmailAddress = ", mailAddress)
+    // if(!isPerNum(mailAddress)) {
+    //   showToast(<span>Please input Email address correctly!<br/> Ex: support@yemnation.com</span>, "error");
+    //   return;
+    // }
+    const params:any = {
+      id: user._id,
+      mail: mailAddress
+    }
+    try {
+      const {success, res}:any = await postUpdateMailAddress(params);
+      console.log("res = ", res)
+      if(success){
+        showToast(res.data.message, "success");
+        // console.log("new pernum = ", params.pernum)
+        dispatch(setUser({...user, pernum: params.pernum}));
+        window.localStorage.removeItem("jwtToken")
+      }
+      else
+        showToast(res.data.message, "error");
+    } catch(err) {
+      console.log("error = ", err);
+      showToast(err, "error")
+    }
+  }
+
   if(!user) return <></>
 
   return (
@@ -262,6 +296,14 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                 </div>
               </div>
 
+              <div>
+                <Label>Email Address</Label>
+                <div className="flex flex-col sm:flex-row">
+                  <Input className="mt-1.5" type="email" placeholder="support@yemnation.com" value={mailAddress} onChange={onChangeMailAddress} />
+                  <ButtonPrimary className="mt-1.5 ml-1 float-right" onClick={onHandleMailAddress}> Save </ButtonPrimary>
+                </div>
+              </div>
+
               {/* ---- */}
               <div>
                 <Label>YEM Balance</Label>
@@ -278,9 +320,6 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
             <div className="w-full border-b-2 border-neutral-200 dark:border-neutral-700"></div>
             <div className="flex flex-col md:flex-row">
               <div className="flex-grow mt-10 md:mt-0 md:pl-16 max-w-3xl space-y-5 sm:space-y-6 md:sm:space-y-7">
-
-
-              {/* ---- */}
 
               {/* ---- */}
               { hasParent ? <>

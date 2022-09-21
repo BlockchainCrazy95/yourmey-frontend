@@ -92,6 +92,10 @@ export const isPerNum = (pernum:string) => {
     return pernum.length === 10 && _nums === null;
 }
 
+export const isMailAddress = (email:string) => {
+    return true;
+}
+
 export const getLegendaryNFTUrlById = (id:any) => {
     return `${UPLOAD_SERVER_URL}legendary/${id}.jpeg`;
 }

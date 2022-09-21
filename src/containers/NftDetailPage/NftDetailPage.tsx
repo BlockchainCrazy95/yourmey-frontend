@@ -35,7 +35,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
   className = "",
   isPreviewMode = true,
 }) => {
-  const YEM_PRICE = "20033.4668";
+  const YEM_PRICE = "21000";
   const history = useHistory();
   const btnPayNow = useRef<any>(null);
   const params:any = useParams();
@@ -101,11 +101,14 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     const _lastPrice = parseFloat(lastPrice);
     console.log("_newPrice =", _newPrice)
     console.log("_lastPrice =", _lastPrice)
-    if(_newPrice <= _lastPrice) {
+    if(_lastPrice !== 0 && _newPrice <= _lastPrice) {
       showToast("New bid price must be bigger than the current price.", "error");
       return;
     } else if(_lastPrice !== 0 && _newPrice > _lastPrice * 1.5) {
       showToast("New bid price must be smaller than 1.5 times of current price.", "error");
+      return;
+    } else if(_lastPrice !== 0 && _newPrice - _lastPrice < 0.0001) {
+      showToast("The difference must be bigger that 0.0001.", "error");
       return;
     }
     console.log("selItem = ", selItem);
@@ -259,7 +262,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
               </div>
 
               <span className="text-sm text-neutral-500 dark:text-neutral-400 ml-5 mt-2 sm:mt-0 sm:ml-10">
-                {`[${selItem.bids.length} bids]`}
+                {`[${selItem.bids == null ? 0 : selItem.bids.length} bids]`}
               </span>
             </div>
 

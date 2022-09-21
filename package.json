@@ -50,6 +50,8 @@
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
     "sass": "^1.53.0",
+    "socket.io": "^4.5.2",
+    "socket.io-client": "^4.5.2",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "styled-components": "^5.3.5",
