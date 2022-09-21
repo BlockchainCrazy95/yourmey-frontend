@@ -121,6 +121,26 @@ export const postUpdatePerNum = async (params:any) => {
     }
 }
 
+export const postUpdateMailAddress = async (params:any) => {
+    try {
+        const res = await axios({
+            method: "post",
+            url: `${API_SERVER_URL}users/updateMailAddress`,
+            data: params
+        });
+        console.log("postUpdateMailAddress res=", res);
+        return {
+            success: true,
+            res
+        }
+    } catch(err) {
+        return {
+            success: false,
+            err
+        }
+    }
+}
+
 export const postUpdate = async (params:any) => {
     try {
         const res = await axios({
@@ -186,6 +206,20 @@ export const getDownlines = async (params:any) => {
         }
     }
     return [];
+}
+
+export const checkUsername = async (params:any) => {
+    try {
+        const res = await axios({
+            method: "post",
+            url: `${API_SERVER_URL}users/checkUsername`,
+            data: params
+        });
+        return res.data;
+    } catch(err:any) {
+        console.log("checkUsername err=", err);
+        return { success: false, message: err.response.data.message };
+    }
 }
 
 export const getAuctionList = async () => {

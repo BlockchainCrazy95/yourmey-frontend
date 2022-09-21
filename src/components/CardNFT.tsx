@@ -78,7 +78,7 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, item }) => {
         <div className="flex justify-between">
           {renderAvatars()}
           <span className="text-neutral-700 dark:text-neutral-400 text-xs">
-            {item.bids.length} bids
+            {item.bids !== null ? item.bids.length : 0} bids
           </span>
         </div>
         <h2 className={`text-lg font-medium`}>

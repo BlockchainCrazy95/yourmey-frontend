@@ -12,7 +12,7 @@ import { useWeb3Context } from "hooks/web3Context";
 import { signString } from "utils/contractUtils";
 import axios from "axios";
 import { API_SERVER_URL, LOG_HISTORY } from "utils/data";
-import { initialize, postSignUp } from "utils/fetchHelpers";
+import { checkUsername, initialize, postSignUp } from "utils/fetchHelpers";
 import { showToast } from "utils";
 import { useDispatch } from "react-redux";
 import { setRefAddress1, setUser } from "app/home/home";
@@ -92,7 +92,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
     // }
   }
 
-  const onNextToWalletConnect = () => {
+  const onNextToWalletConnect = async () => {
     if(!username) {
       showToast("Please input params correctly!", "error");
       return
@@ -102,7 +102,14 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
       // alert("Not more than 20 letters");
       return;
     }
-    setStep(1);
+    console.log("onNextToWalletConnect username=", username);
+    const res:any = await checkUsername({username});
+    console.log('res =', res)
+    if(res.success) {
+      setStep(1);
+    } else {
+      showToast(res.message, "error");
+    }
   }
 
   const onNextToLast = () => {
@@ -125,10 +132,10 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
         <div className="max-w-md mx-auto space-y-6 ">
           <div className="grid grid-cols-1 gap-6">
             <span className="block text-center text-neutral-700 dark:text-neutral-300">
-              Already have an account? {` `}
-              <Link className="text-green-600" to="/login">
+              Already have an account? {` `} Please login to the site.
+              {/* <Link className="text-green-600" to="/login">
                 Login
-              </Link>
+              </Link> */}
             </span>
             <div style={{backgroundColor: "#e1d28b6b", padding: "20px", borderRadius: "10px"}}>
               <span className="flex"><span className={`w-[18px] ${step == 0 ? "font-bold" : ""}`}>1.</span><span className={step == 0 ? "font-bold" : ""}>Please input user name. <br/></span></span>
@@ -143,7 +150,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
                 </span>
                 <Input
                   type="text"
-                  placeholder="e.g: user"
+                  placeholder=""
                   className="mt-1"
                   value={username}
                   onChange={onChangeUserName}
@@ -177,21 +184,24 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
               <label className="block">
                 <span className="flex justify-between items-center text-neutral-800 dark:text-neutral-200">
                   <span>Address <span className="text-[#f00]">*</span></span>
-                  <span className="text-sm text-green-600 hover:text-green-400 hover:underline hover:underline-offset-4 cursor-pointer" onClick={() => onHandleConnect()}>{connected? "Disconnect" : "Wallet Connect"}</span>
+                  {/* <span className="text-sm text-green-600 hover:text-green-400 hover:underline hover:underline-offset-4 cursor-pointer" onClick={() => onHandleConnect()}>{connected? "Disconnect" : "Wallet Connect"}</span> */}
                 </span>
                 <CopyToClipboard
                   text={address}
                 >
                   <Input
                     type="text"
-                    placeholder="e.g: 0x0000000000000000000000000000000000000000"
+                    placeholder=""
                     className="mt-1 cursor-pointer"
                     readOnly
                     value={connected ? address : ""}
                   />
                 </CopyToClipboard>
               </label>
-              <ButtonPrimary className="!flex mt-3 mx-auto" onClick={onNextToLast}>Next Step</ButtonPrimary>
+              <div className={`flex mt-3 ${connected ? "justify-between" : ""}`}>
+                <ButtonPrimary onClick={onHandleConnect}>{connected ? "Disconnect" : "Connect Wallet"}</ButtonPrimary>
+                { connected ? <ButtonPrimary onClick={onNextToLast}>Next Step</ButtonPrimary> : <div>{" "}</div>}
+              </div>
             </div>
             }
             { step == 2 &&

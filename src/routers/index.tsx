@@ -14,7 +14,7 @@ import AccountPage from "containers/AccountPage/AccountPage";
 import PageContact from "containers/PageContact/PageContact";
 import PageAbout from "containers/PageAbout/PageAbout";
 import PageSignUp from "containers/PageSignUp/PageSignUp";
-import PageLogin from "containers/PageLogin/PageLogin";
+// import PageLogin from "containers/PageLogin/PageLogin";
 import PageSubcription from "containers/PageSubcription/PageSubcription";
 import BlogPage from "containers/BlogPage/BlogPage";
 import BlogSingle from "containers/BlogPage/BlogSingle";
@@ -32,7 +32,7 @@ export const pages: Page[] = [
   { path: "/", exact: true, component: PageHome },
   { path: "/#", exact: true, component: PageHome },
   { path: "/signup", component: PageSignUp },
-  { path: "/login", component: PageLogin },
+  // { path: "/login", component: PageLogin },
   { path: "/auction", component: AuctionLists },
   { path: "/auction-detail/:id", component: NftDetailPage},
   //

@@ -10,6 +10,7 @@ const TabDetail = ({bids}:any) => {
   console.log("TabDetail bids = ", bids);
   // const bidHistory = bids ? bids.reverse() : [];
   const TABS = ["Bid History"];
+  const _bids = bids ? bids : [];
 
   const renderTabBidHistory = (bids:any) => {
     return (
@@ -136,7 +137,7 @@ const TabDetail = ({bids}:any) => {
                 "rounded-xl focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60 "
               }
             >
-              {renderTabBidHistory(bids)}
+              {renderTabBidHistory(_bids)}
             </Tab.Panel>
           ))}
         </Tab.Panels>

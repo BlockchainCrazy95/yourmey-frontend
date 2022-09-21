@@ -16,6 +16,8 @@ export const affiliateContractAddr = DEV_MODE ? "0x09Db320e8a17735c53BeAb385B83B
 
 export const SIGN_PASSWORD = "YOURMEY_PASSWORD"
 
+export const SERVER_URL = DEV_MODE ? "https://localhost/" : "https://api.yemnation.com/"
+
 export const API_SERVER_URL = DEV_MODE ? "http://localhost/api/" : "https://api.yemnation.com/api/";
 
 export const UPLOAD_SERVER_URL = DEV_MODE ? "http://localhost/assets/" : "https://api.yemnation.com/assets/";
