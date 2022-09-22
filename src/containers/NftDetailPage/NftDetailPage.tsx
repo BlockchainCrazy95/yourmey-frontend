@@ -148,9 +148,12 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     console.log("onClickPayWithYEM")
     // window.open("/auction");
 
-    if(btnPayNow) {
-      btnPayNow.current.click();
-    }
+    showToast(<p>Please pay using pernumpay to business account - 1001257766</p>, "error");
+
+    // if(btnPayNow) {
+    //   btnPayNow.current.click();
+    // }
+
     // await axios.post("https://pernumpay.com/payment", {
     //   cmd: "_cart",
     //   business: "_cart",
