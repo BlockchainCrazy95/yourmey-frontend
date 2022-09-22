@@ -416,8 +416,8 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       <ModalBid show={isBidShow} onCloseModalBid={closeBidModal} curPrice={curBidPrice} onClickBid={onPlaceABid} />
       <form action="https://pernumpay.com/payment" method="post" style={{display:"none"}}  target="_blank">
         <input type="hidden" name="cmd" value="_cart" />
-        <input type="hidden" name="business" value="1001252974" />
-        <input type="hidden" name="invoice" value="1.5" />
+        <input type="hidden" name="business" value="1001257766" />
+        <input type="hidden" name="invoice" value={`Yemnation Auction NFT - ${user.username} `} />
         <input type="hidden" name="rm" value="2" />
         <input type="hidden" name="free_yem_allowed" value="1" />
         <input type="hidden" name="charset" value="utf-8" />
