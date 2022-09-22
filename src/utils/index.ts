@@ -22,14 +22,14 @@ export const isNullAddress = (address:any) => {
     return address === "0x0000000000000000000000000000000000000000" || address === "";
 }
 
-export const showToast = (content:any, type:string = "error") => {
+export const showToast = (content:any, type:string = "error", autoClose:any = 3000) => {
     switch(type) {
     case "info":
         toast.info(content, {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: autoClose,
             hideProgressBar: false,
-            closeOnClick: true,
+            closeOnClick: autoClose === true ? false: true,
             pauseOnHover: false,
             draggable: false,
         });
@@ -37,7 +37,7 @@ export const showToast = (content:any, type:string = "error") => {
     case "success":
         toast.success(content, {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: autoClose,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,
@@ -47,7 +47,7 @@ export const showToast = (content:any, type:string = "error") => {
     case "success-down":
         toast.success(content, {
             position: "bottom-right",
-            autoClose: 3000,
+            autoClose: autoClose,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,
@@ -57,7 +57,7 @@ export const showToast = (content:any, type:string = "error") => {
     case "warning":
         toast.warning(content, {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: autoClose,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,
@@ -67,7 +67,7 @@ export const showToast = (content:any, type:string = "error") => {
     case "error":
         toast.error(content, {
             position: "top-right",
-            autoClose: 3000,
+            autoClose: autoClose,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,
@@ -77,7 +77,7 @@ export const showToast = (content:any, type:string = "error") => {
     case "error-down":
         toast.error(content, {
             position: "bottom-right",
-            autoClose: 3000,
+            autoClose: autoClose,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: false,

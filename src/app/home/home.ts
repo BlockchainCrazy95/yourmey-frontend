@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "app/store";
+import { useSelector } from "react-redux";
 
 export interface HomeState {
     user?: any,
@@ -31,6 +32,10 @@ export const homeSlice = createSlice({
         }
     }
 });
+
+export const selectUser = (state:any)  => state.home.user
+
+// export const stateUser = homeSlice.;
 
 export const {
     logout,

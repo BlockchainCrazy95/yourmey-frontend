@@ -61,6 +61,9 @@ const ConnectButton:FC<ConnectButtonProps> = (props) => {
                     openModal();
                 else {
                     showToast("Successfully logged in!", "success");
+                    if(decoded._doc.item) {
+                        showToast(<p>You won in the auction! <br/> Please pay for it asap. <br/> If not, you can lose your chance.</p>, "info", false)
+                    }
                     history.push("/");
                 }
             } else {

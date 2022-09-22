@@ -7,6 +7,7 @@ import jwt_decode from "jwt-decode";
 import MyRouter from "routers/index";
 import { useLocation } from "react-router-dom";
 import Web3 from 'web3';
+import { subscribeListeners } from "utils/socketHelper";
 
 
 
@@ -19,7 +20,8 @@ function App() {
       const decoded:any = jwt_decode(jwtToken);
       console.log("token decode=", decoded);
       dispatch(setUser(decoded._doc));
-    }    
+    } 
+    subscribeListeners(); 
   }, [])
 
   return (
