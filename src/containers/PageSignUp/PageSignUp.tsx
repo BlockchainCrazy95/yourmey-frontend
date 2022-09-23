@@ -132,7 +132,7 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
         <div className="max-w-md mx-auto space-y-6 ">
           <div className="grid grid-cols-1 gap-6">
             <span className="block text-center text-neutral-700 dark:text-neutral-300">
-              Already have an account? {` `} Please login to the site.
+              Already have an account? {` `} Please login to the site with connecting your wallet.
               {/* <Link className="text-green-600" to="/login">
                 Login
               </Link> */}
