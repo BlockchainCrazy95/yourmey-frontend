@@ -5,12 +5,14 @@ import { useSelector } from "react-redux";
 export interface HomeState {
     user?: any,
     refAddress?: string,
-    refAddress1?: string | null
+    refAddress1?: string | null,
+    isPayModalOpen?: boolean | undefined
 }
 
 const initialState: HomeState = {
     user: null,
-    refAddress: ""
+    refAddress: "",
+    isPayModalOpen: false
 };
 
 export const homeSlice = createSlice({
@@ -29,6 +31,9 @@ export const homeSlice = createSlice({
         },
         setRefAddress1: (state, action: PayloadAction<HomeState>) => {
             state.refAddress1 = action.payload.refAddress1;
+        },
+        setPayModalOpen: (state, action: PayloadAction<HomeState>) => {
+            state.isPayModalOpen =  action.payload.isPayModalOpen;
         }
     }
 });

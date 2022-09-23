@@ -51,6 +51,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     const _id = parseInt(params.id)
     if(!Number.isNaN(_id)) {
       setId(_id);
+      console.log("auctionList = ", auctionList);
       const _item = auctionList.filter((item:any) => item.tokenId === _id);
       const now = Date.now();
       if(_item.length !== 0) {
@@ -417,7 +418,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       <form action="https://pernumpay.com/payment" method="post" style={{display:"none"}}  target="_blank">
         <input type="hidden" name="cmd" value="_cart" />
         <input type="hidden" name="business" value="1001257766" />
-        <input type="hidden" name="invoice" value={`Yemnation Auction NFT - ${user.username} `} />
+        <input type="hidden" name="invoice" value={`Yemnation Auction NFT - ${user ? user.username : ""} `} />
         <input type="hidden" name="rm" value="2" />
         <input type="hidden" name="free_yem_allowed" value="1" />
         <input type="hidden" name="charset" value="utf-8" />

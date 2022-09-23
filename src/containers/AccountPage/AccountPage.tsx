@@ -38,6 +38,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   const [ parentAddress, setParentAddress ] = useState("");
   const [ pernum, setPerNum ] = useState("");
   const [ mailAddress, setMailAddress ] = useState("");
+  const [ phoneNumber, setPhoneNumber ] = useState("");
   const [ parentName, setParentName ] = useState("");
   const [ levelOnes, setLevelOnes ] = useState("-");
   const [ isPending, setIsPending ] = useState(false);
@@ -232,6 +233,39 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
     }
   }
 
+  const onChangePhoneNumber = (e:any) => {
+    e.preventDefault();
+    const value = e.target.value;
+    setPhoneNumber(value);
+  }
+
+  const onHandlePhoneNumber = async () => {
+    console.log("phoneNumber = ", phoneNumber);
+    // if(!isPerNum(mailAddress)) {
+    //   showToast(<span>Please input Email address correctly!<br/> Ex: support@yemnation.com</span>, "error");
+    //   return;
+    // }
+    const params:any = {
+      id: user._id,
+      phoneNumber: phoneNumber
+    }
+    try {
+      const {success, res}:any = await postUpdateMailAddress(params);
+      console.log("res = ", res)
+      if(success){
+        showToast(res.data.message, "success");
+        // console.log("new pernum = ", params.pernum)
+        dispatch(setUser({...user, pernum: params.pernum}));
+        window.localStorage.removeItem("jwtToken")
+      }
+      else
+        showToast(res.data.message, "error");
+    } catch(err) {
+      console.log("error = ", err);
+      showToast(err, "error")
+    }
+  }
+
   if(!user) return <></>
 
   return (
@@ -303,6 +337,14 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                   <ButtonPrimary className="mt-1.5 ml-1 float-right" onClick={onHandleMailAddress}> Save </ButtonPrimary>
                 </div>
               </div>
+
+              {/* <div>
+                <Label>Phone number</Label>
+                <div className="flex flex-col sm:flex-row">
+                  <Input className="mt-1.5" placeholder="1 234 567 6789" value={phoneNumber} onChange={onChangePhoneNumber} />
+                  <ButtonPrimary className="mt-1.5 ml-1 float-right" onClick={onHandlePhoneNumber}> Save </ButtonPrimary>
+                </div>
+              </div> */}
 
               {/* ---- */}
               <div>
