@@ -22,9 +22,11 @@ export const API_SERVER_URL = DEV_MODE ? "http://localhost/api/" : "https://api.
 
 export const UPLOAD_SERVER_URL = DEV_MODE ? "http://localhost/assets/" : "https://api.yemnation.com/assets/";
 
-export const BASE_URL = DEV_MODE ? "https://localhost:3000/" : "https://test.yemnation.com/";
+// export const BASE_URL = DEV_MODE ? "https://localhost:3000/" : "https://test.yemnation.com/";
+export const BASE_URL = DEV_MODE ? "https://localhost:3000/" : "https://yemnation.com/";
 
-export const SITE_NAME = DEV_MODE ? "localhost:3000/" : "test.yemnation.com/";
+// export const SITE_NAME = DEV_MODE ? "localhost:3000/" : "test.yemnation.com/";
+export const SITE_NAME = DEV_MODE ? "localhost:3000/" : "yemnation.com/";
 
 export const LOG_HISTORY = true;
 

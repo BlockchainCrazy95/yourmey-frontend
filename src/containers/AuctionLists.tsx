@@ -36,7 +36,7 @@ const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
   }
 
   useEffect(() => {
-    loadData();
+    // loadData();
   }, [dispatch])
 
   return (
@@ -133,7 +133,7 @@ const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
                     Volume
                   </span>
                   <span className="font-medium text-base mt-4 sm:text-xl sm:mt-6">
-                    $295,481.62
+                    $ 0
                   </span>
                   <span className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
                     total
@@ -145,7 +145,7 @@ const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
                     Latest Price
                   </span>
                   <span className="font-medium text-base mt-4 sm:text-xl sm:mt-6">
-                    $295,481.62
+                    $ 0
                   </span>
                   <span className="text-xs text-green-500 mt-1"> --</span>
                 </div>
@@ -156,7 +156,7 @@ const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
                     Items
                   </span>
                   <span className="font-medium text-base mt-4 sm:text-xl sm:mt-6">
-                    2235
+                    0
                   </span>
                   <span className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
                     total
@@ -178,7 +178,7 @@ const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10  mt-8 lg:mt-10">
             {auctionList && auctionList.length ? auctionList.map((item:any, index:any) => (
               <CardNFT key={index} item={item}/>
-            )): <>No Auction List</>}
+            )): <>Coming Soon...</>}
           </div>
 
           {/* PAGINATION */}
