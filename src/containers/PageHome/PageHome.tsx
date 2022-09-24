@@ -35,7 +35,7 @@ function PageHome() {
       <HomeSectionDiv>
         <div className="nc-PageHome relative overflow-hidden" style={{marginTop: "-88px", paddingTop: "88px"}}>
           <Helmet>
-            <title>Yourmey</title>
+            <title>Yemnation</title>
           </Helmet>
 
           <div className="container relative space-y-20 mt-12 mb-20 sm:space-y-24 sm:my-24 lg:space-y-32 lg:my-32">

@@ -24,7 +24,7 @@ const PageCollection: FC<PageCollectionProps> = ({ className = "" }) => {
       data-nc-id="PageCollection"
     >
       <Helmet>
-        <title>Yourmey</title>
+        <title>Yemnation</title>
       </Helmet>
 
       {/* HEADER */}

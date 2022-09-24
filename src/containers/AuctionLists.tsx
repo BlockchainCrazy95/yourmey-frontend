@@ -45,7 +45,7 @@ const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
       data-nc-id="AuctionLists"
     >
       <Helmet>
-        <title>Auction || Yourmey</title>
+        <title>Auction || Yemnation</title>
       </Helmet>
 
       {/* HEADER */}

@@ -301,7 +301,7 @@ const BlogSingle = () => {
   return (
     <div className="nc-PageSingle pt-8 lg:pt-16 ">
       <Helmet>
-        <title>Single Blog || Yourmey</title>
+        <title>Single Blog || Yemnation</title>
       </Helmet>
       {renderHeader()}
       <NcImage

@@ -14,7 +14,7 @@ export const RPC_URL = {
 export const affiliateContractAddr = DEV_MODE ? "0x09Db320e8a17735c53BeAb385B83B04D8e872F22" : "0x09Db320e8a17735c53BeAb385B83B04D8e872F22";
 
 
-export const SIGN_PASSWORD = "YOURMEY_PASSWORD"
+export const SIGN_PASSWORD = "Yemnation_PASSWORD"
 
 export const SERVER_URL = DEV_MODE ? "http://localhost/" : "https://api.yemnation.com/"
 
