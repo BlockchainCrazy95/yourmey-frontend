@@ -49,6 +49,9 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
   useEffect(() => {
     if(!user) {
       history.push("/");
+    } else {
+      setPerNum(user.pernum);
+      setMailAddress(user.mail);
     }
   }, [user])
 
@@ -107,8 +110,11 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
     } else {
       setLevelOnes("-");
     }
-    if(user)
-      setPerNum(user.pernum)
+    // if(user) {
+    //   console.log("updateData user=", user);
+    //   setPerNum(user.pernum)
+    //   setMailAddress(user.mail)
+    // }
   }
 
   useEffect(() => {
@@ -222,7 +228,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
       if(success){
         showToast(res.data.message, "success");
         // console.log("new pernum = ", params.pernum)
-        dispatch(setUser({...user, pernum: params.pernum}));
+        dispatch(setUser({...user, mail: params.mail}));
         window.localStorage.removeItem("jwtToken")
       }
       else

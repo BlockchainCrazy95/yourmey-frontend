@@ -1,0 +1,20 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60">
+	<title>New Project</title>
+	<defs>
+		<image  width="60" height="60" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8AQMAAAAAMksxAAAAAXNSR0IB2cksfwAAAANQTFRFAAAAp3o92gAAAAF0Uk5TAEDm2GYAAAAPSURBVHicY2AYBaMAOwAAAhwAAe4HuPoAAAAASUVORK5CYII="/>
+		<image width="200" height="46" id="img2" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAAuAQMAAABXi8RCAAAAAXNSR0IB2cksfwAAAANQTFRFAAAAp3o92gAAAAF0Uk5TAEDm2GYAAAASSURBVHicY2AYBaNgFIyCwQ8ABKwAAWKbsPMAAAAASUVORK5CYII="/>
+		<radialGradient id="g1" cx="20.8" cy="2.3" r="104" gradientUnits="userSpaceOnUse">
+			<stop offset="0" stop-color="#0284c7"/>
+			<stop offset="1" stop-color="#02f0ff"/>
+		</radialGradient>
+	</defs>
+	<style>
+		.s0 { fill: url(#g1) } 
+		.s1 { fill: #ffffff } 
+	</style>
+	<use id="Background" href="#img1" x="0" y="0"/>
+	<use id="img1" href="#img2" transform="matrix(1.304,0,0,1.304,.565,1)"/>
+	<path id="Layer" class="s0" d="m30.8 59c-15.7 0-28.4-12.6-28.4-28.3 0-15.7 12.7-28.4 28.4-28.4 15.6 0 28.3 12.7 28.3 28.4 0 15.7-12.7 28.3-28.3 28.3z"/>
+	<path id="Layer" class="s1" d="m29 20.6c-0.5-1.7 0.4-3.7 2.1-4.2 1.7-0.5 3.5 0.4 4.2 2.1l7.5 22.4c0.5 1.7-0.4 3.7-2.1 4.2-1.7 0.5-3.5-0.4-4-2.1z"/>
+	<path id="Layer" class="s1" d="m17.3 24.5c-0.6-1.7 0.4-3.5 2-4.2 1.7-0.5 3.6 0.4 4.1 2.1l4.2 12.1c0.5 1.7-0.4 3.7-2.1 4.2-1.7 0.5-3.5-0.4-4.2-2.1z"/>
+</svg>
