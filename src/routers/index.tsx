@@ -26,6 +26,7 @@ import PageUploadItem from "containers/PageUploadItem";
 import { logout, setRefAddress } from "app/home/home";
 import { useWeb3Context } from "hooks/web3Context";
 import AuctionLists from "containers/AuctionLists";
+import PageAdminPanel from "containers/PageAdminPanel";
 // import PageConnectWallet from "containers/PageConnectWallet";
 
 export const pages: Page[] = [
@@ -35,6 +36,7 @@ export const pages: Page[] = [
   // { path: "/login", component: PageLogin },
   { path: "/auction", component: AuctionLists },
   { path: "/auction-detail/:id", component: NftDetailPage},
+  { path: "/admin", component: PageAdminPanel },
   //
   { path: "/home-header-2", exact: true, component: PageHome },
   // { path: "/nft-detailt", component: NftDetailPage },
@@ -45,12 +47,12 @@ export const pages: Page[] = [
   { path: "/page-upload-item", component: PageUploadItem },
   // { path: "/connect-wallet", component: PageConnectWallet },
   //
-  { path: "/blog", component: BlogPage },
-  { path: "/blog-single", component: BlogSingle },
+  // { path: "/blog", component: BlogPage },
+  // { path: "/blog-single", component: BlogSingle },
   //
-  { path: "/contact", component: PageContact },
-  { path: "/about", component: PageAbout },
-  { path: "/subscription", component: PageSubcription },
+  // { path: "/contact", component: PageContact },
+  // { path: "/about", component: PageAbout },
+  // { path: "/subscription", component: PageSubcription },
 ];
 
 const useQuery = () => {
