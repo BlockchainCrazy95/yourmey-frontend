@@ -355,7 +355,7 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
               {/* ---- */}
               <div>
                 <Label>YEM Balance</Label>
-                <Input className="mt-1.5 h-11" disabled value="0.0" readOnly />
+                <Input className="mt-1.5 h-11" disabled value={user.yem} readOnly />
               </div>
 
               {/* ---- */}
