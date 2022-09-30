@@ -181,10 +181,10 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
 
   const onHandlePerNumSave = async () => {
     console.log("PerNum = ", pernum)
-    if(!isPerNum(pernum)) {
-      showToast(<span>Please input YEM PerNum correctly!<br/> Ex: 1001001000</span>, "error");
-      return;
-    }
+    // if(!isPerNum(pernum)) {
+    //   showToast(<span>Please input YEM PerNum correctly!<br/> Ex: 1001001000</span>, "error");
+    //   return;
+    // }
     const params:any = {
       id: user._id,
       pernum
@@ -497,6 +497,9 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
                   }
                   </div>
               }
+              { user.verified ?
+                <ButtonPrimary href="/admin" className="mt-5"> Go to Admin Panel </ButtonPrimary>
+              :<></>}
             </div>
           </div>
         </div>

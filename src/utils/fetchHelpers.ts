@@ -141,6 +141,26 @@ export const postUpdateMailAddress = async (params:any) => {
     }
 }
 
+export const postUpdateYEMBalance = async (params:any) => {
+    try {
+        const res = await axios({
+            method: "post",
+            url: `${API_SERVER_URL}users/updateYEMBalance`,
+            data: params
+        });
+        console.log("postUpdateYEMBalance res=", res);
+        return {
+            success: true,
+            res
+        }
+    } catch(err) {
+        return {
+            success: false,
+            err
+        }
+    }
+}
+
 export const postUpdate = async (params:any) => {
     try {
         const res = await axios({
@@ -206,6 +226,45 @@ export const getDownlines = async (params:any) => {
         }
     }
     return [];
+}
+
+export const getUserBalance = async (params:any) => {
+    try {
+        const res = await axios({
+            method: "post",
+            url: `${API_SERVER_URL}users/getUserBalance`,
+            data: params
+        })
+        return res.data;
+    } catch(err:any) {
+        console.log("getUserBalance err=", err)
+        if(err.response.status === 500) {
+            showToast(err.response.statusText, "error");
+        } else if(err.response.data) {
+            showToast(err.response.data.message, "error");
+        } else {
+            showToast(err.message, "error");
+        }
+    }
+}
+
+export const getNumberOfUsers = async () => {
+    try {
+        const res = await axios({
+            method: "get",
+            url: `${API_SERVER_URL}users/getNumberOfUsers`
+        });
+        return res.data;
+    } catch(err:any)  {
+        console.log("getNumberOfUsers err=", err)
+        if(err.response.status === 500) {
+            showToast(err.response.statusText, "error");
+        } else if(err.response.data) {
+            showToast(err.response.data.message, "error");
+        } else {
+            showToast(err.message, "error");
+        }
+    }
 }
 
 export const checkUsername = async (params:any) => {

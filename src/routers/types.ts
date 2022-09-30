@@ -5,6 +5,7 @@ export interface LocationStates {
   "/#"?: {};
   "/home2"?: {};
   "/home3"?: {};
+  "/admin"?: {};
   //
   "/auction"?: {};
   "/auction-detail/:id"?: {};
