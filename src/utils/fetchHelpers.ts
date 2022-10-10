@@ -161,25 +161,6 @@ export const postUpdateYEMBalance = async (params:any) => {
     }
 }
 
-export const postUpdate = async (params:any) => {
-    try {
-        const res = await axios({
-            method: "post",
-            url: `${API_SERVER_URL}users/update`,
-            data: params
-        });
-        return {
-            success: true,
-            res
-        }
-    } catch(err) {
-        return {
-            success: false,
-            err
-        }
-    }
-}
-
 export const postSetBid = async (params: any) => {
     try {
         const res = await axios({
