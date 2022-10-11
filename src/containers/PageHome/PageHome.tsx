@@ -51,7 +51,7 @@ function PageHome() {
                       src={Vector1}
                       alt="Vector1"
                     />
-                    <span className="relative">Universum</span>
+                    <span className="relative">Universe</span>
                   </span>
                 </span>
               }

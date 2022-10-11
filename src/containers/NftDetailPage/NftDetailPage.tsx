@@ -58,7 +58,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
         if(now < _item[0].auctionStarted * 1000) {
           showToast("Auction not started yet!", "error");
           history.push("/auction");
-        } else if(now > (_item[0].auctionStarted + _item[0].auctionPeriod) * 1000) {
+        } else if(_item[0].auctionStarted !==0 && now > (_item[0].auctionStarted + _item[0].auctionPeriod) * 1000) {
           // showToast("Auction Ended!", "error");
           // history.push("/auction");
           setIsEnd(true);
@@ -86,8 +86,12 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     const now = Date.now();
     console.log("now = ", now);
     console.log("auction end time = ", selItem.auctionStarted + selItem.auctionPeriod)
+    if(selItem.auctionStarted === 0 ) {
+      showToast("Auction has not started yet!", "error");
+      return;
+    }
     if(now > (selItem.auctionStarted + selItem.auctionPeriod) * 1000) {
-      showToast("Auction Period Ended", "error");
+      showToast("Auction Period Ended!", "error");
       return;
     }
 
