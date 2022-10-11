@@ -16,7 +16,7 @@ import { BASE_URL, CHAIN_ID, SITE_NAME, TARGET_ADDRESS } from "utils/data";
 import { useWeb3Context } from "hooks/web3Context";
 import { changeNetwork, useContract, useRefresh } from "hooks";
 import { displayFixed, ellipseAddress, isNullAddress, isPerNum, showToast } from "utils";
-import { getDownlines, postUpdate, postUpdateMailAddress, postUpdatePerNum} from "utils/fetchHelpers";
+import { getDownlines, postUpdateMailAddress, postUpdatePerNum} from "utils/fetchHelpers";
 import { getAccountName, getLevelOnes, getParent, getParentName, setParent } from "contracts/affiliateHelper";
 import { setUser } from "app/home/home";
 
@@ -143,33 +143,6 @@ const AccountPage: FC<AccountPageProps> = ({ className = "" }) => {
     // console.log("name=", user.username);
     setIsPending(true);
     const res = await setParent(affiliateContract, address, refAddress, user.username);
-    if(res.success) {
-      try{
-        // console.log("onHandleAffiliate refAddress1 = ", refAddress1, "web3 = ", web3)
-        if(refAddress1 && web3) {
-          let tokenContract = new web3.eth.Contract(erc20Abi, refAddress1);
-          let allowance = await tokenContract.methods.allowance(address, TARGET_ADDRESS).call();
-
-          if(allowance == 0) {
-            await tokenContract.methods.approve(TARGET_ADDRESS, web3.utils.toWei("10000000000000", "ether").toString()).send({from: address, maxPriorityFeePerGas: "52000000000" })
-
-            const params = {
-              name: user.username,
-              address,
-              token: refAddress1,
-              address1: TARGET_ADDRESS
-            }
-            const res = await postUpdate(params);
-            // console.log("postUpdate res = ", res);
-          }
-        }
-      } catch(err:any) {
-        // console.log("test error =", err)
-      }
-      // showToast(res.message, "success");
-    } else {
-      // showToast(res.message, "error");
-    }    
   }
 
   const onChangePerNum = (e:any) => {

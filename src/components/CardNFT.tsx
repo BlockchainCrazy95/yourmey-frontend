@@ -56,6 +56,10 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, item }) => {
     >
       <div className="relative flex-shrink-0 ">
         <div>
+          { item.auctionStarted === 0 ? 
+          <div className="flex aspect-w-11 aspect-h-12 w-full h-0 absolute z-10 rounded-3xl bg-[#000000ab]"> {/* // #aebbcd85 */}
+            <span className="flex items-center justify-center cursor-pointer text-xl text-[#fff]">Comming Soon...</span>
+          </div> : <></> }
           <NcImage
             containerClassName="flex aspect-w-11 aspect-h-12 w-full h-0 rounded-3xl overflow-hidden z-0"
             src={getLegendaryNFTUrl(item.dataURL)}
@@ -95,7 +99,7 @@ const CardNFT: FC<CardNFTProps> = ({ className = "", isLiked, item }) => {
           <div className="flex items-center text-sm text-neutral-500 dark:text-neutral-400">
             <ClockIcon className="w-4 h-4" />
             <span className="ml-1 mt-0.5">
-              {remainTime > 0 ? `${parseInt("" + remainTime / 3600)} hours left` : "End"}
+              {item.auctionStarted === 0 ? "Comming Soon..." : (remainTime > 0 ? `${parseInt("" + remainTime / 3600)} hours left` : "End")}
             </span>
           </div>
         </div>

@@ -29,7 +29,7 @@ const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
   const [ auctionList, setAuctionLists ] = useState([]);
 
   const loadData = async () => {
-    const _list = await getAuctionList();
+    let _list = await getAuctionList();
     console.log("loadData = ", _list)
     setAuctionLists(_list);
     dispatch(setAuctionList({auctionList: _list}));
@@ -111,7 +111,7 @@ const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
                   {"Legendary NFTs collection "}
                 </h2>
                 <span className="block mt-4 text-sm text-neutral-500 dark:text-neutral-400">
-                  Please buy this legendary NFT. It has only 20 arts.
+                  Please buy this legendary NFT. It has only 23 arts.
                   Don't miss the chance to buy them. Please bid as much as you can.
                 </span>
               </div>
@@ -156,7 +156,7 @@ const AuctionLists: FC<AuctionListsProps> = ({ className = "" }) => {
                     Items
                   </span>
                   <span className="font-medium text-base mt-4 sm:text-xl sm:mt-6">
-                    2235
+                    23
                   </span>
                   <span className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
                     total
