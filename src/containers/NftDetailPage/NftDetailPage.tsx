@@ -55,7 +55,7 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
       const _item = auctionList.filter((item:any) => item.tokenId === _id);
       const now = Date.now();
       if(_item.length !== 0) {
-        if(now < _item[0].auctionStarted * 1000) {
+        if(now < _item[0].auctionStarted * 1000 || _item[0].auctionStarted === 0) {
           showToast("Auction not started yet!", "error");
           history.push("/auction");
         } else if(_item[0].auctionStarted !==0 && now > (_item[0].auctionStarted + _item[0].auctionPeriod) * 1000) {
