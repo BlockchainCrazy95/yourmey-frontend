@@ -115,6 +115,9 @@ const NftDetailPage: FC<NftDetailPageProps> = ({
     } else if(_lastPrice !== 0 && _newPrice - _lastPrice < 0.0001) {
       showToast("The difference must be bigger that 0.0001.", "error");
       return;
+    } else if(user.yem < _newPrice) {
+      showToast("You need YEM balance for bidding.", "error");
+      return;
     }
     console.log("selItem = ", selItem);
     console.log("user = ", user);
