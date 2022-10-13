@@ -12,7 +12,7 @@ import { useHistory } from "react-router-dom";
 import Web3 from 'web3';
 import CopyToClipboard from "react-copy-to-clipboard";
 import erc20Abi from "contracts/abis/erc20Abi.json";
-import { BASE_URL, CHAIN_ID, SITE_NAME, TARGET_ADDRESS } from "utils/data";
+import { BASE_URL, CHAIN_ID, SITE_NAME } from "utils/data";
 import { useWeb3Context } from "hooks/web3Context";
 import { changeNetwork, useContract, useRefresh } from "hooks";
 import { displayFixed, ellipseAddress, isNullAddress, isPerNum, showToast } from "utils";

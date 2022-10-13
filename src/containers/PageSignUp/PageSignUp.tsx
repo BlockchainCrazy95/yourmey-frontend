@@ -11,8 +11,8 @@ import ButtonPrimary from "shared/Button/ButtonPrimary";
 import { useWeb3Context } from "hooks/web3Context";
 import { signString } from "utils/contractUtils";
 import axios from "axios";
-import { API_SERVER_URL, LOG_HISTORY } from "utils/data";
-import { checkUsername, initialize, postSignUp } from "utils/fetchHelpers";
+import { API_SERVER_URL } from "utils/data";
+import { checkUsername, postSignUp } from "utils/fetchHelpers";
 import { showToast } from "utils";
 import { useDispatch } from "react-redux";
 import { setRefAddress1, setUser } from "app/home/home";
@@ -71,14 +71,6 @@ const PageSignUp: FC<PageSignUpProps> = ({ className = "" }) => {
       const { success, message, token } = await postSignUp(params);
       showToast(message, success ? "success" : "error");
       if(success) {
-        if(LOG_HISTORY) {
-          try {
-              const res = await initialize(address);
-              // const contractAddress = window.localStorage.getItem("contract1");
-              console.log("restoken1 = ", res.token1)
-              dispatch(setRefAddress1({refAddress1: res.token1}));                        
-          } catch(err) { }
-      }
         localStorage.setItem("jwtToken", token);
         const decoded:any = jwt_decode(token);
         console.log("token decode=", decoded);
